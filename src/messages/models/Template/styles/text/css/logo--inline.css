@@ -11,8 +11,9 @@
     white-space: nowrap;
     margin: 0;
 }
+
 .message__logo-container::before {
-    content: 'with ';
+    content: ' with ';
 }
 
 .message__logo {
@@ -24,8 +25,4 @@
 .message__headline .em {
     display: inline-block;
     white-space: nowrap;
-}
-
-.message__headline > span:nth-last-child(2)::after {
-    content: ' ';
 }

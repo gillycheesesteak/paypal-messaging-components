@@ -14,7 +14,10 @@ export default {
                     tag: 'XSMALL',
                     replace: [['months.', 'months']]
                 },
-                disclaimer: 'XSMALL.2'
+                disclaimer: {
+                    tag: 'SMALL',
+                    blocks: [0]
+                }
             }
         ],
         ['logo.type:primary', { messageWidth: 130 }],

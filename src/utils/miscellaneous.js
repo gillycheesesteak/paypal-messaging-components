@@ -1,5 +1,4 @@
 import arrayFind from 'core-js-pure/stable/array/find';
-import arrayIncludes from 'core-js-pure/stable/array/includes';
 import stringIncludes from 'core-js-pure/stable/string/includes';
 import objectAssign from 'core-js-pure/stable/object/assign';
 import objectEntries from 'core-js-pure/stable/object/entries';
@@ -31,21 +30,21 @@ export function createCallbackError(message, cb) {
     return error;
 }
 
-export function getDataByTag(data, tag) {
-    let selected = arrayFind(data, ([, tags]) => arrayIncludes(tags, tag));
+export function getDataByTag(messages, prop, tag) {
+    let selected = arrayFind(messages, message => message.size === tag);
     if (selected) {
-        return selected[0];
+        return selected[prop];
     }
 
     if (stringIncludes(tag, '.')) {
         const [fallbackTag] = tag.split('.', 1);
-        selected = arrayFind(data, ([, tags]) => arrayIncludes(tags, fallbackTag));
+        selected = arrayFind(messages, message => message.size === fallbackTag);
         if (selected) {
-            return selected[0];
+            return selected[prop];
         }
     }
 
-    return arrayFind(data, ([, tags]) => arrayIncludes(tags, 'default'))[0];
+    return arrayFind(messages, message => message.size === 'DEFAULT')[prop];
 }
 
 export function request(method, url, { data, headers } = {}) {

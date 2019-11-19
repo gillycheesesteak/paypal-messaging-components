@@ -112,7 +112,8 @@ function replace(replacements, markup) {
     });
 }
 
-function getMarkup(textData, options = {}) {
+function getMarkup({ full, blocks }, options = {}) {
+    const textData = blocks.length === 1 ? full : blocks;
     const uniformText = Array.isArray(textData) ? textData : [textData];
 
     const spans = uniformText.map(text => {
@@ -139,11 +140,11 @@ function getMarkup(textData, options = {}) {
 
 /**
  * Convert a text option to markup
- * @param {Object} data Source text data
+ * @param {Object} messages Source text messages
  * @param {any} option Text option
  * @returns {String|HTMLElement|Boolean} Element to be inserted into another element or false if none
  */
-const rulesToMarkup = curry((data, prop, option) => {
+const rulesToMarkup = curry((messages, prop, option) => {
     if (option === false) return false;
     if (typeof option !== 'string' && typeof option !== 'object') return null;
 
@@ -166,11 +167,11 @@ const rulesToMarkup = curry((data, prop, option) => {
 
             let markup;
             if (typeof op === 'string') {
-                markup = getMarkup(getDataByTag(data[prop], op));
+                markup = getMarkup(getDataByTag(messages, prop, op));
                 span.classList.add(`tag--${op.split('.', 1)[0]}`);
             } else {
                 const { tag, ...options } = op;
-                markup = getMarkup(getDataByTag(data[prop], tag), options);
+                markup = getMarkup(getDataByTag(messages, prop, tag), options);
                 span.classList.add(`tag--${tag.split('.', 1)[0]}`);
             }
 
@@ -279,7 +280,7 @@ function createTemplateNode(options, markup) {
 
     const styleSelectors = objectGet(options, 'style._flattened');
     const offerType = objectGet(markup, 'meta.offerType');
-    const data = objectGet(markup, 'data');
+    const messages = objectGet(markup, 'messages');
 
     if (layout === 'legacy') {
         const typeNI = objectGet(options, 'style.typeNI');
@@ -297,7 +298,7 @@ function createTemplateNode(options, markup) {
 
     const classNamePrefix = 'message';
     const applyCascadeRules = applyCascade(styleSelectors);
-    const mutationRules = applyCascadeRules(Object, getMutations(offerType, `layout:${layout}`, data));
+    const mutationRules = applyCascadeRules(Object, getMutations(offerType, `layout:${layout}`));
 
     const layoutProp = `layout:${layout}`;
     const globalStyleRules = applyCascadeRules(Array, allStyles[layoutProp]);
@@ -309,7 +310,7 @@ function createTemplateNode(options, markup) {
     );
     const styleRules = [...globalStyleRules, ...localeStyleRules];
 
-    const toMarkup = rulesToMarkup(data);
+    const toMarkup = rulesToMarkup(messages);
     const newTemplate = baseTemplate.cloneNode(true);
     const getTemplateElement = getElement(classNamePrefix, newTemplate);
     const [messagingContainer, logoContainer, headline, subHeadline, disclaimer] = [

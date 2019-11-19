@@ -59,8 +59,8 @@ export default {
             'default',
             {
                 logo: Logo.PRIMARY.WHITE,
-                headline: 'small',
-                disclaimer: 'xsmall'
+                headline: 'SMALL',
+                disclaimer: 'XSMALL'
             }
         ],
         [
@@ -72,13 +72,13 @@ export default {
         [
             'ratio:20x1',
             {
-                headline: ['xsmall', 'small']
+                headline: ['XSMALL', 'SMALL']
             }
         ],
         [
             'ratio:8x1',
             {
-                headline: ['xsmall', 'small'],
+                headline: ['XSMALL', 'SMALL'],
                 styles: [
                     `@media (min-aspect-ratio: 80/11) and (min-width: 500px) { 
                         .message__headline { font-size: 2.3vw; display: block; }

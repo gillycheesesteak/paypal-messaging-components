@@ -80,14 +80,14 @@ export default {
             {
                 styles: [...flexCommonStyles],
                 logo: Logo.PRIMARY.WHITE,
-                headline: 'large',
-                disclaimer: ['extra', 'xsmall']
+                headline: 'LARGE',
+                disclaimer: ['extra', 'XSMALL']
             }
         ],
         [
             'ratio:20x1',
             {
-                headline: ['small', 'large'],
+                headline: ['SMALL', 'LARGE'],
                 styles: [
                     ...flexCommonStyles,
                     `
@@ -109,7 +109,7 @@ export default {
         [
             'ratio:8x1',
             {
-                headline: ['small', 'large'],
+                headline: ['SMALL', 'LARGE'],
                 styles: [
                     ...flexCommonStyles,
                     `
@@ -133,7 +133,7 @@ export default {
             'ratio:1x1',
             {
                 logo: [Logo.PRIMARY.WHITE, Logo.ALTERNATIVE.WHITE],
-                headline: ['small', 'large']
+                headline: ['SMALL', 'LARGE']
             }
         ],
         ['ratio:1x4', { logo: Logo.STACKED.WHITE }],

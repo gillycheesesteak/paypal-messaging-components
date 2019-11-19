@@ -11,10 +11,10 @@ export default {
                 ],
                 logo: Logo.PRIMARY.COLOR,
                 headline: {
-                    tag: 'small',
+                    tag: 'SMALL',
                     br: ['months', 'APR']
                 },
-                disclaimer: 'xsmall.2'
+                disclaimer: 'XSMALL.2'
             }
         ],
         ['logo.type:primary', { messageWidth: 190 }],
@@ -67,9 +67,9 @@ export default {
             'default',
             {
                 logo: Logo.PRIMARY.WHITE,
-                headline: { tag: 'small', br: ['over', 'at', 'APR'] },
-                subHeadline: 'small',
-                disclaimer: ['xsmall.2', 'xsmall']
+                headline: { tag: 'SMALL', br: ['over', 'at', 'APR'] },
+                subHeadline: 'SMALL',
+                disclaimer: ['XSMALL.2', 'XSMALL']
             }
         ],
 
@@ -77,7 +77,7 @@ export default {
             'ratio:1x4',
             {
                 headline: { br: ['over', 'at', 'APR'] },
-                subHeadline: { tag: 'small', br: ['money'] }
+                subHeadline: { tag: 'SMALL', br: ['money'] }
             }
         ],
 
@@ -99,8 +99,8 @@ export default {
             'default',
             {
                 logo: Logo.PRIMARY.WHITE,
-                headline: 'legacy-small',
-                disclaimer: 'legacy-large'
+                headline: 'legacy-SMALL',
+                disclaimer: 'legacy-LARGE'
             }
         ],
         ['size:1000x36', { logo: Logo.PRIMARY.COLOR }],
@@ -114,14 +114,14 @@ export default {
         [
             'size:234x60',
             {
-                disclaimer: 'legacy-medium',
+                disclaimer: 'legacy-MEDIUM',
                 styles: ['.message__disclaimer { font-size: 9px }', '.message__messaging { padding-top: 5px }']
             }
         ],
         [
             'size:250x250',
             {
-                disclaimer: 'legacy-medium',
+                disclaimer: 'legacy-MEDIUM',
                 styles: ['.message__disclaimer { font-size: 10px }', '.message__headline { margin-bottom: 20px }']
             }
         ],
@@ -132,7 +132,7 @@ export default {
         [
             'size:340x60',
             {
-                disclaimer: 'legacy-medium',
+                disclaimer: 'legacy-MEDIUM',
                 styles: ['.message__headline { font-size: 13px }', '.message__messaging { padding: 7px 0 }']
             }
         ],
@@ -159,8 +159,8 @@ export default {
         [
             'size:540x200',
             {
-                subHeadline: 'legacy-medium',
-                disclaimer: 'legacy-medium.2',
+                subHeadline: 'legacy-MEDIUM',
+                disclaimer: 'legacy-MEDIUM.2',
                 styles: ['.message__headline { padding-right: 40px; }']
             }
         ],

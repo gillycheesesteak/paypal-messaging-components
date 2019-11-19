@@ -21,38 +21,10 @@ import createContainer from '../../models/Container';
 import { setLocale } from '../../../locale';
 import { validateStyleOptions } from '../../models/Banner/validateOptions';
 
-// Using same JSONP callback namespace as original merchant.js
-window.__PP = window.__PP || {};
-
 // Specific dimensions tied to JSON banners in Campaign Studio
 // Swap the placement tag when changes for banners and messaging.js are required in sync
 // const PLACEMENT = 'x200x51';
-const PLACEMENT = 'x215x80';
-
-const NI_ONLY_PLACEMENT = 'x199x99';
-
-function mutateMarkup(markup) {
-    try {
-        const content = markup.content.json;
-        const tracking = markup.tracking_details;
-        const meta = JSON.parse(content.meta);
-        const mutatedMarkup = {
-            data: {
-                disclaimer: JSON.parse(content.disclaimer),
-                headline: JSON.parse(content.headline),
-                subHeadline: JSON.parse(content.subHeadline)
-            },
-            meta: {
-                clickUrl: tracking.click_url,
-                impressionUrl: tracking.impression_url,
-                ...meta
-            }
-        };
-        return mutatedMarkup;
-    } catch (err) {
-        throw new Error(ERRORS.MESSAGE_INVALID_MARKUP);
-    }
-}
+// const PLACEMENT = 'x215x80';
 
 /**
  * Fetch banner markup from imadserver via JSONP
@@ -68,57 +40,31 @@ function fetcher(options) {
         style: { typeEZP }
     } = options;
     return new ZalgoPromise(resolve => {
-        // Create JSONP callback
-        const callbackName = `c${Math.floor(Math.random() * 10 ** 19)}`;
-
-        // For legacy banner placements where there is no EZP banner, use a separate placement tag that will always return NI
-        const dimensions = typeEZP === '' || offerType === 'NI' ? NI_ONLY_PLACEMENT : PLACEMENT;
-
-        // Fire off JSONP request
         const rootUrl = getGlobalUrl('MESSAGE');
         const queryParams = {
-            dimensions,
             currency_value: amount,
-            currency_code: currency || getCurrency(),
-            format: 'HTML',
-            presentation_types: 'HTML',
-            ch: 'UPSTREAM',
-            call: `__PP.${callbackName}`
+            currency_code: currency || getCurrency()
         };
+
+        if (typeEZP === '' || offerType === 'NI') {
+            queryParams.offer = 'NI';
+        }
 
         const queryString = objectEntries(queryParams)
             .filter(([, val]) => val)
             .reduce(
                 (accumulator, [key, val]) => `${accumulator}&${key}=${val}`,
-                stringStartsWith(account, 'client-id') ? `client_id=${account.slice(10)}` : `pub_id=${account}`
+                stringStartsWith(account, 'client-id') ? `client_id=${account.slice(10)}` : `payer_id=${account}`
             );
-        const script = document.createElement('script');
-        script.async = true;
 
         // Manual request instead of traditional JSONP so that we can catch 204 no content stalling
         request('GET', `${rootUrl}?${queryString}`).then(res => {
-            script.text = res.data;
-            document.head.appendChild(script);
-        });
-
-        window.__PP[callbackName] = markup => {
-            document.head.removeChild(script);
-            delete window.__PP[callbackName];
-
-            // Handles markup for v2, v1, v0
-            if (typeof markup === 'object') {
-                // Mutate Markup handles personalization studio json response
-                resolve({ markup: mutateMarkup(markup) });
-            } else {
-                try {
-                    resolve({
-                        markup: JSON.parse(markup.replace(/<\/?div>/g, ''))
-                    });
-                } catch (err) {
-                    resolve({ markup });
-                }
+            try {
+                resolve({ markup: JSON.parse(res.data) });
+            } catch (err) {
+                throw new Error(ERRORS.MESSAGE_INVALID_MARKUP);
             }
-        };
+        });
     });
 }
 
@@ -225,7 +171,7 @@ export default function getBannerMarkup({ options, logger }) {
     ).then(({ markup, options: customOptions = {} }) => {
         logger.info(EVENTS.FETCH_END);
 
-        const offerCountry = (markup && markup.meta && markup.meta.offerCountry) || 'US';
+        const offerCountry = markup.meta.offerType.split(':')[0];
         setLocale(offerCountry);
 
         const style = validateStyleOptions(logger, options.style);
@@ -237,32 +183,25 @@ export default function getBannerMarkup({ options, logger }) {
             ...customOptions
         };
 
-        if (typeof markup === 'object') {
-            const meta = {
-                ...markup.meta,
-                offerCountry
-            };
+        const meta = {
+            ...markup.meta,
+            offerCountry
+        };
 
-            const template = Template.getTemplateNode(totalOptions, markup);
+        const template = Template.getTemplateNode(totalOptions, markup);
 
-            return objectGet(totalOptions, 'style.layout') === 'text'
-                ? getContentMinWidth(template).then(minWidth => ({
-                      markup,
-                      options: totalOptions,
-                      template,
-                      meta: { ...meta, minWidth }
-                  }))
-                : {
-                      markup,
-                      options: totalOptions,
-                      template,
-                      meta: { ...meta, minWidth: template.minWidth }
-                  };
-        }
-
-        const template = document.createElement('div');
-        template.innerHTML = markup;
-
-        return { markup, options: totalOptions, template, meta: {} };
+        return objectGet(totalOptions, 'style.layout') === 'text'
+            ? getContentMinWidth(template).then(minWidth => ({
+                  markup,
+                  options: totalOptions,
+                  template,
+                  meta: { ...meta, minWidth }
+              }))
+            : {
+                  markup,
+                  options: totalOptions,
+                  template,
+                  meta: { ...meta, minWidth: template.minWidth }
+              };
     });
 }

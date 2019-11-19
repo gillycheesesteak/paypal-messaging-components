@@ -130,6 +130,7 @@ export default function toNewPipeline(ppScript) {
             }).render(span);
         }, 0);
         ppScript.destroyDom();
+        console.log('here');
 
         return true;
     }

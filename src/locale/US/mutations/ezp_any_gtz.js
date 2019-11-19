@@ -11,10 +11,10 @@ export default {
                 ],
                 logo: Logo.PRIMARY.COLOR,
                 headline: {
-                    tag: 'xsmall',
-                    br: ['months']
+                    tag: 'XSMALL',
+                    replace: [['months.', 'months']]
                 },
-                disclaimer: 'xsmall.2'
+                disclaimer: 'XSMALL.2'
             }
         ],
         ['logo.type:primary', { messageWidth: 130 }],
@@ -32,10 +32,7 @@ export default {
             'logo.type:none',
             {
                 messageWidth: [235, 1000],
-                logo: false,
-                headline: {
-                    br: ['months']
-                }
+                logo: false
             }
         ],
         [
@@ -67,16 +64,16 @@ export default {
             'default',
             {
                 logo: Logo.PRIMARY.WHITE,
-                headline: { tag: 'small', br: ['over'] },
-                subHeadline: 'small',
-                disclaimer: ['xsmall.2', 'xsmall']
+                headline: { tag: 'SMALL', br: ['over'] },
+                subHeadline: 'SMALL',
+                disclaimer: ['XSMALL.2', 'XSMALL']
             }
         ],
         [
             'ratio:1x4',
             {
                 headline: { br: ['over', 'months'] },
-                subHeadline: { tag: 'xsmall', br: ['money'] }
+                subHeadline: { tag: 'XSMALL', br: ['money'] }
             }
         ],
         ['color:gray', { logo: Logo.PRIMARY.COLOR }],
@@ -89,8 +86,8 @@ export default {
             'default',
             {
                 logo: Logo.PRIMARY.WHITE,
-                headline: 'legacy-small',
-                disclaimer: 'legacy-medium'
+                headline: 'legacy-SMALL',
+                disclaimer: 'legacy-MEDIUM'
             }
         ],
         ['size:1000x36', { logo: Logo.PRIMARY.COLOR }],
@@ -104,7 +101,7 @@ export default {
         [
             'size:234x60',
             {
-                disclaimer: 'legacy-medium.2',
+                disclaimer: 'legacy-MEDIUM.2',
                 styles: ['.message__disclaimer { font-size: 9px }', '.message__messaging { padding-top: 5px }']
             }
         ],
@@ -112,7 +109,7 @@ export default {
             'size:250x250',
             {
                 styles: ['.message__disclaimer { font-size: 10px }', '.message__headline { margin-bottom: 20px }'],
-                disclaimer: 'legacy-medium.2'
+                disclaimer: 'legacy-MEDIUM.2'
             }
         ],
         [
@@ -123,7 +120,7 @@ export default {
             'size:340x60',
             {
                 styles: ['.message__headline { font-size: 13px }', '.message__messaging { padding: 7px 0 }'],
-                disclaimer: 'legacy-medium.2'
+                disclaimer: 'legacy-MEDIUM.2'
             }
         ],
         [
@@ -149,8 +146,8 @@ export default {
         [
             'size:540x200',
             {
-                subHeadline: 'legacy-medium',
-                disclaimer: 'legacy-medium.2',
+                subHeadline: 'legacy-MEDIUM',
+                disclaimer: 'legacy-MEDIUM.2',
                 styles: ['.message__headline { padding-right: 40px; }']
             }
         ],

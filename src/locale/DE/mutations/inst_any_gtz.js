@@ -59,8 +59,8 @@ export default {
             'default',
             {
                 logo: Logo.PRIMARY.WHITE,
-                headline: 'small',
-                disclaimer: 'xsmall'
+                headline: 'SMALL',
+                disclaimer: 'XSMALL'
             }
         ],
         [

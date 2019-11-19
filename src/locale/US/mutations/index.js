@@ -9,21 +9,21 @@ import palaSingleGtz from './pala_single_gtz';
 
 export default function getMutations(id, type) {
     switch (id) {
-        case 'EZP:ANY:EQZ':
+        case 'US:PPC:EZP_ANY_EQZ':
             return ezpAnyEqz[type];
-        case 'EZP:ANY:GTZ':
+        case 'US:PPC:EZP_ANY_GTZ':
             return ezpAnyGtz[type];
-        case 'PALA:MULTI:EQZ':
+        case 'US:PPC:PALA_MULTI_EQZ':
             return palaMultiEqz[type];
-        case 'PALA:MULTI:GTZ':
+        case 'US:PPC:PALA_MULTI_GTZ':
             return palaMultiGtz[type];
-        case 'PALA:SINGLE:EQZ':
+        case 'US:PPC:PALA_SINGLE_EQZ':
             return palaSingleEqz[type];
-        case 'PALA:SINGLE:GTZ':
+        case 'US:PPC:PALA_SINGLE_GTZ':
             return palaSingleGtz[type];
-        case 'NI:NON-US':
+        case 'US:PPC:NI_NON-US':
             return niNonUs[type];
-        case 'NI':
+        case 'US:PPC:NI':
         default:
             return ni[type];
     }

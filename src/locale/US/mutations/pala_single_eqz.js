@@ -7,10 +7,10 @@ export default {
             {
                 logo: Logo.PRIMARY.COLOR,
                 headline: {
-                    tag: 'small',
+                    tag: 'SMALL',
                     br: ['/mo']
                 },
-                disclaimer: 'xsmall'
+                disclaimer: 'XSMALL'
             }
         ],
         ['logo.type:primary', { messageWidth: [190, 240] }],
@@ -44,16 +44,16 @@ export default {
             'default',
             {
                 logo: Logo.PRIMARY.WHITE,
-                headline: { tag: 'small', br: [' of', 'at'] },
-                subHeadline: 'small',
-                disclaimer: 'xsmall'
+                headline: { tag: 'SMALL', br: [' of', 'at'] },
+                subHeadline: 'SMALL',
+                disclaimer: 'XSMALL'
             }
         ],
         [
             'ratio:1x4',
             {
                 headline: { br: ['payments', 'mo'] },
-                subHeadline: { tag: 'small', br: ['money'] }
+                subHeadline: { tag: 'SMALL', br: ['money'] }
             }
         ],
         [
@@ -74,17 +74,17 @@ export default {
             'default',
             {
                 logo: Logo.PRIMARY.WHITE,
-                headline: 'legacy-small',
-                subHeadline: 'legacy-xlarge',
-                disclaimer: 'legacy-medium'
+                headline: 'legacy-SMALL',
+                subHeadline: 'legacy-XLARGE',
+                disclaimer: 'legacy-MEDIUM'
             }
         ],
         ['size:1000x36', { logo: Logo.PRIMARY.COLOR }],
-        ['size:120x90', { logo: false, headline: 'legacy-xsmall' }],
-        ['size:234x60', { headline: 'legacy-xsmall', disclaimer: 'legacy-medium.2' }],
-        ['size:250x250', { headline: 'legacy-small.2', disclaimer: 'legacy-medium.2' }],
-        ['size:340x60', { disclaimer: 'legacy-medium.2' }],
-        ['size:728x90', { headline: 'legacy-xsmall' }],
-        ['size:170x100', { logo: false, headline: 'legacy-xsmall' }]
+        ['size:120x90', { logo: false, headline: 'legacy-XSMALL' }],
+        ['size:234x60', { headline: 'legacy-XSMALL', disclaimer: 'legacy-MEDIUM.2' }],
+        ['size:250x250', { headline: 'legacy-SMALL.2', disclaimer: 'legacy-MEDIUM.2' }],
+        ['size:340x60', { disclaimer: 'legacy-MEDIUM.2' }],
+        ['size:728x90', { headline: 'legacy-XSMALL' }],
+        ['size:170x100', { logo: false, headline: 'legacy-XSMALL' }]
     ]
 };

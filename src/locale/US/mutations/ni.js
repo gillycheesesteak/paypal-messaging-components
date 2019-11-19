@@ -25,9 +25,9 @@ export const legacyNI = [
         'default',
         {
             logo: Logo.PRIMARY.COLOR,
-            headline: 'medium',
-            subHeadline: 'small',
-            disclaimer: 'legacy-medium'
+            headline: 'MEDIUM',
+            subHeadline: 'SMALL',
+            disclaimer: 'legacy-MEDIUM'
         }
     ],
     [
@@ -58,8 +58,8 @@ export default {
                     '@media (max-width: 289px) { .message__disclaimer { display: block; } }'
                 ],
                 logo: Logo.PRIMARY.COLOR,
-                headline: ['xsmall', { tag: 'medium', br: ['months'] }],
-                disclaimer: 'xsmall'
+                headline: ['XSMALL', { tag: 'MEDIUM', br: ['months'] }],
+                disclaimer: 'XSMALL'
             }
         ],
         ['logo.type:primary', { messageWidth: [130, 320] }],
@@ -70,8 +70,8 @@ export default {
                 styles: [basicMediaQuery(280)],
                 logo: Logo.ALT_NO_PP.COLOR,
                 headline: [
-                    { tag: 'xsmall', replace: [['time.', 'time']] },
-                    { tag: 'medium', br: ['purchases'] }
+                    { tag: 'XSMALL', replace: [['time.', 'time']] },
+                    { tag: 'MEDIUM', br: ['purchases'] }
                 ]
             }
         ],
@@ -83,12 +83,12 @@ export default {
                 logo: false,
                 headline: [
                     {
-                        tag: 'xsmall',
+                        tag: 'XSMALL',
                         replace: [['time.', 'time']],
                         br: ['time']
                     },
                     {
-                        tag: 'medium',
+                        tag: 'MEDIUM',
                         br: ['purchases']
                     }
                 ]
@@ -99,7 +99,7 @@ export default {
             {
                 styles: [basicMediaQuery(520)],
                 logo: Logo.ALTERNATIVE.COLOR,
-                headline: ['xsmall', { tag: 'medium', br: ['months'] }]
+                headline: ['XSMALL', { tag: 'MEDIUM', br: ['months'] }]
             }
         ],
         ['logo.type:primary && logo.position:top', { styles: [basicMediaQuery(210)] }],
@@ -114,27 +114,27 @@ export default {
             'default',
             {
                 logo: Logo.PRIMARY.WHITE,
-                headline: ['xsmall', { tag: 'medium', br: ['months'] }],
-                disclaimer: 'xsmall'
+                headline: ['XSMALL', { tag: 'MEDIUM', br: ['months'] }],
+                disclaimer: 'XSMALL'
             }
         ],
         [
             'ratio:1x1',
             {
-                headline: ['xsmall', 'medium'],
+                headline: ['XSMALL', 'MEDIUM'],
                 styles: ['@media (min-width: 150px) { .message__headline { font-size: 8vw } }']
             }
         ],
         [
             'ratio:1x4',
             {
-                headline: { tag: 'medium', br: ['months'] },
+                headline: { tag: 'MEDIUM', br: ['months'] },
                 styles: [
                     '.message__logo-container { margin-bottom: 30%; }',
                     '.message__disclaimer span.multi:nth-of-type(1) { display: none; }',
                     '.message__headline { font-size: 1.1rem }'
                 ],
-                disclaimer: ['xlarge', 'xsmall']
+                disclaimer: ['XLARGE', 'XSMALL']
             }
         ],
         ['color:gray', { logo: Logo.PRIMARY.COLOR }],

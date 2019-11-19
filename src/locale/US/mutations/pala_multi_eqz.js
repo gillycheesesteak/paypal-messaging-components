@@ -7,10 +7,10 @@ export default {
             {
                 logo: Logo.PRIMARY.COLOR,
                 headline: {
-                    tag: 'small',
+                    tag: 'SMALL',
                     br: ['/mo']
                 },
-                disclaimer: 'small'
+                disclaimer: 'SMALL'
             }
         ],
         ['logo.type:primary', { messageWidth: [130, 200] }],
@@ -53,12 +53,12 @@ export default {
             'default',
             {
                 logo: Logo.PRIMARY.WHITE,
-                headline: { tag: 'medium', br: ['low as', 'at'] },
-                subHeadline: 'small',
-                disclaimer: 'xsmall'
+                headline: { tag: 'MEDIUM', br: ['low as', 'at'] },
+                subHeadline: 'SMALL',
+                disclaimer: 'XSMALL'
             }
         ],
-        ['ratio:1x4', { subHeadline: { tag: 'small', br: ['money'] } }],
+        ['ratio:1x4', { subHeadline: { tag: 'SMALL', br: ['money'] } }],
         ['color:gray', { logo: Logo.PRIMARY.COLOR }],
         ['color:white', { logo: Logo.PRIMARY.COLOR }],
         ['color:white-no-border', { logo: Logo.PRIMARY.COLOR }]
@@ -69,24 +69,24 @@ export default {
             'default',
             {
                 logo: Logo.PRIMARY.WHITE,
-                headline: 'legacy-medium',
-                subHeadline: 'legacy-large',
-                disclaimer: 'legacy-small'
+                headline: 'legacy-MEDIUM',
+                subHeadline: 'legacy-LARGE',
+                disclaimer: 'legacy-SMALL'
             }
         ],
-        ['size:1000x36', { logo: Logo.PRIMARY.COLOR, disclaimer: 'legacy-medium' }],
-        ['size:120x90', { logo: false, headline: 'legacy-small', disclaimer: 'legacy-medium' }],
-        ['size:234x60', { headline: 'legacy-small', disclaimer: 'legacy-medium' }],
-        ['size:300x50', { disclaimer: 'legacy-medium' }],
-        ['size:468x60', { disclaimer: 'legacy-medium' }],
+        ['size:1000x36', { logo: Logo.PRIMARY.COLOR, disclaimer: 'legacy-MEDIUM' }],
+        ['size:120x90', { logo: false, headline: 'legacy-SMALL', disclaimer: 'legacy-MEDIUM' }],
+        ['size:234x60', { headline: 'legacy-SMALL', disclaimer: 'legacy-MEDIUM' }],
+        ['size:300x50', { disclaimer: 'legacy-MEDIUM' }],
+        ['size:468x60', { disclaimer: 'legacy-MEDIUM' }],
         [
             'size:250x250',
             {
-                headline: 'legacy-large'
+                headline: 'legacy-LARGE'
             }
         ],
-        ['size:728x90', { headline: 'legacy-small', disclaimer: 'legacy-medium' }],
-        ['size:540x200', { disclaimer: 'legacy-medium' }],
-        ['size:170x100', { logo: false, headline: 'legacy-small', disclaimer: 'legacy-medium' }]
+        ['size:728x90', { headline: 'legacy-SMALL', disclaimer: 'legacy-MEDIUM' }],
+        ['size:540x200', { disclaimer: 'legacy-MEDIUM' }],
+        ['size:170x100', { logo: false, headline: 'legacy-SMALL', disclaimer: 'legacy-MEDIUM' }]
     ]
 };

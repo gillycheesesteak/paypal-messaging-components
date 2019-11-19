@@ -24,7 +24,10 @@ module.exports = (env = {}) => ({
             __PRODUCTION__: 'https://www.paypal.com',
 
             __MESSAGE__: {
-                __LOCAL__: env.localMessage ? 'http://localhost.paypal.com:8080' : 'https://www.paypal.com'
+                __LOCAL__: env.localMessage ? 'http://localhost.paypal.com:8442' : 'https://www.paypal.com'
+            },
+            __MARKUP__: {
+                __LOCAL__: env.localMessage ? 'http://localhost.paypal.com:8442' : 'https://www.paypal.com'
             },
             __MODAL__: {
                 __LOCAL__: env.localModal ? 'http://localhost.paypal.com:8080' : 'https://www.paypalobjects.com',
@@ -40,7 +43,8 @@ module.exports = (env = {}) => ({
             }
         },
         __URI__: {
-            __MESSAGE__: '/imadserver/upstream',
+            __MESSAGE__: '/crcpresentmentnodeweb/messages',
+            __MARKUP__: '/crcpresentmentnodeweb/markup',
             __MODAL__: '/upstream/assets/messaging/modal',
             __LOGGER__: '/ppcredit/messagingLogger',
             __TERMS__: '/ppcredit/finance/terms'

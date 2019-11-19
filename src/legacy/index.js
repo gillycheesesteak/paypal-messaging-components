@@ -4,7 +4,7 @@ import objectEntries from 'core-js-pure/stable/object/entries';
 
 import toNewPipeline from './toNewPipeline';
 import { Logger, EVENTS } from '../messages/services/logger';
-import { nextId, getGlobalUrl } from '../utils';
+import { nextId, getGlobalUrl, request } from '../utils';
 
 /**
  * This script is a combination of 2 similar legacy scripts (merchant.js and partner.js)
@@ -13,7 +13,6 @@ import { nextId, getGlobalUrl } from '../utils';
 
 window.__PP = window.__PP || {};
 
-const instance = `c${new Date().getTime() + Math.floor(65536 * Math.random())}`;
 const popupDimensions = [650, 600];
 let totalPageAds = 0;
 
@@ -71,27 +70,6 @@ const Page = {
     }
 };
 
-class JSONPRequest {
-    constructor(src) {
-        const script = Page.createElement('script');
-        script.async = 'true';
-        script.src = src;
-        this.el = script;
-        this.attach();
-    }
-
-    attach() {
-        const [firstScript] = Page.getElementsByTagName('script');
-        firstScript.parentNode.insertBefore(this.el, firstScript);
-        this.attach = () => {};
-    }
-
-    destroy() {
-        this.el.parentNode.removeChild(this.el);
-        delete this.el;
-    }
-}
-
 class PPScript {
     constructor(el) {
         this.el = el;
@@ -133,11 +111,9 @@ class Ad {
         this.logger = logger;
         totalPageAds += 1;
         this.idx = totalPageAds;
-        this.namespace = instance + this.idx;
         this.kvs = kvs;
         this.variant = kvs && kvs.partner_version ? 'PARTNER' : 'MERCHANT';
         this.initContainer();
-        this.initCallback();
         this.initQueryString();
     }
 
@@ -193,17 +169,7 @@ class Ad {
         this.logger.info(EVENTS.FETCH_END);
         this.logger.info(EVENTS.INSERT);
         this.setContent(markup);
-        this.script.destroy();
-        delete window.__PP[this.namespace];
-        delete this.script;
         this.logger.end();
-    }
-
-    initCallback() {
-        this.callbackName = `__PP.${this.namespace}`;
-        window.__PP[this.namespace] = (...args) => {
-            this.callback(...args);
-        };
     }
 
     clickHandler(evt) {
@@ -219,34 +185,13 @@ class Ad {
 
     request() {
         this.logger.info(EVENTS.FETCH_START);
-        this.script = new JSONPRequest(`${getGlobalUrl('MESSAGE')}${this.queryString}`);
+        request('GET', `${getGlobalUrl('MARKUP')}${this.queryString}`).then(res => {
+            this.callback(res.data);
+        });
     }
 
     initQueryString() {
-        const defaultQueryParams = {
-            call: this.callbackName,
-            v: 2.4,
-            vtag: 3.1,
-            rand: new Date().getTime(),
-            page: 'DefaultPage',
-            format: 'HTML',
-            presentation_types: 'HTML',
-            locale: 'en_US',
-            country_code: 'US',
-            currency_code: 'USD'
-        };
-
-        if (this.variant === 'MERCHANT') {
-            defaultQueryParams.pu_type = 'ANONYMOUS';
-            defaultQueryParams.ch = 'UPSTREAM';
-        }
-
-        const queryParams = {
-            ...defaultQueryParams,
-            ...this.kvs
-        };
-
-        const queryString = objectEntries(queryParams).reduce(
+        const queryString = objectEntries(this.kvs).reduce(
             (accumulator, [key, val]) => `${accumulator}&${key}=${encodeURIComponent(val)}`,
             ''
         );

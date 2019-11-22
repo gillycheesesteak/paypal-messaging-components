@@ -114,16 +114,13 @@ function replace(replacements, markup) {
 
 function getMarkup({ blocks }, options = {}) {
     const selectedBlocks = blocks.filter((block, idx) => !options.blocks || arrayIncludes(options.blocks, idx));
-    const textData = selectedBlocks.length === 1 ? selectedBlocks[0] : selectedBlocks;
-    const uniformText = Array.isArray(textData) ? textData : [textData];
 
-    const spans = uniformText.map(text => {
+    const spans = selectedBlocks.map((text, idx) => {
         const span = document.createElement('span');
+        span.textContent = text;
 
-        if (Array.isArray(text)) {
-            [span.textContent, span.className] = text;
-        } else {
-            span.textContent = text;
+        if (options.weak && arrayIncludes(options.weak, idx)) {
+            span.className = 'weak';
         }
 
         return span;

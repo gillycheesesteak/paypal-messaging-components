@@ -60,7 +60,12 @@ function fetcher(options) {
         // Manual request instead of traditional JSONP so that we can catch 204 no content stalling
         request('GET', `${rootUrl}?${queryString}`).then(res => {
             try {
-                resolve({ markup: JSON.parse(res.data) });
+                const markup = JSON.parse(res.data);
+                if (!markup.messages || markup.messages.length === 0) {
+                    throw new Error(ERRORS.MESSAGE_INVALID_MARKUP);
+                }
+
+                resolve({ markup });
             } catch (err) {
                 throw new Error(ERRORS.MESSAGE_INVALID_MARKUP);
             }

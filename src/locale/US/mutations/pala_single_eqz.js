@@ -7,8 +7,7 @@ export default {
             {
                 logo: Logo.PRIMARY.COLOR,
                 headline: {
-                    tag: 'SMALL',
-                    br: ['/mo']
+                    tag: 'SMALL'
                 },
                 disclaimer: 'XSMALL'
             }
@@ -20,7 +19,7 @@ export default {
                 messageWidth: [260, 1000],
                 logo: Logo.ALT_NO_PP.COLOR,
                 headline: {
-                    br: ['APR']
+                    replace: [['APR.', 'APR']]
                 }
             }
         ],
@@ -30,7 +29,7 @@ export default {
                 messageWidth: [260, 1000],
                 logo: false,
                 headline: {
-                    br: ['APR']
+                    replace: [['APR.', 'APR']]
                 }
             }
         ],
@@ -52,7 +51,6 @@ export default {
         [
             'ratio:1x4',
             {
-                headline: { br: ['payments', 'mo'] },
                 subHeadline: { tag: 'SMALL', br: ['money'] }
             }
         ],

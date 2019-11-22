@@ -11,8 +11,7 @@ export default {
                 ],
                 logo: Logo.PRIMARY.COLOR,
                 headline: {
-                    tag: 'XSMALL',
-                    replace: [['months.', 'months']]
+                    tag: 'XSMALL'
                 },
                 disclaimer: {
                     tag: 'SMALL',
@@ -27,7 +26,7 @@ export default {
                 messageWidth: [250, 1000],
                 logo: Logo.ALT_NO_PP.COLOR,
                 headline: {
-                    br: ['months']
+                    replace: [['months.', 'months']]
                 }
             }
         ],
@@ -35,17 +34,16 @@ export default {
             'logo.type:none',
             {
                 messageWidth: [235, 1000],
-                logo: false
+                logo: false,
+                headline: {
+                    replace: [['months.', 'months']]
+                }
             }
         ],
         [
             'logo.type:alternative',
             {
-                logo: Logo.ALTERNATIVE.COLOR,
-                headline: {
-                    replace: [['months', 'months.']],
-                    br: ['months.']
-                }
+                logo: Logo.ALTERNATIVE.COLOR
             }
         ],
         [

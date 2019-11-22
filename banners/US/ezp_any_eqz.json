@@ -1,27 +1,78 @@
 {
     "meta": {
-        "offerCountry": "US",
-        "offerType": "EZP:ANY:EQZ",
-        "lander": "https://www.paypal.com/us/webapps/mpp/credit-easy-payments"
+        "offerType": "US:PPC:EZP_ANY_EQZ",
+        "impression_url": "",
+        "click_url": ""
     },
-
-    "headline": [
-        ["Pay over ${CREDIT_OFFERS_DS.total_payments} months at 0% APR", ["default", "small"]],
-        ["Enjoy ${CREDIT_OFFERS_DS.total_payments} Easy Payments with No Interest.", ["legacy-small"]]
-    ],
-
-    "subHeadline": [
-        [
-            "Choose PayPal Credit and select ${CREDIT_OFFERS_DS.total_payments} Easy Payments to pay over time",
-            ["legacy-medium"]
-        ],
-        ["No money due today.", ["default", "small"]]
-    ],
-
-    "disclaimer": [
-        ["See terms", ["default", "xsmall"]],
-        ["Min purchase required.", ["xsmall.2", "small", "medium", "large", "xlarge"]],
-        [["Min purch req'd. Subject to credit approval.", ["See terms", "em"]], ["legacy-medium"]],
-        [["Minimum purchase required. Subject to credit approval.", ["See terms", "em"]], ["legacy-large"]]
+    "messages": [
+        {
+            "size": "DEFAULT",
+            "headline": {
+                "full": "Pay over ${CREDIT_OFFERS_DS.total_payments} months at 0% APR.",
+                "blocks": ["Pay over ${CREDIT_OFFERS_DS.total_payments} months at 0% APR."]
+            },
+            "sub_headline": { "full": "", "blocks": [""] },
+            "disclaimer": { "full": "See terms", "blocks": ["See terms"] }
+        },
+        {
+            "size": "XSMALL",
+            "headline": {
+                "full": "Pay over ${CREDIT_OFFERS_DS.total_payments} months at 0% APR.",
+                "blocks": ["Pay over ${CREDIT_OFFERS_DS.total_payments} months at 0% APR."]
+            },
+            "sub_headline": { "full": "", "blocks": [""] },
+            "disclaimer": { "full": "See terms", "blocks": ["See terms"] }
+        },
+        {
+            "size": "SMALL",
+            "headline": {
+                "full": "Pay over ${CREDIT_OFFERS_DS.total_payments} months at 0% APR.",
+                "blocks": ["Pay over ${CREDIT_OFFERS_DS.total_payments} months at 0% APR."]
+            },
+            "sub_headline": { "full": "", "blocks": [""] },
+            "disclaimer": {
+                "full": "Min purchase required. See terms",
+                "blocks": ["Min purchase required.", "See terms"]
+            }
+        },
+        {
+            "size": "MEDIUM",
+            "headline": {
+                "full": "Pay over ${CREDIT_OFFERS_DS.total_payments} months at 0% APR.",
+                "blocks": ["Pay over ${CREDIT_OFFERS_DS.total_payments} months at 0% APR."]
+            },
+            "sub_headline": {
+                "full": "No money due today.",
+                "blocks": ["No money due today."]
+            },
+            "disclaimer": {
+                "full": "Min purchase required. See terms",
+                "blocks": ["Min purchase required.", "See terms"]
+            }
+        },
+        {
+            "size": "LARGE",
+            "headline": {
+                "full": "Pay over ${CREDIT_OFFERS_DS.total_payments} months at 0% APR.",
+                "blocks": ["Pay over ${CREDIT_OFFERS_DS.total_payments} months at 0% APR."]
+            },
+            "sub_headline": { "full": "", "blocks": [""] },
+            "disclaimer": {
+                "full": "Min purchase required. See terms",
+                "blocks": ["Min purchase required.", "See terms"]
+            }
+        },
+        {
+            "size": "XLARGE",
+            "headline": {
+                "full": "Pay over ${CREDIT_OFFERS_DS.total_payments} months at 0% APR.",
+                "blocks": ["Pay over ${CREDIT_OFFERS_DS.total_payments} months at 0% APR."]
+            },
+            "sub_headline": { "full": "", "blocks": [""] },
+            "disclaimer": {
+                "full": "Min purchase required. See terms",
+                "blocks": ["Min purchase required.", "See terms"]
+            }
+        }
     ]
 }

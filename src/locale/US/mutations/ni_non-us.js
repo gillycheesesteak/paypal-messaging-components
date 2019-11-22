@@ -8,7 +8,7 @@ export default {
             {
                 styles: [basicMediaQuery(320)],
                 logo: Logo.PRIMARY.COLOR,
-                headline: ['XSMALL', { tag: 'MEDIUM', br: ['months'], replace: [['99+', '99+.']] }],
+                headline: ['XSMALL', { tag: 'MEDIUM', replace: [['99+', '99+.']] }],
                 disclaimer: ['extra', 'XSMALL']
             }
         ],
@@ -19,10 +19,7 @@ export default {
                 messageWidth: [240, 1000],
                 styles: [basicMediaQuery(290)],
                 logo: Logo.ALT_NO_PP.COLOR,
-                headline: [
-                    { tag: 'XSMALL', replace: [['time.', 'time']], br: ['time'] },
-                    { tag: 'MEDIUM', br: ['purchases'] }
-                ]
+                headline: [{ tag: 'XSMALL', replace: [['time.', 'time']] }, 'MEDIUM']
             }
         ],
         [
@@ -34,13 +31,9 @@ export default {
                 headline: [
                     {
                         tag: 'XSMALL',
-                        replace: [['time.', 'time']],
-                        br: ['time']
+                        replace: [['time.', 'time']]
                     },
-                    {
-                        tag: 'MEDIUM',
-                        br: ['purchases']
-                    }
+                    'MEDIUM'
                 ]
             }
         ],
@@ -49,7 +42,7 @@ export default {
             {
                 styles: [basicMediaQuery(570)],
                 logo: Logo.ALTERNATIVE.COLOR,
-                headline: ['XSMALL', { tag: 'MEDIUM', br: ['months'], replace: [['99+', '99+.']] }]
+                headline: ['XSMALL', { tag: 'MEDIUM', replace: [['99+', '99+.']] }]
             }
         ],
         [
@@ -57,7 +50,7 @@ export default {
             {
                 styles: [basicMediaQuery(230)],
                 messageWidth: [150, 320],
-                headline: ['XSMALL', { tag: 'MEDIUM', br: ['months'] }]
+                headline: ['XSMALL', 'MEDIUM']
             }
         ],
         ['logo.type:primary && logo.position:top', { styles: [basicMediaQuery(235)] }],
@@ -71,7 +64,7 @@ export default {
             'default',
             {
                 logo: Logo.PRIMARY.WHITE,
-                headline: ['XSMALL', { tag: 'MEDIUM', br: ['months'] }],
+                headline: ['XSMALL', 'MEDIUM'],
                 disclaimer: ['extra.2', 'SMALL']
             }
         ],
@@ -85,7 +78,7 @@ export default {
         [
             'ratio:1x4',
             {
-                headline: { tag: 'MEDIUM', br: ['months'] },
+                headline: 'MEDIUM',
                 styles: [
                     '.message__logo-container { margin-bottom: 30%; }',
                     '.message__disclaimer span.multi:nth-of-type(1) { display: none; }',

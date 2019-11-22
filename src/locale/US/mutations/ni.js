@@ -58,7 +58,7 @@ export default {
                     '@media (max-width: 289px) { .message__disclaimer { display: block; } }'
                 ],
                 logo: Logo.PRIMARY.COLOR,
-                headline: ['XSMALL', { tag: 'MEDIUM', br: ['months'] }],
+                headline: ['XSMALL', { tag: 'LARGE', br: ['purchases'] }],
                 disclaimer: 'XSMALL'
             }
         ],
@@ -71,7 +71,7 @@ export default {
                 logo: Logo.ALT_NO_PP.COLOR,
                 headline: [
                     { tag: 'XSMALL', replace: [['time.', 'time']] },
-                    { tag: 'MEDIUM', br: ['purchases'] }
+                    { tag: 'LARGE', replace: [['$99+.', '$99+']], br: ['purchases'] }
                 ]
             }
         ],
@@ -82,15 +82,8 @@ export default {
                 styles: [basicMediaQuery(280)],
                 logo: false,
                 headline: [
-                    {
-                        tag: 'XSMALL',
-                        replace: [['time.', 'time']],
-                        br: ['time']
-                    },
-                    {
-                        tag: 'MEDIUM',
-                        br: ['purchases']
-                    }
+                    { tag: 'XSMALL', replace: [['time.', 'time']] },
+                    { tag: 'LARGE', replace: [['$99+.', '$99+']], br: ['purchases'] }
                 ]
             }
         ],
@@ -98,8 +91,7 @@ export default {
             'logo.type:alternative',
             {
                 styles: [basicMediaQuery(520)],
-                logo: Logo.ALTERNATIVE.COLOR,
-                headline: ['XSMALL', { tag: 'MEDIUM', br: ['months'] }]
+                logo: Logo.ALTERNATIVE.COLOR
             }
         ],
         ['logo.type:primary && logo.position:top', { styles: [basicMediaQuery(210)] }],
@@ -114,7 +106,7 @@ export default {
             'default',
             {
                 logo: Logo.PRIMARY.WHITE,
-                headline: ['XSMALL', { tag: 'MEDIUM', br: ['months'] }],
+                headline: ['XSMALL', { tag: 'MEDIUM', weak: [1] }],
                 disclaimer: 'XSMALL'
             }
         ],
@@ -128,7 +120,7 @@ export default {
         [
             'ratio:1x4',
             {
-                headline: { tag: 'MEDIUM', br: ['months'] },
+                headline: 'MEDIUM',
                 styles: [
                     '.message__logo-container { margin-bottom: 30%; }',
                     '.message__disclaimer span.multi:nth-of-type(1) { display: none; }',

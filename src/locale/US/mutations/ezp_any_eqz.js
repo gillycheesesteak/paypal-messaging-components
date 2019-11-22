@@ -10,11 +10,8 @@ export default {
                     '.message__disclaimer > span { color: #2c2e2f; text-decoration: none; }'
                 ],
                 logo: Logo.PRIMARY.COLOR,
-                headline: {
-                    tag: 'SMALL',
-                    br: ['months', 'APR']
-                },
-                disclaimer: 'XSMALL.2'
+                headline: { tag: 'SMALL' },
+                disclaimer: { tag: 'SMALL', blocks: [0] }
             }
         ],
         ['logo.type:primary', { messageWidth: 190 }],
@@ -24,7 +21,7 @@ export default {
                 messageWidth: [255, 1000],
                 logo: Logo.ALT_NO_PP.COLOR,
                 headline: {
-                    br: ['APR']
+                    replace: [['APR.', 'APR']]
                 }
             }
         ],
@@ -34,18 +31,14 @@ export default {
                 messageWidth: [240, 1000],
                 logo: false,
                 headline: {
-                    br: ['APR']
+                    replace: [['APR.', 'APR']]
                 }
             }
         ],
         [
             'logo.type:alternative',
             {
-                logo: Logo.ALTERNATIVE.COLOR,
-                headline: {
-                    replace: [['APR', 'APR.']],
-                    br: ['APR.']
-                }
+                logo: Logo.ALTERNATIVE.COLOR
             }
         ],
         [
@@ -76,7 +69,6 @@ export default {
         [
             'ratio:1x4',
             {
-                headline: { br: ['over', 'at', 'APR'] },
                 subHeadline: { tag: 'SMALL', br: ['money'] }
             }
         ],

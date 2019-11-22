@@ -18,16 +18,15 @@ const devAccountMap = {
 };
 
 module.exports = function proxyImadserv(app) {
-    app.get('/imadserver/upstream', (req, res) => {
-        const { call, currency_value: amount = 0, dimensions } = req.query;
-        const account = req.query.pub_id ? req.query.pub_id : req.query.client_id;
+    app.get('/crcpresentmentnodeweb/messages', (req, res) => {
+        const { currency_value: amount = 0, dimensions } = req.query;
+        const account = req.query.payer_id ? req.query.payer_id : req.query.client_id;
 
         if (devAccountMap[account]) {
             const banner =
                 dimensions !== 'x199x99'
                     ? fs.readFileSync(`banners/${devAccountMap[account].join('/')}.json`, 'utf-8')
                     : fs.readFileSync(`banners/ni.json`, 'utf-8');
-            const bannerJSON = JSON.parse(banner);
 
             const morsVars = {
                 total_payments: 12,
@@ -43,24 +42,9 @@ module.exports = function proxyImadserv(app) {
                     )
                     .replace(/\r\n|\r|\n/g, '');
 
-            const populatedBanner = Object.entries(bannerJSON).reduce((accumulator, [key, value]) => {
-                return {
-                    ...accumulator,
-                    [key]: populateVars(JSON.stringify(value))
-                };
-            }, {});
+            const populatedBanner = JSON.parse(populateVars(banner));
 
-            const wrappedMarkup = JSON.stringify({
-                content: {
-                    json: populatedBanner
-                },
-                tracking_details: {
-                    click_url: '',
-                    impression_url: ''
-                }
-            });
-
-            res.send(`${call}(${wrappedMarkup})`);
+            res.send(populatedBanner);
         } else {
             const query = Object.entries(req.query)
                 .reduce((accumulator, [key, val]) => `${accumulator}&${key}=${val}`, '')

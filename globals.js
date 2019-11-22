@@ -24,7 +24,7 @@ module.exports = (env = {}) => ({
             __PRODUCTION__: 'https://www.paypal.com',
 
             __MESSAGE__: {
-                __LOCAL__: env.localMessage ? 'http://localhost.paypal.com:8442' : 'https://www.paypal.com'
+                __LOCAL__: env.localMessage ? 'http://localhost.paypal.com:8080' : 'https://www.paypal.com'
             },
             __MARKUP__: {
                 __LOCAL__: env.localMessage ? 'http://localhost.paypal.com:8442' : 'https://www.paypal.com'

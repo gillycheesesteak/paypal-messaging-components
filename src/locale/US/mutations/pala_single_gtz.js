@@ -16,7 +16,9 @@ export default {
             {
                 messageWidth: [200, 1000],
                 logo: Logo.ALT_NO_PP.COLOR,
-                headline: { br: ['/mo'] }
+                headline: {
+                    replace: [['/mo.', '/mo']]
+                }
             }
         ],
 
@@ -26,7 +28,7 @@ export default {
                 messageWidth: [200, 1000],
                 logo: false,
                 headline: {
-                    br: ['/mo']
+                    replace: [['/mo.', '/mo']]
                 }
             }
         ],
@@ -48,7 +50,6 @@ export default {
         [
             'ratio:1x4',
             {
-                headline: { br: ['payments'] },
                 subHeadline: { tag: 'SMALL', br: ['money'] }
             }
         ],

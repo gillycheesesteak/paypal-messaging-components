@@ -1,32 +1,84 @@
 {
     "meta": {
-        "offerCountry": "US",
-        "offerType": "PALA:SINGLE:GTZ",
-        "clickUrl": "https://www.paypal.com/us/webapps/mpp/credit-pala-easy-payments"
+        "offerType": "US:PPC:PALA_SINGLE_GTZ",
+        "impression_url": "",
+        "click_url": ""
     },
-
-    "headline": [
-        [
-            [
-                ["Make ${CREDIT_OFFERS_DS.total_payments} payments of", "weak"],
-                "${CREDIT_OFFERS_DS.formattedMonthlyPayment}/mo"
-            ],
-            ["default", "small"]
-        ],
-        ["Enjoy Easy Payments.", ["legacy-xsmall"]]
-    ],
-
-    "subHeadline": [
-        ["No money due today.", ["default", "xsmall"]],
-        [
-            "Make ${CREDIT_OFFERS_DS.total_payments} Easy Payments as low as ${CREDIT_OFFERS_DS.formattedMonthlyPayment}/month for est. total pymts of ${CREDIT_OFFERS_DS.formattedTotalCost}.",
-            ["legacy-large"]
-        ]
-    ],
-
-    "disclaimer": [
-        ["See terms", ["default", "xsmall"]],
-        [["Minimum purchase required. Subject to credit approval.", ["See terms", "em"]], ["legacy-medium"]],
-        [["Min purch req'd. Subject to credit approval.", ["See terms", "em"]], ["legacy-medium.2"]]
+    "messages": [
+        {
+            "size": "DEFAULT",
+            "headline": {
+                "full": "Make ${CREDIT_OFFERS_DS.total_payments} payments of ${CREDIT_OFFERS_DS.formattedMonthlyPayment}/mo.",
+                "blocks": [
+                    "Make ${CREDIT_OFFERS_DS.total_payments} payments of",
+                    "${CREDIT_OFFERS_DS.formattedMonthlyPayment}/mo."
+                ]
+            },
+            "sub_headline": { "full": "", "blocks": [""] },
+            "disclaimer": { "full": "See terms", "blocks": ["See terms"] }
+        },
+        {
+            "size": "XSMALL",
+            "headline": {
+                "full": "Make ${CREDIT_OFFERS_DS.total_payments} payments of ${CREDIT_OFFERS_DS.formattedMonthlyPayment}/mo.",
+                "blocks": [
+                    "Make ${CREDIT_OFFERS_DS.total_payments} payments of",
+                    "${CREDIT_OFFERS_DS.formattedMonthlyPayment}/mo."
+                ]
+            },
+            "sub_headline": { "full": "", "blocks": [""] },
+            "disclaimer": { "full": "See terms", "blocks": ["See terms"] }
+        },
+        {
+            "size": "SMALL",
+            "headline": {
+                "full": "Make ${CREDIT_OFFERS_DS.total_payments} payments of ${CREDIT_OFFERS_DS.formattedMonthlyPayment}/mo.",
+                "blocks": [
+                    "Make ${CREDIT_OFFERS_DS.total_payments} payments of",
+                    "${CREDIT_OFFERS_DS.formattedMonthlyPayment}/mo."
+                ]
+            },
+            "sub_headline": { "full": "", "blocks": [""] },
+            "disclaimer": { "full": "See terms", "blocks": ["See terms"] }
+        },
+        {
+            "size": "MEDIUM",
+            "headline": {
+                "full": "Make ${CREDIT_OFFERS_DS.total_payments} payments of ${CREDIT_OFFERS_DS.formattedMonthlyPayment}/mo.",
+                "blocks": [
+                    "Make ${CREDIT_OFFERS_DS.total_payments} payments of",
+                    "${CREDIT_OFFERS_DS.formattedMonthlyPayment}/mo."
+                ]
+            },
+            "sub_headline": {
+                "full": "No money due today.",
+                "blocks": ["No money due today."]
+            },
+            "disclaimer": { "full": "See terms", "blocks": ["See terms"] }
+        },
+        {
+            "size": "LARGE",
+            "headline": {
+                "full": "Make ${CREDIT_OFFERS_DS.total_payments} payments of ${CREDIT_OFFERS_DS.formattedMonthlyPayment}/mo.",
+                "blocks": [
+                    "Make ${CREDIT_OFFERS_DS.total_payments} payments of",
+                    "${CREDIT_OFFERS_DS.formattedMonthlyPayment}/mo."
+                ]
+            },
+            "sub_headline": { "full": "", "blocks": [""] },
+            "disclaimer": { "full": "See terms", "blocks": ["See terms"] }
+        },
+        {
+            "size": "XLARGE",
+            "headline": {
+                "full": "Make ${CREDIT_OFFERS_DS.total_payments} payments of ${CREDIT_OFFERS_DS.formattedMonthlyPayment}/mo.",
+                "blocks": [
+                    "Make ${CREDIT_OFFERS_DS.total_payments} payments of",
+                    "${CREDIT_OFFERS_DS.formattedMonthlyPayment}/mo."
+                ]
+            },
+            "sub_headline": { "full": "", "blocks": [""] },
+            "disclaimer": { "full": "See terms", "blocks": ["See terms"] }
+        }
     ]
 }

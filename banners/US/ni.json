@@ -1,23 +1,72 @@
 {
-    "meta": {
-        "offerCountry": "US",
-        "offerType": "NI",
-        "clickUrl": "https://www.paypal.com/ppclander"
-    },
-
-    "headline": [
-        ["Buy now. Pay over time.", ["default", "xsmall", "small"]],
-        [["No Interest if paid in full in 6 months", ["on purchases of $99+", "weak"]], ["medium", "large", "xlarge"]]
-    ],
-
-    "subHeadline": [["Check out with PayPal and choose PayPal Credit.", ["default", "small"]]],
-
-    "disclaimer": [
-        ["See terms", ["default", "xsmall"]],
-        [["US customers only. Subject to credit approval", ["See terms", "em"]], ["legacy-medium"]],
-        [
-            "Interest will be charged to your account from the purchase date if the balance is not paid in full within 6 months. Minimum monthly payments required.",
-            ["xlarge"]
-        ]
+    "meta": { "offerType": "US:PPC:NI", "impression_url": "", "click_url": "" },
+    "messages": [
+        {
+            "size": "DEFAULT",
+            "headline": {
+                "full": "No Interest if paid in full in 6 months on purchases of $99+.",
+                "blocks": ["No Interest", "if paid in full in 6 months", "on purchases of $99+."]
+            },
+            "sub_headline": { "full": "", "blocks": [""] },
+            "disclaimer": { "full": "See terms", "blocks": ["See terms"] }
+        },
+        {
+            "size": "XSMALL",
+            "headline": {
+                "full": "Buy now. Pay over time.",
+                "blocks": ["Buy now.", "Pay over time."]
+            },
+            "sub_headline": { "full": "", "blocks": [""] },
+            "disclaimer": { "full": "See terms", "blocks": ["See terms"] }
+        },
+        {
+            "size": "SMALL",
+            "headline": {
+                "full": "No Interest if paid in full in 6 months on purchases of $99+.",
+                "blocks": ["No Interest", "if paid in full in 6 months", "on purchases of $99+."]
+            },
+            "sub_headline": { "full": "", "blocks": [""] },
+            "disclaimer": { "full": "See terms", "blocks": ["See terms"] }
+        },
+        {
+            "size": "MEDIUM",
+            "headline": {
+                "full": "Buy now. Pay over time.",
+                "blocks": ["Buy now.", "Pay over time."]
+            },
+            "sub_headline": { "full": "", "blocks": [""] },
+            "disclaimer": { "full": "See terms", "blocks": ["See terms"] }
+        },
+        {
+            "size": "LARGE",
+            "headline": {
+                "full": "No Interest if paid in full in 6 months on purchases of $99+.",
+                "blocks": ["No Interest", "if paid in full in 6 months", "on purchases of $99+."]
+            },
+            "sub_headline": {
+                "full": "Check out with PayPal and choose PayPal Credit.",
+                "blocks": ["Check out with PayPal", "and choose PayPal Credit."]
+            },
+            "disclaimer": { "full": "See terms", "blocks": ["See terms"] }
+        },
+        {
+            "size": "XLARGE",
+            "headline": {
+                "full": "No Interest if paid in full in 6 months on purchases of $99+.",
+                "blocks": ["No Interest", "if paid in full in 6 months", "on purchases of $99+."]
+            },
+            "sub_headline": {
+                "full": "Check out with PayPal and choose PayPal Credit.",
+                "blocks": ["Check out with PayPal", "and choose PayPal Credit."]
+            },
+            "disclaimer": {
+                "full": "Interest will be charged to your account from the purchase date if the balance is not paid in full within 6 months. Minimum monthly payments required. See terms",
+                "blocks": [
+                    "Interest will be charged to your account from the purchase date if the balance is not paid in full within 6 months.",
+                    "Minimum monthly payments required.",
+                    "See terms"
+                ]
+            }
+        }
     ]
 }

@@ -42,7 +42,7 @@ export default {
             'default',
             {
                 logo: Logo.PRIMARY.WHITE,
-                headline: { tag: 'SMALL', br: ['low as'] },
+                headline: { tag: 'SMALL', br: ['low as'], weak: [0] },
                 subHeadline: 'SMALL',
                 disclaimer: 'XSMALL'
             }

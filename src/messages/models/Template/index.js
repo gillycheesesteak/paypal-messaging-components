@@ -163,6 +163,7 @@ const rulesToMarkup = curry((messages, prop, option) => {
                 span.setAttribute('class', 'multi');
             }
 
+            console.log(prop);
             let markup;
             if (typeof op === 'string') {
                 markup = getMarkup(getDataByTag(messages, prop, op));
@@ -322,7 +323,7 @@ function createTemplateNode(options, markup) {
     messagingContainer.classList.add(localeClass);
 
     appendText(headline, toMarkup('headline', mutationRules.headline));
-    appendText(subHeadline, toMarkup('subHeadline', mutationRules.subHeadline));
+    appendText(subHeadline, toMarkup('sub_headline', mutationRules.subHeadline));
     prependText(disclaimer, toMarkup('disclaimer', mutationRules.disclaimer));
     appendImage(logoContainer, mutationRules.logo, 'PayPal Credit logo');
 

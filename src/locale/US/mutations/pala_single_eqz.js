@@ -43,7 +43,7 @@ export default {
             'default',
             {
                 logo: Logo.PRIMARY.WHITE,
-                headline: { tag: 'SMALL', br: [' of', 'at'] },
+                headline: { tag: 'SMALL', weak: [0], replace: [['APR.', 'APR']] },
                 subHeadline: 'SMALL',
                 disclaimer: 'XSMALL'
             }

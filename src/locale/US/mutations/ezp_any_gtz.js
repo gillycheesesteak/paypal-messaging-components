@@ -65,15 +65,14 @@ export default {
             'default',
             {
                 logo: Logo.PRIMARY.WHITE,
-                headline: { tag: 'SMALL', br: ['over'] },
+                headline: { tag: 'SMALL', br: ['over'], replace: [['months.', 'months']] },
                 subHeadline: 'SMALL',
-                disclaimer: ['XSMALL.2', 'XSMALL']
+                disclaimer: 'SMALL'
             }
         ],
         [
             'ratio:1x4',
             {
-                headline: { br: ['over', 'months'] },
                 subHeadline: { tag: 'XSMALL', br: ['money'] }
             }
         ],

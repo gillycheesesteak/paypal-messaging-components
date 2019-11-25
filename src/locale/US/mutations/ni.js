@@ -106,21 +106,26 @@ export default {
             'default',
             {
                 logo: Logo.PRIMARY.WHITE,
-                headline: ['XSMALL', { tag: 'MEDIUM', weak: [1] }],
+                headline: ['XSMALL', { tag: 'LARGE', weak: [2] }],
                 disclaimer: 'XSMALL'
+            }
+        ],
+        [
+            'ratio:8x1',
+            {
+                headline: ['XSMALL', { tag: 'LARGE', weak: [2], br: ['months'] }]
             }
         ],
         [
             'ratio:1x1',
             {
-                headline: ['XSMALL', 'MEDIUM'],
                 styles: ['@media (min-width: 150px) { .message__headline { font-size: 8vw } }']
             }
         ],
         [
             'ratio:1x4',
             {
-                headline: 'MEDIUM',
+                headline: { tag: 'LARGE', weak: [2] },
                 styles: [
                     '.message__logo-container { margin-bottom: 30%; }',
                     '.message__disclaimer span.multi:nth-of-type(1) { display: none; }',

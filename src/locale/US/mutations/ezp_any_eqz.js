@@ -60,9 +60,9 @@ export default {
             'default',
             {
                 logo: Logo.PRIMARY.WHITE,
-                headline: { tag: 'SMALL', br: ['over', 'at', 'APR'] },
+                headline: { tag: 'SMALL', br: ['over', 'at'], replace: [['APR.', 'APR']] },
                 subHeadline: 'SMALL',
-                disclaimer: ['XSMALL.2', 'XSMALL']
+                disclaimer: 'SMALL'
             }
         ],
 

@@ -51,7 +51,7 @@ export default {
             'default',
             {
                 logo: Logo.PRIMARY.WHITE,
-                headline: { tag: 'MEDIUM', br: ['low as', 'at'] },
+                headline: { tag: 'MEDIUM', replace: [['APR.', 'APR']], weak: [0], br: ['low as'] },
                 subHeadline: 'SMALL',
                 disclaimer: 'XSMALL'
             }

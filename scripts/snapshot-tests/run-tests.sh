@@ -29,6 +29,8 @@ if [[ $PREVIOUS_COMMIT_MESSAGE == "[update snapshot]" ]]; then
     #     git remote set-url origin ${REPO_URL}
     # } &> /dev/null
 
+    git checkout ${GITHUB_REF#refs/heads/}
+
     # Commit new snapshots and push to repo
     git add ./tests/functional/snapshots
     git commit -m "chore: update snapshots [skip ci]"

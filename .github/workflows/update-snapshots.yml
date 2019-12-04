@@ -16,3 +16,4 @@ jobs:
               run: ./scripts/snapshot-tests/run-tests.sh
               env:
                   CI: true
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

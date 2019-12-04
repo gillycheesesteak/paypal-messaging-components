@@ -25,6 +25,9 @@ if [[ $PREVIOUS_COMMIT_MESSAGE == "[update snapshot]" ]]; then
         # Allows fetching and checking out other branches
         git config remote.origin.fetch +refs/heads/*:refs/remotes/origin/*
 
+        git config --global user.email "you@example.com"
+        git config --global user.name "Your Name"
+
         # Allows pushing to remote
         git remote set-url origin ${REPO_URL}
     } &> /dev/null

@@ -29,6 +29,7 @@ if [[ $PREVIOUS_COMMIT_MESSAGE == "[update snapshot]" ]]; then
 
     # Allows pushing to remote
     git remote set-url origin ${REPO_URL}
+    echo $REPO_URL
 
     git checkout ${GITHUB_REF#refs/heads/}
 

@@ -19,10 +19,9 @@ jobs:
             - name: npm install, build, and test
               run: |
                   echo "127.0.0.1 localhost.paypal.com" | sudo tee -a /etc/hosts
-                  cat /etc/hosts
                   npm install
                   npm run dev:standalone &
                   sleep 20
-                  npm run test:func
+                  ./scripts/snapshot-tests/run-tests.sh
               env:
                   CI: true

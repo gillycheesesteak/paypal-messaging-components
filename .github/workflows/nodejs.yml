@@ -18,7 +18,7 @@ jobs:
                   node-version: ${{ matrix.node-version }}
             - name: npm install, build, and test
               run: |
-                  echo "localhost.paypal.com  127.0.0.1" | sudo tee -a /etc/hosts
+                  echo "127.0.0.1 localhost.paypal.com" | sudo tee -a /etc/hosts
                   cat /etc/hosts
                   npm install
                   npm run dev:standalone &

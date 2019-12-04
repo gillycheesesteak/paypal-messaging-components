@@ -11,5 +11,5 @@ if [[ $PREVIOUS_COMMIT_MESSAGE == "[update snapshot]" ]]; then
     echo "Found trigger commit"
 else
     echo "Didn't find trigger commit message, skipping snapshot update..."
-    exit 1
+    export CANCEL_SNAPSHOT_UPDATE=1
 fi

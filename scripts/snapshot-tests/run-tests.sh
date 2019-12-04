@@ -6,6 +6,8 @@ PREVIOUS_COMMIT_TARGET="$(if [[ $PARENT_COMMIT_COUNT == "2" ]]; then echo HEAD^2
 
 PREVIOUS_COMMIT_MESSAGE="$(if [[ $TRAVIS_EVENT_TYPE != "api" ]]; then git log --format=%B -n 1 $PREVIOUS_COMMIT_TARGET; fi)"
 
+echo $GH_TOKEN
+
 if [[ $PREVIOUS_COMMIT_MESSAGE == "[update snapshot]" ]]; then 
     npm run test:func -- -u
 

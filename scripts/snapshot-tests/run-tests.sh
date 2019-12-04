@@ -12,7 +12,7 @@ if [[ $PREVIOUS_COMMIT_MESSAGE == "[update snapshot]" ]]; then
     echo "Pushing updated snapshots to pull request branch"
     {
         # TODO: Update remote URL to main repo
-        REPO_URL=https://${GH_TOKEN}@github.com/gillycheesesteak/paypal-messaging-components.git
+        REPO_URL=https://${GH_TOKEN}@github.com/${TRAVIS_PULL_REQUEST_SLUG}.git
         
         # Allows fetching and checking out other branches
         git config remote.origin.fetch +refs/heads/*:refs/remotes/origin/*

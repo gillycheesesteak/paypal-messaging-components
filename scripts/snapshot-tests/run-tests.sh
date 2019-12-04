@@ -10,9 +10,6 @@ PREVIOUS_COMMIT_MESSAGE="$(git log --format=%B -n 1 $PREVIOUS_COMMIT_TARGET)"
 
 # Set up .netrc file with GitHub credentials
 git_setup() {
-    echo $HOME
-    echo $GITHUB_ACTOR
-
     cat <<- EOF > $HOME/.netrc
         machine github.com
         login $GITHUB_ACTOR
@@ -44,15 +41,6 @@ if [[ $PREVIOUS_COMMIT_MESSAGE == "[update snapshot]" ]]; then
     npm run test:func -- -u
 
     echo "Pushing updated snapshots to pull request branch"
-    # # TODO: Update remote URL to main repo
-    # REPO_URL=https://${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git
-    
-    # # Allows fetching and checking out other branches
-    # git config remote.origin.fetch +refs/heads/*:refs/remotes/origin/*
-
-    # # Allows pushing to remote
-    # git remote set-url origin ${REPO_URL}
-    # echo $REPO_URL
 
     git branch ${GITHUB_REF:11}
     git checkout ${GITHUB_REF:11}
@@ -61,4 +49,6 @@ if [[ $PREVIOUS_COMMIT_MESSAGE == "[update snapshot]" ]]; then
     git add ./tests/functional/snapshots
     git commit -m "chore: update snapshots [skip ci]"
     git push --set-upstream origin "${GITHUB_REF:11}"
+else
+    echo "Didn't find trigger commit message, skipping snapshot update..."
 fi

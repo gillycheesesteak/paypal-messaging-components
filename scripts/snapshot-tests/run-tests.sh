@@ -18,16 +18,16 @@ if [[ $PREVIOUS_COMMIT_MESSAGE == "[update snapshot]" ]]; then
     npm run test:func -- -u
 
     echo "Pushing updated snapshots to pull request branch"
-    # {
-    #     # TODO: Update remote URL to main repo
-    #     REPO_URL=https://${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git
+    {
+        # TODO: Update remote URL to main repo
+        REPO_URL=https://${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git
         
-    #     # Allows fetching and checking out other branches
-    #     git config remote.origin.fetch +refs/heads/*:refs/remotes/origin/*
+        # Allows fetching and checking out other branches
+        git config remote.origin.fetch +refs/heads/*:refs/remotes/origin/*
 
-    #     # Allows pushing to remote
-    #     git remote set-url origin ${REPO_URL}
-    # } &> /dev/null
+        # Allows pushing to remote
+        git remote set-url origin ${REPO_URL}
+    } &> /dev/null
 
     git checkout ${GITHUB_REF#refs/heads/}
 

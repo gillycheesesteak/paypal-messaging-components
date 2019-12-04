@@ -6,23 +6,13 @@ PREVIOUS_COMMIT_TARGET="$(if [[ $PARENT_COMMIT_COUNT == "2" ]]; then echo HEAD^2
 
 PREVIOUS_COMMIT_MESSAGE="$(git log --format=%B -n 1 $PREVIOUS_COMMIT_TARGET)"
 
-echo $PREVIOUS_COMMIT_MESSAGE
-echo GITHUB_REPOSITORY
-echo $GITHUB_REPOSITORY
-echo GITHUB_REF
-echo $GITHUB_REF
-echo GITHUB_HEAD_REF
-echo $GITHUB_HEAD_REF
-echo GITHUB_BASE_REF
-echo $GITHUB_BASE_REF
-
 if [[ $PREVIOUS_COMMIT_MESSAGE == "[update snapshot]" ]]; then 
     npm run test:func -- -u
 
     echo "Pushing updated snapshots to pull request branch"
     {
         # TODO: Update remote URL to main repo
-        REPO_URL=https://${GITHUB_TOKEN}@github.com/gillycheesesteak/paypal-messaging-components.git
+        REPO_URL=https://${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git
         
         # Allows fetching and checking out other branches
         git config remote.origin.fetch +refs/heads/*:refs/remotes/origin/*
@@ -31,8 +21,7 @@ if [[ $PREVIOUS_COMMIT_MESSAGE == "[update snapshot]" ]]; then
         git remote set-url origin ${REPO_URL}
 
         # Switch to pull request branch
-        git fetch origin $TRAVIS_PULL_REQUEST_BRANCH
-        git checkout $TRAVIS_PULL_REQUEST_BRANCH
+        git checkout $GITHUB_REF
 
         # Commit new snapshots and push to repo
         git add ./tests/functional/snapshots

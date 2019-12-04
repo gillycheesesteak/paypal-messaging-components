@@ -16,6 +16,14 @@ echo GITHUB_BASE_REF
 echo $GITHUB_BASE_REF
 
 if [[ $PREVIOUS_COMMIT_MESSAGE == "[update snapshot]" ]]; then 
+    echo "127.0.0.1 localhost.paypal.com" | sudo tee -a /etc/hosts
+
+    npm install
+
+    npm run dev:standalone &
+
+    sleep 20
+
     npm run test:func -- -u
 
     echo "Pushing updated snapshots to pull request branch"

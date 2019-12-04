@@ -11,13 +11,13 @@ jobs:
             - name: Check for trigger commit
               run: ./scripts/snapshot-tests/should-update.sh
             - name: Use Node.js 10
-              if: env.CANCEL_SNAPSHOT_UPDATE != '1'
+              if: ${{ env.CANCEL_SNAPSHOT_UPDATE }} != "1"
               uses: actions/setup-node@v1
               with:
                   node-version: 10.x
             - name: if trigger commit found, update snapshots
-              if: env.CANCEL_SNAPSHOT_UPDATE != '1'
+              if: ${{ env.CANCEL_SNAPSHOT_UPDATE }} != "1"
               run: ./scripts/snapshot-tests/run-update.sh
               env:
-                  CI: truex
+                  CI: true
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

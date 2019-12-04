@@ -11,7 +11,7 @@ const toMatchImageSnapshot = configureToMatchImageSnapshot({
 expect.extend({ toMatchImageSnapshot });
 
 test('text banners', async () => {
-    await page.goto('http://localhost:8080/banner.html?config={"account":"DEV00000000NI","style":{}}');
+    await page.goto('http://localhost.paypal.com:8080/banner.html?config={"account":"DEV00000000NI","style":{}}');
 
     await new Promise(resolve => setTimeout(resolve, 3000));
 

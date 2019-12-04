@@ -45,7 +45,7 @@ module.exports = (env = {}) => {
         publicPath: '/',
         openPage: env.standalone ? (env.legacy && 'legacy.html') || 'standalone.html' : '',
         compress: true,
-        host: 'localhost',
+        host: 'localhost.paypal.com',
         port: 8080,
         open: true,
         overlay: true,

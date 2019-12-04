@@ -1,21 +1,17 @@
 name: Node CI
 
-on: [push, pull_request]
+on: push
 
 jobs:
     build:
         runs-on: ubuntu-latest
 
-        strategy:
-            matrix:
-                node-version: [10.x]
-
         steps:
             - uses: actions/checkout@v1
-            - name: Use Node.js ${{ matrix.node-version }}
+            - name: Use Node.js 10
               uses: actions/setup-node@v1
               with:
-                  node-version: ${{ matrix.node-version }}
+                  node-version: 10.x
             - name: npm install, build, and test
               run: |
                   echo "127.0.0.1 localhost.paypal.com" | sudo tee -a /etc/hosts

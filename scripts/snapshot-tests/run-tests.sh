@@ -37,6 +37,4 @@ if [[ $PREVIOUS_COMMIT_MESSAGE == "[update snapshot]" ]]; then
     git add ./tests/functional/snapshots
     git commit -m "chore: update snapshots [skip ci]"
     git push
-else 
-    npm run test:func
 fi

@@ -6,6 +6,15 @@ PREVIOUS_COMMIT_TARGET="$(if [[ $PARENT_COMMIT_COUNT == "2" ]]; then echo HEAD^2
 
 PREVIOUS_COMMIT_MESSAGE="$(git log --format=%B -n 1 $PREVIOUS_COMMIT_TARGET)"
 
+echo GITHUB_REPOSITORY
+echo $GITHUB_REPOSITORY
+echo GITHUB_REF
+echo $GITHUB_REF
+echo GITHUB_HEAD_REF
+echo $GITHUB_HEAD_REF
+echo GITHUB_BASE_REF
+echo $GITHUB_BASE_REF
+
 if [[ $PREVIOUS_COMMIT_MESSAGE == "[update snapshot]" ]]; then 
     npm run test:func -- -u
 

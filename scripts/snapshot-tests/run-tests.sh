@@ -19,15 +19,15 @@ if [[ $PREVIOUS_COMMIT_MESSAGE == "[update snapshot]" ]]; then
 
         # Allows pushing to remote
         git remote set-url origin ${REPO_URL}
-
-        # Switch to pull request branch
-        git checkout $GITHUB_REF
-
-        # Commit new snapshots and push to repo
-        git add ./tests/functional/snapshots
-        git commit -m "chore: update snapshots [skip ci]"
-        git push
     } &> /dev/null
+
+    # Switch to pull request branch
+    git checkout $GITHUB_REF
+
+    # Commit new snapshots and push to repo
+    git add ./tests/functional/snapshots
+    git commit -m "chore: update snapshots [skip ci]"
+    git push
 else 
     npm run test:func
 fi

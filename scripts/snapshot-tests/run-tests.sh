@@ -1,4 +1,6 @@
 #!/bin/bash
+
+# parts of this script found and modified from here: https://github.com/EndBug/add-and-commit/blob/master/entrypoint.sh
 PARENT_COMMIT_COUNT="$(git log --format=%P HEAD -n 1 | wc -w | xargs)"
 
 # When we are operating on a merge commit, target the last commit in the PR branch
@@ -7,7 +9,6 @@ PREVIOUS_COMMIT_TARGET="$(if [[ $PARENT_COMMIT_COUNT == "2" ]]; then echo HEAD^2
 PREVIOUS_COMMIT_MESSAGE="$(git log --format=%B -n 1 $PREVIOUS_COMMIT_TARGET)"
 
 # Set up .netrc file with GitHub credentials
-# found here: https://github.com/EndBug/add-and-commit/blob/master/entrypoint.sh
 git_setup() {
   cat <<- EOF > $HOME/.netrc
         machine github.com
@@ -47,10 +48,11 @@ if [[ $PREVIOUS_COMMIT_MESSAGE == "[update snapshot]" ]]; then
     # git remote set-url origin ${REPO_URL}
     # echo $REPO_URL
 
-    git checkout ${GITHUB_REF#refs/heads/}
+    git branch ${GITHUB_REF:11}
+    git checkout ${GITHUB_REF:11}
 
     # Commit new snapshots and push to repo
     git add ./tests/functional/snapshots
     git commit -m "chore: update snapshots [skip ci]"
-    git push
+    git push --set-upstream origin "${GITHUB_REF:11}"
 fi

@@ -1,7 +1,5 @@
 #!/bin/bash
 
-echo CANCEL_SNAPSHOT_UPDATE
-echo $CANCEL_SNAPSHOT_UPDATE
 CURRENT_BRANCH="$(git rev-parse --abbrev-ref HEAD)"
 STAGED_COUNT="$(git diff --cached --numstat | wc -l | xargs)"
 if [[ $CURRENT_BRANCH == "develop" ]] || [[ $CURRENT_BRANCH == "release" ]]; then 

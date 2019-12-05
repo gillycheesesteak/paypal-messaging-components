@@ -20,6 +20,9 @@ EOF
     git config --global user.name "Update Snapshots"
 }
 
+echo CANCEL_SNAPSHOT_UPDATE
+echo $CANCEL_SNAPSHOT_UPDATE
+
 git_setup
 
 echo "127.0.0.1 localhost.paypal.com" | sudo tee -a /etc/hosts

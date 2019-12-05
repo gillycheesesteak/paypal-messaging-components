@@ -16,7 +16,9 @@ jobs:
             - name: Run snapshot tests
               if: "!contains(github.event.head_commit.message, '[update snapshot]')"
               run: |
+                  echo $EVENT
                   ./scripts/snapshot-tests/setup-tests.sh
                   npm run test:func
               env:
+                  EVENT: ${{ toJSON(github) }}
                   CI: true

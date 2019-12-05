@@ -11,12 +11,12 @@ jobs:
             - name: Retrieve last commit message
               run: ./scripts/snapshot-tests/get-target-commit.sh
             - name: Use Node.js 10.x
-              if: "!contains(env.PREVIOUS_COMMIT_MESSAGE, '[update snapshot]')"
+              if: "!contains(env.LAST_COMMIT_MESSAGE, '[update snapshot]')"
               uses: actions/setup-node@v1
               with:
                   node-version: 10.x
             - name: Run snapshot tests
-              if: "!contains(env.PREVIOUS_COMMIT_MESSAGE, '[update snapshot]')"
+              if: "!contains(env.LAST_COMMIT_MESSAGE, '[update snapshot]')"
               run: |
                   ./scripts/snapshot-tests/setup-tests.sh
                   npm run test:func

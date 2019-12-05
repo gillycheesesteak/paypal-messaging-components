@@ -7,9 +7,5 @@ PREVIOUS_COMMIT_TARGET="$(if [[ $PARENT_COMMIT_COUNT == "2" ]]; then echo HEAD^2
 
 PREVIOUS_COMMIT_MESSAGE="$(git log --format=%B -n 1 $PREVIOUS_COMMIT_TARGET)"
 
-if [[ $PREVIOUS_COMMIT_MESSAGE == "[update snapshot]" ]]; then 
-    echo "Found trigger commit"
-else
-    echo "Didn't find trigger commit message, skipping snapshot update..."
-    echo "::set-env name=CANCEL_SNAPSHOT_UPDATE::1"
-fi
+echo "Didn't find trigger commit message, skipping snapshot update..."
+echo "::set-env name=PREVIOUS_COMMIT_MESSAGE::$PREVIOUS_COMMIT_MESSAGE"

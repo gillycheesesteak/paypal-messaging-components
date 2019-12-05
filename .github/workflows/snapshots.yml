@@ -8,17 +8,17 @@ jobs:
 
         steps:
             - uses: actions/checkout@v1
+            - name: Retrieve last commit message
+              run: ./scripts/snapshot-tests/get-target-commit.sh
             - name: Use Node.js 10.x
-              if: "!contains(github.event.head_commit.message, '[update snapshot]')"
+              if: "!contains(env.PREVIOUS_COMMIT_MESSAGE, '[update snapshot]')"
               uses: actions/setup-node@v1
               with:
                   node-version: 10.x
             - name: Run snapshot tests
-              if: "!contains(github.event.head_commit.message, '[update snapshot]')"
+              if: "!contains(env.PREVIOUS_COMMIT_MESSAGE, '[update snapshot]')"
               run: |
-                  echo $EVENT
                   ./scripts/snapshot-tests/setup-tests.sh
                   npm run test:func
               env:
-                  EVENT: ${{ toJSON(github) }}
                   CI: true

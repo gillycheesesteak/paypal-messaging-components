@@ -8,13 +8,15 @@ jobs:
 
         steps:
             - uses: actions/checkout@v1
+            - name: Retrieve last commit message
+              run: ./scripts/snapshot-tests/get-target-commit.sh
             - name: Use Node.js 10
-              if: "contains(github.event.head_commit.message, '[update snapshot]')"
+              if: "contains(env.PREVIOUS_COMMIT_MESSAGE, '[update snapshot]')"
               uses: actions/setup-node@v1
               with:
                   node-version: 10.x
-            - name: Update snapshots
-              if: "contains(github.event.head_commit.message, '[update snapshot]')"
+            - name: if trigger commit found, update snapshots
+              if: "contains(env.PREVIOUS_COMMIT_MESSAGE, '[update snapshot]')"
               run: |
                   ./scripts/snapshot-tests/setup-tests.sh
                   ./scripts/snapshot-tests/run-update.sh

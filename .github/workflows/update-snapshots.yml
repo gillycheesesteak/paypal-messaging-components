@@ -8,15 +8,15 @@ jobs:
 
         steps:
             - uses: actions/checkout@v1
-            - name: Retrieve last commit message
-              run: ./scripts/snapshot-tests/get-target-commit.sh
+            - name: Check for trigger commit
+              run: ./scripts/snapshot-tests/should-update.sh
             - name: Use Node.js 10
-              if: "contains(env.LAST_COMMIT_MESSAGE, '[update snapshot]')"
+              if: env.UPDATE_SNAPSHOT == 1
               uses: actions/setup-node@v1
               with:
                   node-version: 10.x
             - name: if trigger commit found, update snapshots
-              if: "contains(env.LAST_COMMIT_MESSAGE, '[update snapshot]')"
+              if: env.UPDATE_SNAPSHOT == 1
               run: |
                   ./scripts/snapshot-tests/setup-tests.sh
                   ./scripts/snapshot-tests/run-update.sh

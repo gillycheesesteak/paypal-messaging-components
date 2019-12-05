@@ -20,7 +20,7 @@ test('text banners', async () => {
             clip: {
                 x: 0,
                 y: 0,
-                width: 900,
+                width: 1000,
                 height: 100
             }
         },

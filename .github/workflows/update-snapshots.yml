@@ -15,9 +15,11 @@ jobs:
               uses: actions/setup-node@v1
               with:
                   node-version: 10.x
-            - name: if trigger commit found, update snapshots
+            - name: Update snapshots
               if: env.CANCEL_SNAPSHOT_UPDATE != 1
-              run: ./scripts/snapshot-tests/run-update.sh
+              run: |
+                  ./scripts/snapshot-tests/setup-tests.sh
+                  ./scripts/snapshot-tests/run-update.sh
               env:
                   CI: true
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

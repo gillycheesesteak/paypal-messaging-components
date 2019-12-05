@@ -9,7 +9,7 @@ PREVIOUS_COMMIT_MESSAGE="$(git log --format=%B -n 1 $PREVIOUS_COMMIT_TARGET)"
 
 if [[ $PREVIOUS_COMMIT_MESSAGE == "[update snapshot]" ]]; then 
     echo "Found trigger commit"
+    echo "::set-env name=UPDATE_SNAPSHOT::1"
 else
     echo "Didn't find trigger commit message, skipping snapshot update..."
-    echo "::set-env name=UPDATE_SNAPSHOT::1"
 fi

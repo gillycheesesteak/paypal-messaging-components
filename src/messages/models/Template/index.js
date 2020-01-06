@@ -163,7 +163,6 @@ const rulesToMarkup = curry((messages, prop, option) => {
                 span.setAttribute('class', 'multi');
             }
 
-            console.log(prop);
             let markup;
             if (typeof op === 'string') {
                 markup = getMarkup(getDataByTag(messages, prop, op));

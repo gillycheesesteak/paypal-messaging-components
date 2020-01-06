@@ -60,12 +60,27 @@ function fetcher(options) {
         // Manual request instead of traditional JSONP so that we can catch 204 no content stalling
         request('GET', `${rootUrl}?${queryString}`).then(res => {
             try {
-                const markup = JSON.parse(res.data);
+                const markup = JSON.parse(res.data).messages[0];
                 if (!markup.messages || markup.messages.length === 0) {
                     throw new Error(ERRORS.MESSAGE_INVALID_MARKUP);
                 }
 
-                resolve({ markup });
+                const {
+                    impression_url: impressionUrl,
+                    click_url: clickUrl,
+                    offer_category: offerCategory
+                } = markup.meta;
+
+                resolve({
+                    markup: {
+                        ...markup,
+                        meta: {
+                            impressionUrl,
+                            clickUrl,
+                            offerType: offerCategory
+                        }
+                    }
+                });
             } catch (err) {
                 throw new Error(ERRORS.MESSAGE_INVALID_MARKUP);
             }

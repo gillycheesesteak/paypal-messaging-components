@@ -26,6 +26,9 @@ script:
     - npm run test
     - ./scripts/snapshot-tests/run-tests.sh
 
+after_script:
+    - ./scripts/snapshot-tests/checkin-diffs.sh
+
 deploy:
     provider: script
     skip_cleanup: true

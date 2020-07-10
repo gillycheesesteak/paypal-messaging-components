@@ -1,7 +1,7 @@
 // import arrayFrom from 'core-js-pure/stable/array/from';
 
 import Message from './message';
-// import { setLocale } from './locale';
+import { setLocale } from './locale';
 // import { loadPPFonts } from './utils';
 
 // const createNodeWithInnerHTML = (doc, type, html) => {
@@ -11,8 +11,8 @@ import Message from './message';
 //     return node;
 // };
 
-// setLocale('US');
 export default (options, markup) => {
+    setLocale(markup.meta.offerCountry);
     return Message({ options, markup });
     // const container = containerDocument.createElement('div');
     // containerDocument.body.appendChild(container);

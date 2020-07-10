@@ -54,7 +54,6 @@ export function getLogos() {
 }
 
 export function getLocaleStyles(layout) {
-    console.log(localeSettings.styles);
     return (localeSettings.styles && localeSettings.styles[layout]) || [];
 }
 

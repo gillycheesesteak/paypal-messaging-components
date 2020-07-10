@@ -1,15 +1,14 @@
-/* eslint-disable */
-/* eslint-disable import/no-extraneous-dependencies */
 /** @jsx h */
 import { h } from 'preact';
 import render from 'preact-render-to-string';
 
-import { objectGet, objectMerge, curry } from '../utils';
-import { getLocalProductName, getMutations, getLogos, getLocaleStyles, getLocaleClass, setLocale } from '../locale';
+import { objectGet, objectMerge, curry, objectFlattenToArray } from '../utils';
+import { getMutations, getLocaleStyles, getLocaleClass } from '../locale';
 import allStyles from './styles';
 import fonts from './styles/fonts.css';
+import Logo from './parts/Logo';
+import MutatedText from './parts/MutatedText';
 
-setLocale('US');
 /**
  * Get all applicable rules based on user flattened options
  * and available rules to cascade
@@ -41,7 +40,7 @@ const applyCascade = curry((style, flattened, type, rules) =>
 export default ({ options, markup }) => {
     const layout = objectGet(options, 'style.layout');
 
-    const styleSelectors = objectGet(options, 'style._flattened');
+    const styleSelectors = objectFlattenToArray(options.style);
     const offerType = objectGet(markup, 'meta.offerType');
     const data = objectGet(markup, 'data');
 
@@ -58,15 +57,13 @@ export default ({ options, markup }) => {
         rule.replace(/\.message/g, `.${localeClass} .message`)
     );
     const styleRules = [...globalStyleRules, ...localeStyleRules, ...mutationRules.styles];
+    console.log(globalStyleRules);
 
     const textSize = objectGet(options, 'style.text.size');
     if (layout === 'text' && textSize) {
         styleRules.push(`.${classNamePrefix}__headline { font-size: ${textSize}px }`);
         styleRules.push(`.${classNamePrefix}__disclaimer { font-size: ${textSize}px }`);
     }
-
-    console.log(styleSelectors, offerType, data);
-    console.log(localeStyleRules);
 
     // Set boundaries on the width of the message text to ensure proper line counts
     if (mutationRules.messageWidth) {
@@ -79,54 +76,41 @@ export default ({ options, markup }) => {
         }
     }
 
-    console.log(styleRules);
+    // TODO:
+    // if (layout === 'text' && objectGet(options, 'style.text.fontFamily')) {
+    //     prependStyle(newTemplate, createCustomFontFamily(options.account, objectGet(options, 'style.text.fontFamily')));
+    // }
 
     return render(
         <div role="button" className="message" tabIndex="0" data-pp-message>
             <style dangerouslySetInnerHTML={{ __html: fonts }} />
             <style dangerouslySetInnerHTML={{ __html: styleRules.join('\n') }} />
-            <div className="message__container locale--US">
+            <div className={`message__container ${localeClass}`}>
                 {/* foreground layer */}
-                <div className="message__foreground"></div>
+                <div className="message__foreground" />
 
                 {/* content layer */}
                 <div className="message__content">
                     {/* PP Credit Logo */}
-                    <div className="message__logo-container">
-                        <div className="message__logo message__logo--svg">
-                            <img
-                                src="https://www.paypalobjects.com/upstream/assets/logos/US/ppc_fc_pri.svg"
-                                alt="PayPal Credit logo"
-                            />
-                            <canvas height="152" width="453"></canvas>
-                        </div>
-                    </div>
+                    <Logo type={objectGet(options, 'style.logo.type')} mutations={mutationRules.logo} />
+
                     {/* Promotional Messaging */}
                     <div className="message__messaging">
                         <div className="message__promo-container">
                             <h5 className="message__headline">
-                                <span className="multi tag--xsmall">
-                                    <span className="br">Buy now. Pay over time.</span>
-                                </span>{' '}
-                                <span className="multi tag--medium">
-                                    <span className="br">No Interest if paid in full in 6 months</span>{' '}
-                                    <span className="weak br">on purchases of $99+.</span>
-                                </span>
+                                <MutatedText tagData={data.headline} options={mutationRules.headline} />
                             </h5>
-                            <h6 className="message__sub-headline"></h6>
+                            <h6 className="message__sub-headline">
+                                <MutatedText tagData={data.subHeadline} options={mutationRules.subHeadline} />
+                            </h6>
                         </div>
                         <p className="message__disclaimer">
-                            <span className="multi tag--extra">
-                                <span>US only.</span>
-                            </span>{' '}
-                            <span className="multi tag--xsmall">
-                                <span>Learn more</span>
-                            </span>
+                            <MutatedText tagData={data.disclaimer} options={mutationRules.disclaimer} />
                         </p>
                     </div>
                 </div>
                 {/* background layer */}
-                <div className="message__background"></div>
+                <div className="message__background" />
             </div>
         </div>
     );

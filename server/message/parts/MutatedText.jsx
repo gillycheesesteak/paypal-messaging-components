@@ -1,7 +1,7 @@
 /** @jsx h */
 import { h } from 'preact';
 import { getDataByTag } from '../../utils';
-import SpacedText from './SpacedText';
+import Text from './Text';
 import BreakText from './BreakText';
 
 const MutatedText = ({ tagData, options }) => {
@@ -17,15 +17,33 @@ const MutatedText = ({ tagData, options }) => {
     }
 
     return uniformOptions.map(op => {
-        const { tag, ...option } = typeof op === 'string' ? { tag: op } : op;
+        const { tag, ...otherOptions } = typeof op === 'string' ? { tag: op } : op;
         const textData = getDataByTag(tagData, tag);
         const uniformText = Array.isArray(textData) ? textData : [textData];
-        const uniformTextParts = uniformText.map(text => (Array.isArray(text) ? text : [text, '']));
+        const uniformTextParts = uniformText
+            .map(text => (Array.isArray(text) ? text : [text, '']))
+            .map(([text, className]) => [
+                otherOptions.replace
+                    ? otherOptions.replace.reduce(
+                          (accumulator, [substr, replacement]) => accumulator.replace(substr, replacement),
+                          text
+                      )
+                    : text,
+                className
+            ]);
 
         return (
-            <SpacedText className={`tag--${tag.split('.', 1)[0]} ${uniformOptions.length > 1 ? 'multi' : ''}`}>
-                <BreakText textParts={uniformTextParts} options={option} />
-            </SpacedText>
+            <Text className={`tag--${tag.split('.', 1)[0]} ${uniformOptions.length > 1 ? 'multi' : ''}`} spaced>
+                {otherOptions.br ? (
+                    <BreakText textParts={uniformTextParts} options={otherOptions} />
+                ) : (
+                    uniformTextParts.map(([text, className], idx) => (
+                        <Text className={className} spaced={idx < uniformTextParts.length - 1}>
+                            {text}
+                        </Text>
+                    ))
+                )}
+            </Text>
         );
     });
 };

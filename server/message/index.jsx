@@ -3,11 +3,12 @@ import { h } from 'preact';
 import render from 'preact-render-to-string';
 
 import { objectGet, objectMerge, curry, objectFlattenToArray } from '../utils';
-import { getMutations, getLocaleStyles, getLocaleClass } from '../locale';
+import { getMutations, getLocaleStyles, getLocaleClass, getLocalProductName } from '../locale';
 import allStyles from './styles';
 import fonts from './styles/fonts.css';
 import Logo from './parts/Logo';
 import MutatedText from './parts/MutatedText';
+import FlexStyles from './parts/FlexStyles';
 
 /**
  * Get all applicable rules based on user flattened options
@@ -42,11 +43,10 @@ export default ({ options, markup }) => {
 
     const styleSelectors = objectFlattenToArray(options.style);
     const offerType = objectGet(markup, 'meta.offerType');
-    const data = objectGet(markup, 'data');
 
     const classNamePrefix = 'message';
     const applyCascadeRules = applyCascade(options.style, styleSelectors);
-    const mutationRules = applyCascadeRules(Object, getMutations(offerType, `layout:${layout}`, data));
+    const mutationRules = applyCascadeRules(Object, getMutations(offerType, `layout:${layout}`, markup));
 
     const layoutProp = `layout:${layout}`;
     const globalStyleRules = applyCascadeRules(Array, allStyles[layoutProp]);
@@ -57,7 +57,6 @@ export default ({ options, markup }) => {
         rule.replace(/\.message/g, `.${localeClass} .message`)
     );
     const styleRules = [...globalStyleRules, ...localeStyleRules, ...mutationRules.styles];
-    console.log(globalStyleRules);
 
     const textSize = objectGet(options, 'style.text.size');
     if (layout === 'text' && textSize) {
@@ -76,15 +75,23 @@ export default ({ options, markup }) => {
         }
     }
 
+    const logoType = objectGet(options, 'style.logo.type');
+    const logo = <Logo type={logoType} mutations={mutationRules.logo} />;
+
+    const [withText, productName] = getLocalProductName();
+
     // TODO:
     // if (layout === 'text' && objectGet(options, 'style.text.fontFamily')) {
     //     prependStyle(newTemplate, createCustomFontFamily(options.account, objectGet(options, 'style.text.fontFamily')));
     // }
 
+    const ratio = objectGet(options, 'style.ratio');
+
     return render(
         <div role="button" className="message" tabIndex="0" data-pp-message>
             <style dangerouslySetInnerHTML={{ __html: fonts }} />
             <style dangerouslySetInnerHTML={{ __html: styleRules.join('\n') }} />
+            {layout === 'flex' || ratio ? <FlexStyles layout={layout} ratio={ratio} /> : null}
             <div className={`message__container ${localeClass}`}>
                 {/* foreground layer */}
                 <div className="message__foreground" />
@@ -92,20 +99,26 @@ export default ({ options, markup }) => {
                 {/* content layer */}
                 <div className="message__content">
                     {/* PP Credit Logo */}
-                    <Logo type={objectGet(options, 'style.logo.type')} mutations={mutationRules.logo} />
+                    {logoType !== 'none' && logoType !== 'inline' ? logo : null}
 
                     {/* Promotional Messaging */}
                     <div className="message__messaging">
                         <div className="message__promo-container">
                             <h5 className="message__headline">
-                                <MutatedText tagData={data.headline} options={mutationRules.headline} />
+                                <MutatedText tagData={markup.headline} options={mutationRules.headline} />
+                                {logoType === 'inline' ? logo : null}{' '}
+                                {logoType === 'none' ? (
+                                    <span>
+                                        {withText} <strong>{productName}</strong>
+                                    </span>
+                                ) : null}{' '}
                             </h5>
                             <h6 className="message__sub-headline">
-                                <MutatedText tagData={data.subHeadline} options={mutationRules.subHeadline} />
+                                <MutatedText tagData={markup.subHeadline} options={mutationRules.subHeadline} />{' '}
                             </h6>
                         </div>
                         <p className="message__disclaimer">
-                            <MutatedText tagData={data.disclaimer} options={mutationRules.disclaimer} />
+                            <MutatedText tagData={markup.disclaimer} options={mutationRules.disclaimer} />{' '}
                         </p>
                     </div>
                 </div>

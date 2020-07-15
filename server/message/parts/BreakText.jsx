@@ -1,6 +1,6 @@
 /** @jsx h */
 import { h } from 'preact';
-import ReplaceText from './ReplaceText';
+import Text from './Text';
 
 function splitText(text, breakWord) {
     const breakIndex = text.indexOf(breakWord) + breakWord.length;
@@ -15,36 +15,44 @@ function splitText(text, breakWord) {
 }
 
 const BreakText = ({ textParts, options }) => {
-    if (options.br) {
-        const availableBreaks = [...options.br];
-        return textParts.map(([text, className]) => {
-            const containedBreaks = [];
+    const availableBreaks = [...options.br];
+    return textParts.map(([text, className], idx) => {
+        // Last portion of text should not have a space after it
+        const spaced = idx < textParts.length - 1;
+        const containedBreaks = [];
 
-            while (text.includes(availableBreaks[0])) {
-                containedBreaks.push(availableBreaks[0]);
-                availableBreaks.shift();
-            }
+        while (text.includes(availableBreaks[0])) {
+            containedBreaks.push(availableBreaks[0]);
+            availableBreaks.shift();
+        }
 
-            // Prevent unnecessary nesting if the entire span innerText would be wrapped in a single br span
-            if (containedBreaks.length === 0 || (containedBreaks.length === 1 && text.endsWith(containedBreaks[0]))) {
-                return <ReplaceText textPart={[text, `${className} br`]} options={options} />;
-            }
-
-            const breakText = containedBreaks.reduce(
-                (accumulator, breakWord) => {
-                    const split = splitText(accumulator[accumulator.length - 1], breakWord);
-                    return [...accumulator.slice(0, -1), ...split];
-                },
-                [text]
+        // Prevent unnecessary nesting if the entire span innerText would be wrapped in a single br span
+        if (containedBreaks.length === 0 || (containedBreaks.length === 1 && text.endsWith(containedBreaks[0]))) {
+            return (
+                <Text className={`${className} br`} spaced={spaced}>
+                    {text}
+                </Text>
             );
+        }
 
-            return breakText.map(breakTextPart => (
-                <ReplaceText textPart={[breakTextPart, `${className} br`]} options={options} />
-            ));
-        });
-    }
+        const breakText = containedBreaks.reduce(
+            (accumulator, breakWord) => {
+                const split = splitText(accumulator[accumulator.length - 1], breakWord);
+                return [...accumulator.slice(0, -1), ...split];
+            },
+            [text]
+        );
 
-    return textParts.map(textPart => <ReplaceText textPart={textPart} options={options} />);
+        return (
+            <Text className={className} spaced={spaced}>
+                {breakText.map((breakTextPart, breakIdx) => (
+                    <Text className="br" spaced={breakIdx < textParts.length - 1}>
+                        {breakTextPart}
+                    </Text>
+                ))}
+            </Text>
+        );
+    });
 };
 
 export default BreakText;

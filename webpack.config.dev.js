@@ -66,7 +66,7 @@ module.exports = (env = {}) => {
         watchContentBase: true,
         injectClient: compiler => !!compiler.devServer,
         before: devServerProxy,
-        https: env.NODE_ENV !== 'local',
+        https: true,
         disableHostCheck: true // IE11
     };
 

@@ -1,6 +1,5 @@
 /** @jsx h */
 import { h } from 'preact';
-import render from 'preact-render-to-string';
 
 import { objectGet, objectMerge, curry, objectFlattenToArray } from '../utils';
 import { getMutations, getLocaleStyles, getLocaleClass, getLocalProductName } from '../locale';
@@ -38,7 +37,7 @@ const applyCascade = curry((style, flattened, type, rules) =>
     )
 );
 
-export default ({ options, markup }) => {
+export default ({ options, markup, locale }) => {
     const layout = objectGet(options, 'style.layout');
 
     const styleSelectors = objectFlattenToArray(options.style);
@@ -46,14 +45,14 @@ export default ({ options, markup }) => {
 
     const classNamePrefix = 'message';
     const applyCascadeRules = applyCascade(options.style, styleSelectors);
-    const mutationRules = applyCascadeRules(Object, getMutations(offerType, `layout:${layout}`, markup));
+    const mutationRules = applyCascadeRules(Object, getMutations(locale, offerType, `layout:${layout}`, markup));
 
     const layoutProp = `layout:${layout}`;
     const globalStyleRules = applyCascadeRules(Array, allStyles[layoutProp]);
 
     const localeClass = getLocaleClass();
     // Scope all locale-specific styles to the selected locale
-    const localeStyleRules = applyCascadeRules(Array, getLocaleStyles(layoutProp)).map(rule =>
+    const localeStyleRules = applyCascadeRules(Array, getLocaleStyles(locale, layoutProp)).map(rule =>
         rule.replace(/\.message/g, `.${localeClass} .message`)
     );
     const styleRules = [...globalStyleRules, ...localeStyleRules, ...mutationRules.styles];
@@ -78,7 +77,7 @@ export default ({ options, markup }) => {
     const logoType = objectGet(options, 'style.logo.type');
     const logo = <Logo type={logoType} mutations={mutationRules.logo} />;
 
-    const [withText, productName] = getLocalProductName();
+    const [withText, productName] = getLocalProductName(locale);
 
     // TODO:
     // if (layout === 'text' && objectGet(options, 'style.text.fontFamily')) {
@@ -87,7 +86,7 @@ export default ({ options, markup }) => {
 
     const ratio = objectGet(options, 'style.ratio');
 
-    return render(
+    return (
         <div role="button" className="message" tabIndex="0" data-pp-message>
             <style dangerouslySetInnerHTML={{ __html: fonts }} />
             <style dangerouslySetInnerHTML={{ __html: styleRules.join('\n') }} />

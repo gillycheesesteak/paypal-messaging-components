@@ -138,22 +138,21 @@ function getValidStyleOptions(addLog, localeStyleOptions, options) {
  * @param {Object} options User options object
  * @returns {Object} Object containing only valid options
  */
-export default (style, locale) => {
-    const logs = [];
+export default (addLog, style, locale) => {
     const validStyleOptions = getValidOptions(locale);
 
     const validatedStyle = (() => {
         if (validStyleOptions[style.layout]) {
-            return getValidStyleOptions(logs.push, validStyleOptions, style);
+            return getValidStyleOptions(addLog, validStyleOptions, style);
         }
 
-        logInvalidOption(logs.push, 'style.layout', Object.keys(validStyleOptions), style.layout);
+        logInvalidOption(addLog, 'style.layout', Object.keys(validStyleOptions), style.layout);
 
         // Get the default settings for a text banner
-        return getValidStyleOptions(logs.push, validStyleOptions, {
+        return getValidStyleOptions(addLog, validStyleOptions, {
             layout: 'text'
         });
     })();
 
-    return [validatedStyle, logs];
+    return validatedStyle;
 };

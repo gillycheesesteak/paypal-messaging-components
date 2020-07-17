@@ -138,7 +138,7 @@ function getValidStyleOptions(addLog, localeStyleOptions, options) {
  * @param {Object} options User options object
  * @returns {Object} Object containing only valid options
  */
-export default (addLog, style, locale) => {
+export default function(addLog, style, locale) {
     const validStyleOptions = getValidOptions(locale);
 
     const validatedStyle = (() => {
@@ -155,4 +155,4 @@ export default (addLog, style, locale) => {
     })();
 
     return validatedStyle;
-};
+}

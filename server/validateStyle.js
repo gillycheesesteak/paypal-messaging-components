@@ -141,18 +141,14 @@ function getValidStyleOptions(addLog, localeStyleOptions, options) {
 export default function(addLog, style, locale) {
     const validStyleOptions = getValidOptions(locale);
 
-    const validatedStyle = (() => {
-        if (validStyleOptions[style.layout]) {
-            return getValidStyleOptions(addLog, validStyleOptions, style);
-        }
+    if (validStyleOptions[style.layout]) {
+        return getValidStyleOptions(addLog, validStyleOptions, style);
+    }
 
-        logInvalidOption(addLog, 'style.layout', Object.keys(validStyleOptions), style.layout);
+    logInvalidOption(addLog, 'style.layout', Object.keys(validStyleOptions), style.layout);
 
-        // Get the default settings for a text banner
-        return getValidStyleOptions(addLog, validStyleOptions, {
-            layout: 'text'
-        });
-    })();
-
-    return validatedStyle;
+    // Get the default settings for a text banner
+    return getValidStyleOptions(addLog, validStyleOptions, {
+        layout: 'text'
+    });
 }

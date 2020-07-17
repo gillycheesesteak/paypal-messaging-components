@@ -38,13 +38,14 @@ const applyCascade = curry((style, flattened, type, rules) =>
 );
 
 export default ({ options, markup, locale }) => {
-    const layout = objectGet(options, 'style.layout');
+    const { style } = options;
+    const { layout, ratio } = style;
 
-    const styleSelectors = objectFlattenToArray(options.style);
+    const styleSelectors = objectFlattenToArray(style);
     const offerType = objectGet(markup, 'meta.offerType');
 
     const classNamePrefix = 'message';
-    const applyCascadeRules = applyCascade(options.style, styleSelectors);
+    const applyCascadeRules = applyCascade(style, styleSelectors);
     const mutationRules = applyCascadeRules(Object, getMutations(locale, offerType, `layout:${layout}`, markup));
 
     const layoutProp = `layout:${layout}`;
@@ -57,7 +58,7 @@ export default ({ options, markup, locale }) => {
     );
     const styleRules = [...globalStyleRules, ...localeStyleRules, ...mutationRules.styles];
 
-    const textSize = objectGet(options, 'style.text.size');
+    const textSize = style.text?.size;
     if (layout === 'text' && textSize) {
         styleRules.push(`.${classNamePrefix}__headline { font-size: ${textSize}px }`);
         styleRules.push(`.${classNamePrefix}__disclaimer { font-size: ${textSize}px }`);
@@ -74,8 +75,8 @@ export default ({ options, markup, locale }) => {
         }
     }
 
-    const logoType = objectGet(options, 'style.logo.type');
-    const logo = <Logo type={logoType} mutations={mutationRules.logo} />;
+    const logoType = style.logo?.type;
+    const logoEl = <Logo type={logoType} mutations={mutationRules.logo} />;
 
     const [withText, productName] = getLocalProductName(locale);
 
@@ -83,8 +84,6 @@ export default ({ options, markup, locale }) => {
     // if (layout === 'text' && objectGet(options, 'style.text.fontFamily')) {
     //     prependStyle(newTemplate, createCustomFontFamily(options.account, objectGet(options, 'style.text.fontFamily')));
     // }
-
-    const ratio = objectGet(options, 'style.ratio');
 
     return (
         <div role="button" className="message" tabIndex="0" data-pp-message>
@@ -98,14 +97,14 @@ export default ({ options, markup, locale }) => {
                 {/* content layer */}
                 <div className="message__content">
                     {/* PP Credit Logo */}
-                    {logoType !== 'none' && logoType !== 'inline' ? logo : null}
+                    {logoType !== 'none' && logoType !== 'inline' ? logoEl : null}
 
                     {/* Promotional Messaging */}
                     <div className="message__messaging">
                         <div className="message__promo-container">
                             <h5 className="message__headline">
                                 <MutatedText tagData={markup.headline} options={mutationRules.headline} />
-                                {logoType === 'inline' ? logo : null}{' '}
+                                {logoType === 'inline' ? logoEl : null}{' '}
                                 {logoType === 'none' ? (
                                     <span>
                                         {withText} <strong>{productName}</strong>

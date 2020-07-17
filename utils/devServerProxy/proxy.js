@@ -49,7 +49,7 @@ export default (app, server, compiler) => {
                     ? fs.readFileSync(`banners/${country}/${offer}.json`, 'utf-8')
                     : fs.readFileSync(`banners/US/ni.json`, 'utf-8');
 
-            const { meta, ...populatedBanner } = JSON.parse(populateTemplate(morsVars, banner));
+            const populatedBanner = JSON.parse(populateTemplate(morsVars, banner));
 
             // eslint-disable-next-line no-eval
             const renderMessage = eval(
@@ -61,9 +61,9 @@ export default (app, server, compiler) => {
             const markup = renderMessage(
                 { style: JSON.parse(req.query.style) },
                 {
-                    data: populatedBanner,
+                    ...populatedBanner,
                     meta: {
-                        ...meta,
+                        ...populatedBanner.meta,
                         impressionUrl: '//localhost.paypal.com:8080/ptrk/?fdata=null',
                         clickUrl: '//localhost.paypal.com:8080/ptrk/?fdata=null',
                         messageRequestId: '1234'

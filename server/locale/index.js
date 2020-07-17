@@ -1,5 +1,3 @@
-import { createState } from '../../src/utils/miscellaneous';
-
 import US from './US';
 import DE from './DE';
 
@@ -13,50 +11,48 @@ const getLocaleSettings = offerCountry => {
     }
 };
 
-const [localeSettings, updateLocaleSettings] = createState({});
-
-export const setLocale = offerCountry => updateLocaleSettings(getLocaleSettings(offerCountry));
-
-export function getLocaleClass() {
-    return localeSettings.localeClass;
+export function getLocaleClass(locale) {
+    return getLocaleSettings(locale).localeClass;
 }
 
-export function getLocalProductName() {
-    return localeSettings.productName;
+export function getLocalProductName(locale) {
+    return getLocaleSettings(locale).productName;
 }
 
-export function getValidOptions() {
-    return localeSettings.validOptions;
+export function getValidOptions(locale) {
+    return getLocaleSettings(locale).validOptions;
 }
 
-export function getMutations(id, type) {
-    const mutations = localeSettings.getMutations(id, type).map(mutation => {
-        if (mutation[1].styles) {
-            return [
-                mutation[0],
-                {
-                    ...mutation[1],
-                    styles: mutation[1].styles.map(style =>
-                        style.replace(/\.message/g, `.${getLocaleClass()} .message`)
-                    )
-                }
-            ];
-        }
+export function getMutations(locale, id, type) {
+    const mutations = getLocaleSettings(locale)
+        .getMutations(id, type)
+        .map(mutation => {
+            if (mutation[1].styles) {
+                return [
+                    mutation[0],
+                    {
+                        ...mutation[1],
+                        styles: mutation[1].styles.map(style =>
+                            style.replace(/\.message/g, `.${getLocaleClass()} .message`)
+                        )
+                    }
+                ];
+            }
 
-        return mutation;
-    });
+            return mutation;
+        });
 
     return mutations;
 }
 
-export function getLogos() {
-    return localeSettings.logos;
+export function getLogos(locale) {
+    return getLocaleSettings(locale).logos;
 }
 
-export function getLocaleStyles(layout) {
-    return (localeSettings.styles && localeSettings.styles[layout]) || [];
+export function getLocaleStyles(locale, layout) {
+    return (getLocaleSettings(locale).styles && getLocaleSettings(locale).styles[layout]) || [];
 }
 
-export function getMinimumWidthOptions() {
-    return localeSettings.minimumSizeOptions || {};
+export function getMinimumWidthOptions(locale) {
+    return getLocaleSettings(locale).minimumSizeOptions || {};
 }

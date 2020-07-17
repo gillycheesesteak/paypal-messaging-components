@@ -114,7 +114,7 @@ module.exports = (env = {}) => {
     };
 
     const RENDERING_DEV_CONFIG = getWebpackConfig({
-        entry: ['./server/render.js'],
+        entry: ['./server/index.js'],
         libraryTarget: 'global',
         modulename: 'renderMessage',
         debug: true,

@@ -7,7 +7,6 @@ import allStyles from './styles';
 import fonts from './styles/fonts.css';
 import Logo from './parts/Logo';
 import MutatedText from './parts/MutatedText';
-import FlexStyles from './parts/FlexStyles';
 
 /**
  * Get all applicable rules based on user flattened options
@@ -39,7 +38,7 @@ const applyCascade = curry((style, flattened, type, rules) =>
 
 export default ({ options, markup, locale }) => {
     const { style } = options;
-    const { layout, ratio } = style;
+    const { layout } = style;
 
     const styleSelectors = objectFlattenToArray(style);
     const offerType = objectGet(markup, 'meta.offerType');
@@ -89,7 +88,6 @@ export default ({ options, markup, locale }) => {
         <div role="button" className="message" tabIndex="0" data-pp-message>
             <style dangerouslySetInnerHTML={{ __html: fonts }} />
             <style dangerouslySetInnerHTML={{ __html: styleRules.join('\n') }} />
-            {layout === 'flex' || ratio ? <FlexStyles layout={layout} ratio={ratio} /> : null}
             <div className={`message__container ${localeClass}`}>
                 {/* foreground layer */}
                 <div className="message__foreground" />

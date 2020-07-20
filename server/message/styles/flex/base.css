@@ -1,3 +1,10 @@
+/* Sizing will be handled by the iframe container */
+html,
+body,
+button {
+    height: 100%;
+}
+
 .message {
     cursor: pointer;
 }

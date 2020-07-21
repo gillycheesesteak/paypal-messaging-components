@@ -1,7 +1,7 @@
 /** @jsx h */
 import { h } from 'preact';
 
-import { objectGet, objectMerge, curry, objectFlattenToArray } from '../utils';
+import { objectMerge, curry, objectFlattenToArray } from '../utils';
 import { getMutations, getLocaleStyles, getLocaleClass, getLocalProductName } from '../locale';
 import allStyles from './styles';
 import fonts from './styles/fonts.css';
@@ -24,7 +24,7 @@ const applyCascade = curry((style, flattened, type, rules) =>
                 const calculatedVal =
                     typeof val === 'function'
                         ? val({
-                              textSize: objectGet(style, 'text.size')
+                              textSize: style.text?.size
                           })
                         : val;
                 return type === Array ? [...accumulator, calculatedVal] : objectMerge(accumulator, calculatedVal);
@@ -41,9 +41,8 @@ export default ({ options, markup, locale }) => {
     const { layout } = style;
 
     const styleSelectors = objectFlattenToArray(style);
-    const offerType = objectGet(markup, 'meta.offerType');
+    const offerType = markup?.meta?.offerType;
 
-    const classNamePrefix = 'message';
     const applyCascadeRules = applyCascade(style, styleSelectors);
     const mutationRules = applyCascadeRules(Object, getMutations(locale, offerType, `layout:${layout}`, markup));
 
@@ -59,17 +58,17 @@ export default ({ options, markup, locale }) => {
 
     const textSize = style.text?.size;
     if (layout === 'text' && textSize) {
-        styleRules.push(`.${classNamePrefix}__headline { font-size: ${textSize}px }`);
-        styleRules.push(`.${classNamePrefix}__disclaimer { font-size: ${textSize}px }`);
+        styleRules.push(`.message__headline { font-size: ${textSize}px }`);
+        styleRules.push(`.message__disclaimer { font-size: ${textSize}px }`);
     }
 
     // Set boundaries on the width of the message text to ensure proper line counts
     if (mutationRules.messageWidth) {
         if (typeof mutationRules.messageWidth === 'number') {
-            styleRules.push(`.${classNamePrefix}__messaging { width: ${mutationRules.messageWidth}px }`);
+            styleRules.push(`.message__messaging { width: ${mutationRules.messageWidth}px }`);
         } else if (Array.isArray(mutationRules.messageWidth)) {
             styleRules.push(
-                `.${classNamePrefix}__messaging { min-width: ${mutationRules.messageWidth[0]}px; max-width: ${mutationRules.messageWidth[1]}px }`
+                `.message__messaging { min-width: ${mutationRules.messageWidth[0]}px; max-width: ${mutationRules.messageWidth[1]}px }`
             );
         }
     }

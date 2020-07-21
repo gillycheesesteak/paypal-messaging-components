@@ -11,7 +11,7 @@ import {
     objectMerge,
     objectFlattenToArray,
     objectGet
-} from 'src/utils';
+} from 'utils';
 
 describe('Utils', () => {
     describe('memoize', () => {

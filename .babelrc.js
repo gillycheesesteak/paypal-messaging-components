@@ -12,6 +12,7 @@ module.exports = {
                 root: ['./'],
                 alias: {
                     src: './src',
+                    server: './server',
                     utils: './utils'
                 }
             }

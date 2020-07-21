@@ -29,6 +29,7 @@
             "babel-module": {
                 "alias": {
                     "src": "./src",
+                    "server": "./server",
                     "utils": "./utils"
                 }
             }

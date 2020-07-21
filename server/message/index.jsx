@@ -56,7 +56,7 @@ export default ({ options, markup, locale }) => {
     const localeStyleRules = applyCascadeRules(Array, getLocaleStyles(locale, layoutProp)).map(rule =>
         rule.replace(/\.message/g, `.${localeClass} .message`)
     );
-    const styleRules = [...globalStyleRules, ...localeStyleRules, ...mutationRules.styles];
+    const styleRules = [...globalStyleRules, ...localeStyleRules, ...(mutationRules.styles ?? [])];
 
     const textSize = style.text?.size;
     if (layout === 'text' && textSize) {
@@ -86,7 +86,7 @@ export default ({ options, markup, locale }) => {
     // }
 
     return (
-        <div role="button" className="message" tabIndex="0" data-pp-message>
+        <div role="button" className="message" tabIndex="0">
             <style dangerouslySetInnerHTML={{ __html: fonts }} />
             <style dangerouslySetInnerHTML={{ __html: styleRules.join('\n') }} />
             <div className={`message__container ${localeClass}`}>

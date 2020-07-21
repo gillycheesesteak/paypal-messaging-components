@@ -8,9 +8,13 @@ export default {
     productName: ['with', 'PayPal Credit.'],
     validOptions,
     minimumSizeOptions: {
-        'style.layout': 'text',
-        'style.logo.position': 'top',
-        'style.logo.type': 'primary'
+        style: {
+            layout: 'text',
+            logo: {
+                position: 'top',
+                type: 'primary'
+            }
+        }
     },
     getMutations,
     logos,

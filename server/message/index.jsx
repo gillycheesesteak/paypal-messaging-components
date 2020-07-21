@@ -2,7 +2,7 @@
 import { h } from 'preact';
 
 import { objectMerge, curry, objectFlattenToArray } from '../utils';
-import { getMutations, getLocaleStyles, getLocaleClass, getLocalProductName } from '../locale';
+import { getMutations, getLocaleStyles, getLocaleClass, getLocalProductName, getMinimumWidthOptions } from '../locale';
 import allStyles from './styles';
 import fonts from './styles/fonts.css';
 import Logo from './parts/Logo';
@@ -37,7 +37,9 @@ const applyCascade = curry((style, flattened, type, rules) =>
 );
 
 export default ({ options, markup, locale }) => {
-    const { style } = options;
+    const style =
+        options.preset === 'smallest' ? objectMerge(options.style, getMinimumWidthOptions(locale)) : options.style;
+
     const { layout } = style;
 
     const styleSelectors = objectFlattenToArray(style);
@@ -49,7 +51,7 @@ export default ({ options, markup, locale }) => {
     const layoutProp = `layout:${layout}`;
     const globalStyleRules = applyCascadeRules(Array, allStyles[layoutProp]);
 
-    const localeClass = getLocaleClass();
+    const localeClass = getLocaleClass(locale);
     // Scope all locale-specific styles to the selected locale
     const localeStyleRules = applyCascadeRules(Array, getLocaleStyles(locale, layoutProp)).map(rule =>
         rule.replace(/\.message/g, `.${localeClass} .message`)

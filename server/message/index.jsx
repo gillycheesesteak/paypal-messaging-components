@@ -1,7 +1,7 @@
 /** @jsx h */
 import { h } from 'preact';
 
-import { objectMerge, curry, objectFlattenToArray } from '../utils';
+import { objectMerge, objectFlattenToArray, curry } from '../../utils/server';
 import { getMutations, getLocaleStyles, getLocaleClass, getLocalProductName, getMinimumWidthOptions } from '../locale';
 import allStyles from './styles';
 import fonts from './styles/fonts.css';

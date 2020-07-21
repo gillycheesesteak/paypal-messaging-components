@@ -2,7 +2,8 @@ import fs from 'fs';
 import path from 'path';
 import got from 'got';
 
-import { getTerms, populateTemplate } from '..';
+import { populateTemplate } from './miscellaneous';
+import { getTerms } from './mockTerms';
 
 const devAccountMap = {
     DEV00000000NI: ['US', 'ni'],
@@ -76,7 +77,7 @@ export default (app, server, compiler) => {
         if (populatedBanner) {
             const style = JSON.parse(req.query.style);
 
-            // eslint-disable-next-line no-eval
+            // eslint-disable-next-line no-eval, security/detect-eval-with-expression
             const { render, validateStyle, getParentStyles } = eval(
                 compiler.compilers[2].outputFileSystem
                     .readFileSync(path.resolve(__dirname, '../../dist/render.js'))

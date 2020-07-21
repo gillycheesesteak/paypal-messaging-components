@@ -2,7 +2,7 @@ import objectEntries from 'core-js-pure/stable/object/entries';
 import { useReducer, useEffect } from 'preact/hooks';
 
 import { useXProps, useServerData } from '../../../lib';
-import { request, memoizeOnProps } from '../../../../utils';
+import { request, memoizeOnProps } from '../../../../../utils';
 
 const termsFetcher = memoizeOnProps(
     ({ csrf, ...params }) => {

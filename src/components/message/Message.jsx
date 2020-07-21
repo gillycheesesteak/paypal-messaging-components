@@ -3,7 +3,7 @@ import { h } from 'preact';
 import { useEffect } from 'preact/hooks';
 
 import { useXProps, useServerData, useDidUpdateEffect } from './lib';
-import { request } from '../../utils';
+import { request } from '../../../utils';
 
 const Message = () => {
     const { amount, currency, style, offer, payerId, clientId, merchantId, onClick, onReady, onHover } = useXProps();

@@ -8,7 +8,7 @@ import { ZalgoPromise } from 'zalgo-promise/src';
 
 import toNewPipeline from './toNewPipeline';
 import { Logger, EVENTS } from '../services/logger';
-import { nextIndex, getGlobalUrl, getWhitelist } from '../utils';
+import { nextIndex, getGlobalUrl, getWhitelist } from '../../utils';
 
 /**
  * This script is a combination of 2 similar legacy scripts (merchant.js and partner.js)

@@ -1,4 +1,4 @@
-import { Types } from '../../../src/messages/models/Banner/types';
+import { Types } from '../../types';
 
 export default {
     text: {

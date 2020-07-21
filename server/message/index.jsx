@@ -80,7 +80,7 @@ export default ({ options, markup, locale }) => {
 
     const [withText, productName] = getLocalProductName(locale);
 
-    // TODO:
+    // TODO: custom banner support
     // if (layout === 'text' && objectGet(options, 'style.text.fontFamily')) {
     //     prependStyle(newTemplate, createCustomFontFamily(options.account, objectGet(options, 'style.text.fontFamily')));
     // }

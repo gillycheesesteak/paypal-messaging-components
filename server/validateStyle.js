@@ -113,7 +113,7 @@ function populateDefaults(addLog, defaults, options, prefix = 'style.') {
 
         return {
             ...accumulator,
-            [key]: populateDefaults(addLog, defaults[key], options[key] || {}, `${prefix}${key}.`)
+            [key]: populateDefaults(addLog, defaults[key], options[key] ?? {}, `${prefix}${key}.`)
         };
     }, {});
 }

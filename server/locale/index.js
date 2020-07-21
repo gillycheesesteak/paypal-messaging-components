@@ -1,7 +1,7 @@
 import US from './US';
 import DE from './DE';
 
-const getLocaleSettings = offerCountry => {
+const getLocaleSettings = (offerCountry) => {
     switch (offerCountry) {
         case 'DE':
             return DE;
@@ -26,13 +26,13 @@ export function getValidOptions(locale) {
 export function getMutations(locale, id, type) {
     const mutations = getLocaleSettings(locale)
         .getMutations(id, type)
-        .map(mutation => {
+        .map((mutation) => {
             if (mutation[1].styles) {
                 return [
                     mutation[0],
                     {
                         ...mutation[1],
-                        styles: mutation[1].styles.map(style =>
+                        styles: mutation[1].styles.map((style) =>
                             style.replace(/\.message/g, `.${getLocaleClass()} .message`)
                         )
                     }
@@ -50,9 +50,9 @@ export function getLogos(locale) {
 }
 
 export function getLocaleStyles(locale, layout) {
-    return (getLocaleSettings(locale).styles && getLocaleSettings(locale).styles[layout]) || [];
+    return (getLocaleSettings(locale).styles && getLocaleSettings(locale).styles[layout]) ?? [];
 }
 
 export function getMinimumWidthOptions(locale) {
-    return getLocaleSettings(locale).minimumSizeOptions || {};
+    return getLocaleSettings(locale).minimumSizeOptions ?? {};
 }

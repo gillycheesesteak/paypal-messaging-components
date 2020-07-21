@@ -1,5 +1,6 @@
 /** @jsx h */
 import { h } from 'preact';
+
 import { getDataByTag } from '../../../utils/server';
 import Text from './Text';
 import BreakText from './BreakText';

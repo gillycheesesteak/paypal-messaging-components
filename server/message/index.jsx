@@ -79,7 +79,7 @@ export default ({ options, markup, locale }) => {
     }
 
     const logoType = style.logo?.type;
-    const logoEl = <Logo type={logoType} mutations={mutationRules.logo} />;
+    const logoEl = <Logo mutations={mutationRules.logo} />;
 
     const [withText, productName] = getLocalProductName(locale);
 
@@ -87,6 +87,14 @@ export default ({ options, markup, locale }) => {
     // if (layout === 'text' && objectGet(options, 'style.text.fontFamily')) {
     //     prependStyle(newTemplate, createCustomFontFamily(options.account, objectGet(options, 'style.text.fontFamily')));
     // }
+
+    const productNameEl = (
+        <span>
+            {' '}
+            {withText} <span className="pp-text-logo" />
+            <strong>{productName}</strong>
+        </span>
+    );
 
     return (
         <div role="button" className="message" tabIndex="0">
@@ -109,18 +117,13 @@ export default ({ options, markup, locale }) => {
                         <div className="message__promo-container">
                             <h5 className="message__headline">
                                 <MutatedText tagData={markup.headline} options={mutationRules.headline} />
+                                {logoType === 'none' || locale === 'GB' ? productNameEl : null}
                                 {logoType === 'inline' ? <> {logoEl}</> : null}
-                                {logoType === 'none' ? (
-                                    <span>
-                                        {' '}
-                                        {withText} <strong>{productName}</strong>
-                                    </span>
-                                ) : null}
-                            </h5>
+                            </h5>{' '}
                             <h6 className="message__sub-headline">
                                 <MutatedText tagData={markup.subHeadline} options={mutationRules.subHeadline} />
                             </h6>
-                        </div>
+                        </div>{' '}
                         <p className="message__disclaimer">
                             <MutatedText tagData={markup.disclaimer} options={mutationRules.disclaimer} />
                         </p>

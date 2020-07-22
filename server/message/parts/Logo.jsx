@@ -1,8 +1,8 @@
 /** @jsx h */
 import { h } from 'preact';
 
-const Logos = ({ type, mutations }) => {
-    if (type === 'none') return null;
+const Logos = ({ mutations }) => {
+    if (!mutations) return null;
 
     const logos = Array.isArray(mutations) ? mutations : [mutations];
 

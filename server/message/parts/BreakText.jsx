@@ -46,7 +46,7 @@ const BreakText = ({ textParts, options }) => {
         return (
             <Text className={className} spaced={spaced}>
                 {breakText.map((breakTextPart, breakIdx) => (
-                    <Text className="br" spaced={breakIdx < textParts.length - 1}>
+                    <Text className="br" spaced={breakIdx < breakText.length - 1}>
                         {breakTextPart}
                     </Text>
                 ))}

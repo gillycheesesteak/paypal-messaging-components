@@ -1,5 +1,7 @@
 /** @jsx h */
-import { h } from 'preact';
+/** @jsxFrag Fragment */
+// eslint-disable-next-line no-unused-vars
+import { h, Fragment } from 'preact';
 
 import { objectMerge, objectFlattenToArray, curry } from '../../utils/server';
 import { getMutations, getLocaleStyles, getLocaleClass, getLocalProductName, getMinimumWidthOptions } from '../locale';
@@ -56,20 +58,21 @@ export default ({ options, markup, locale }) => {
     const localeStyleRules = applyCascadeRules(Array, getLocaleStyles(locale, layoutProp)).map(rule =>
         rule.replace(/\.message/g, `.${localeClass} .message`)
     );
-    const styleRules = [...globalStyleRules, ...localeStyleRules, ...(mutationRules.styles ?? [])];
+    const mutationStyleRules = mutationRules.styles ?? [];
+    const miscStyleRules = [];
 
     const textSize = style.text?.size;
     if (layout === 'text' && textSize) {
-        styleRules.push(`.message__headline { font-size: ${textSize}px }`);
-        styleRules.push(`.message__disclaimer { font-size: ${textSize}px }`);
+        miscStyleRules.push(`.message__headline { font-size: ${textSize}px }`);
+        miscStyleRules.push(`.message__disclaimer { font-size: ${textSize}px }`);
     }
 
     // Set boundaries on the width of the message text to ensure proper line counts
     if (mutationRules.messageWidth) {
         if (typeof mutationRules.messageWidth === 'number') {
-            styleRules.push(`.message__messaging { width: ${mutationRules.messageWidth}px }`);
+            miscStyleRules.push(`.message__messaging { width: ${mutationRules.messageWidth}px }`);
         } else if (Array.isArray(mutationRules.messageWidth)) {
-            styleRules.push(
+            miscStyleRules.push(
                 `.message__messaging { min-width: ${mutationRules.messageWidth[0]}px; max-width: ${mutationRules.messageWidth[1]}px }`
             );
         }
@@ -87,8 +90,11 @@ export default ({ options, markup, locale }) => {
 
     return (
         <div role="button" className="message" tabIndex="0">
-            <style dangerouslySetInnerHTML={{ __html: fonts }} />
-            <style dangerouslySetInnerHTML={{ __html: styleRules.join('\n') }} />
+            <style className="styles__fonts" dangerouslySetInnerHTML={{ __html: fonts }} />
+            <style className="styles__global" dangerouslySetInnerHTML={{ __html: globalStyleRules.join('\n') }} />
+            <style className="styles__locale" dangerouslySetInnerHTML={{ __html: localeStyleRules.join('\n') }} />
+            <style className="styles__mutations" dangerouslySetInnerHTML={{ __html: mutationStyleRules.join('\n') }} />
+            <style className="styles__misc" dangerouslySetInnerHTML={{ __html: miscStyleRules.join('\n') }} />
             <div className={`message__container ${localeClass}`}>
                 {/* foreground layer */}
                 <div className="message__foreground" />
@@ -103,19 +109,20 @@ export default ({ options, markup, locale }) => {
                         <div className="message__promo-container">
                             <h5 className="message__headline">
                                 <MutatedText tagData={markup.headline} options={mutationRules.headline} />
-                                {logoType === 'inline' ? logoEl : null}{' '}
+                                {logoType === 'inline' ? <> {logoEl}</> : null}
                                 {logoType === 'none' ? (
                                     <span>
+                                        {' '}
                                         {withText} <strong>{productName}</strong>
                                     </span>
-                                ) : null}{' '}
+                                ) : null}
                             </h5>
                             <h6 className="message__sub-headline">
-                                <MutatedText tagData={markup.subHeadline} options={mutationRules.subHeadline} />{' '}
+                                <MutatedText tagData={markup.subHeadline} options={mutationRules.subHeadline} />
                             </h6>
                         </div>
                         <p className="message__disclaimer">
-                            <MutatedText tagData={markup.disclaimer} options={mutationRules.disclaimer} />{' '}
+                            <MutatedText tagData={markup.disclaimer} options={mutationRules.disclaimer} />
                         </p>
                     </div>
                 </div>

@@ -2,6 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import got from 'got';
 
+import { VARIANT } from 'server/constants';
 import { populateTemplate } from './miscellaneous';
 import { getTerms } from './mockTerms';
 
@@ -71,38 +72,60 @@ export default (app, server, compiler) => {
         </body>
     `;
 
-    const getRenderedMessage = req => {
-        const populatedBanner = getMockBanner(req);
+    const passthroughMessageReq = async req => {
+        const { style, ...params } = req.query;
+        const query = Object.entries({
+            ...params,
+            variant: VARIANT
+        })
+            .reduce((accumulator, [key, val]) => `${accumulator}&${key}=${val}`, '')
+            .slice(1);
 
-        if (populatedBanner) {
-            const style = JSON.parse(req.query.style);
+        const { statusCode, body } = await got(`https://www.paypal.com/credit-presentment/messages?${query}`);
 
-            // eslint-disable-next-line no-eval, security/detect-eval-with-expression
-            const { render, validateStyle, getParentStyles } = eval(
-                compiler.compilers[2].outputFileSystem
-                    .readFileSync(path.resolve(__dirname, '../../dist/render.js'))
-                    .toString()
-            );
+        return statusCode === 200 ? JSON.parse(body) : null;
+    };
 
-            const warnings = [];
+    const getRenderedMessage = async req => {
+        try {
+            const populatedBanner = getMockBanner(req) ?? (await passthroughMessageReq(req));
 
-            const validatedStyle = validateStyle(warnings.push, style, populatedBanner.meta.offerCountry);
+            if (populatedBanner) {
+                const style = JSON.parse(req.query.style);
 
-            const markup = render({ style: validatedStyle }, populatedBanner);
+                // eslint-disable-next-line no-eval, security/detect-eval-with-expression
+                const { render, validateStyle, getParentStyles } = eval(
+                    compiler.compilers[2].outputFileSystem
+                        .readFileSync(path.resolve(__dirname, '../../dist/render.js'))
+                        .toString()
+                );
 
-            return {
-                markup,
-                warnings,
-                parentStyles: getParentStyles(style),
-                meta: {
-                    uuid: '928ad66d-81de-440e-8c47-69bb3c3a5623',
-                    messageRequestId: 'acb0956c-d0a6-4b57-9bc5-c1daaa93d313',
-                    trackingDetails: {
-                        clickUrl: '//localhost.paypal.com:8080/ptrk/?fdata=null',
-                        impressionUrl: '//localhost.paypal.com:8080/ptrk/?fdata=null'
+                const warnings = [];
+
+                const validatedStyle = validateStyle(
+                    warnings.push.bind(warnings),
+                    style,
+                    populatedBanner.meta.offerCountry
+                );
+
+                const markup = render({ style: validatedStyle }, populatedBanner);
+
+                return {
+                    markup,
+                    warnings,
+                    parentStyles: getParentStyles(style),
+                    meta: {
+                        uuid: '928ad66d-81de-440e-8c47-69bb3c3a5623',
+                        messageRequestId: 'acb0956c-d0a6-4b57-9bc5-c1daaa93d313',
+                        trackingDetails: {
+                            clickUrl: '//localhost.paypal.com:8080/ptrk/?fdata=null',
+                            impressionUrl: '//localhost.paypal.com:8080/ptrk/?fdata=null'
+                        }
                     }
-                }
-            };
+                };
+            }
+        } catch (err) {
+            console.log(err);
         }
 
         return null;
@@ -112,8 +135,8 @@ export default (app, server, compiler) => {
 
     app.post('/credit-presentment/log', (req, res) => res.send(''));
 
-    app.get('/credit-presentment/smart/message', (req, res) => {
-        const props = getRenderedMessage(req);
+    app.get('/credit-presentment/smart/message', async (req, res) => {
+        const props = await getRenderedMessage(req);
 
         if (props) {
             res.set('Cache-Control', 'public, max-age=10');
@@ -140,8 +163,8 @@ export default (app, server, compiler) => {
         res.send(createMockZoidMarkup('modal', `<script>crc.setupModal(${JSON.stringify(props)})</script>`));
     });
 
-    app.get('/credit-presentment/renderMessage', (req, res) => {
-        res.send(getRenderedMessage(req));
+    app.get('/credit-presentment/renderMessage', async (req, res) => {
+        res.send(await getRenderedMessage(req));
     });
 
     app.post('/credit-presentment/calculateTerms', (req, res) => {

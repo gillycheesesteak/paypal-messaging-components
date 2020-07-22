@@ -56,3 +56,7 @@ button {
 .message__background {
     z-index: -1;
 }
+
+.message__promo-container {
+    line-height: 0;
+}

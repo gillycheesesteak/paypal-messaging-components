@@ -33,7 +33,7 @@ export function getMutations(locale, id, type) {
                     {
                         ...mutation[1],
                         styles: mutation[1].styles.map(style =>
-                            style.replace(/\.message/g, `.${getLocaleClass()} .message`)
+                            style.replace(/\.message/g, `.${getLocaleClass(locale)} .message`)
                         )
                     }
                 ];

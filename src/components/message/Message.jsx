@@ -52,7 +52,8 @@ const Message = () => {
                 border: 'none',
                 outline: 'none',
                 textAlign: 'left',
-                fontFamily: 'inherit'
+                fontFamily: 'inherit',
+                fontSize: 'inherit'
             }}
             innerHTML={markup}
         />

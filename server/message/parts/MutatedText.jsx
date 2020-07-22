@@ -17,7 +17,7 @@ const MutatedText = ({ tagData, options }) => {
         uniformOptions = options;
     }
 
-    return uniformOptions.map(op => {
+    return uniformOptions.map((op, optionIdx) => {
         const { tag, ...otherOptions } = typeof op === 'string' ? { tag: op } : op;
         const textData = getDataByTag(tagData, tag);
         const uniformText = Array.isArray(textData) ? textData : [textData];
@@ -34,7 +34,10 @@ const MutatedText = ({ tagData, options }) => {
             ]);
 
         return (
-            <Text className={`tag--${tag.split('.', 1)[0]} ${uniformOptions.length > 1 ? 'multi' : ''}`} spaced>
+            <Text
+                className={`tag--${tag.split('.', 1)[0]} ${uniformOptions.length > 1 ? 'multi' : ''}`}
+                spaced={optionIdx < uniformOptions.length - 1}
+            >
                 {otherOptions.br ? (
                     <BreakText textParts={uniformTextParts} options={otherOptions} />
                 ) : (

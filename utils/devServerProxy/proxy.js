@@ -206,9 +206,11 @@ export default (app, server, compiler) => {
                 ...populatedBanner,
                 meta: {
                     ...populatedBanner.meta,
-                    impressionUrl: '//localhost.paypal.com:8080/ptrk/?fdata=null',
-                    clickUrl: '//localhost.paypal.com:8080/ptrk/?fdata=null',
-                    messageRequestId: '1234'
+                    messageRequestId: '1234',
+                    trackingDetails: {
+                        impressionUrl: '//localhost.paypal.com:8080/ptrk/?fdata=null',
+                        clickUrl: '//localhost.paypal.com:8080/ptrk/?fdata=null'
+                    }
                 }
             });
         } else {

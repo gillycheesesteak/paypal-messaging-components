@@ -3,7 +3,7 @@ import { h } from 'preact';
 import { useRef } from 'preact/hooks';
 
 import { createEvent } from '../../../../../utils';
-import { useXProps, useServerData, useScroll, useApplyNow } from '../../../lib';
+import { useXProps, useServerData, useScroll, useApplyNow, useContent } from '../../../lib';
 import Icon from '../../../parts/Icon';
 import Calculator from './Calculator';
 import Button from '../../../parts/Button';
@@ -11,9 +11,7 @@ import Button from '../../../parts/Button';
 export const Header = () => {
     const buttonRef = useRef();
     const handleApplyNowClick = useApplyNow('Apply Now');
-    const { products } = useServerData();
-
-    const { content } = products.find(product => product.meta.product === 'EZP');
+    const content = useContent('EZP');
 
     useScroll(({ target: { scrollTop } }) => {
         const { offsetTop, clientHeight } = buttonRef.current;
@@ -47,9 +45,12 @@ export const Header = () => {
 
 export const Content = () => {
     const { onClick } = useXProps();
-    const { aprEntry, products } = useServerData();
+    const { aprEntry } = useServerData();
 
-    const { content } = products.find(product => product.meta.product === 'EZP');
+    const content = useContent('EZP', {
+        aprEntry,
+        fullYear: new Date().getFullYear()
+    });
 
     return (
         <section className="content-body">

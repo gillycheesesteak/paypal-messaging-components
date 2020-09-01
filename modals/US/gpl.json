@@ -2,5 +2,17 @@
     "meta": {
         "product": "PI4"
     },
-    "content": {}
+    "content": {
+        "headline": "Simple, short-term installments",
+        "subHeadline": "Interest-free payments every 2 weeks, starting today, with no impact to your credit score. Available on purchases from {minAmount}-{maxAmount}.",
+
+        "instructions": {
+            "title": ["Check out with", "PayPal", "and choose", "Pay Later"],
+            "items": [
+                "Pay in 4 is not available to residents of Wisconsin, North Dakota, Missouri, or any U.S. Territories.",
+                "Late fees may apply for missed payments depending on your state of residency",
+                "When applying, a soft credit check may be needed, but will not affect your credit score."
+            ]
+        }
+    }
 }

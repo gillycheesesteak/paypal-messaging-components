@@ -1,17 +1,16 @@
 /** @jsx h */
 import { h, Fragment } from 'preact';
 
-import { useServerData } from '../../../lib';
+import { useServerData, useContent } from '../../../lib';
 import PieChart from './PieChart';
-
-const instructions = [
-    'Pay in 4 is not available to residents of Wisconsin, North Dakota, Missouri, or any U.S. Territories.',
-    'Late fees may apply for missed payments depending on your state of residency',
-    'When applying, a soft credit check may be needed, but will not affect your credit score.'
-];
 
 export default () => {
     const { terms } = useServerData();
+
+    const content = useContent('PI4', {
+        minAmount: `$${terms.minAmount}`,
+        maxAmount: `$${terms.maxAmount}`
+    });
 
     // For now, only PI4 INST offer should be shown in this modal
     const offer = terms.offers.find(ofr => ofr.type === 'INST' && ofr.qualified);
@@ -19,12 +18,9 @@ export default () => {
     return (
         <section className="content-body">
             <div className="description">
-                <h2>Simple, short-term installments</h2>
+                <h2>{content.headline}</h2>
 
-                <p>
-                    Interest-free payments every 2 weeks, starting today, with no impact to your credit score. Available
-                    on purchases from ${terms.minAmount}-${terms.maxAmount}.
-                </p>
+                <p>{content.subHeadline}</p>
 
                 <div className="payment-breakdown">
                     {offer ? (
@@ -54,7 +50,10 @@ export default () => {
                 </div>
 
                 <p>
-                    Check out with <b>PayPal</b> and choose <b>Pay Later</b>
+                    {content.instructions.title[0]}
+                    <b>{content.instructions.title[1]}</b>
+                    {content.instructions.title[2]}
+                    <b>{content.instructions.title[3]}</b>
                 </p>
             </div>
 
@@ -63,7 +62,7 @@ export default () => {
             <div className="terms">
                 <h3>About Pay in 4</h3>
                 <ul>
-                    {instructions.map(inst => (
+                    {content.instructions.items.map(inst => (
                         <li>{inst}</li>
                     ))}
                 </ul>

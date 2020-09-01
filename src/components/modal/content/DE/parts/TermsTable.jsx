@@ -1,33 +1,22 @@
 /** @jsx h */
 import { h, Fragment } from 'preact';
+import { useContent } from '../../../lib';
 
 const TableContent = ({ terms }) => {
-    const genericError = (
-        <h3 className="error">
-            Es ist ein Fehler bei der Berechnung Ihres Angebots aufgetreten. Bitte versuchen Sie es später noch einmal.
-        </h3>
-    );
+    const content = useContent('INST', { terms });
+
+    const genericError = <h3 className="error">{content.terms.genericError}</h3>;
 
     if (terms.error || !terms.maxAmount) {
         return genericError;
     }
 
     if (+terms.amount < terms.minAmount && terms.type === 'pala') {
-        return (
-            <h3 className="error">
-                PayPal Ratenzahlung steht ab einem Bestellwert von {terms.formattedMinAmount}€ zur Verfügung. Bitte
-                geben Sie einen Betrag von {terms.formattedMinAmount}€ oder mehr ein.
-            </h3>
-        );
+        return <h3 className="error">{content.terms.minError}</h3>;
     }
 
     if (+terms.amount > terms.maxAmount && terms.type === 'pala') {
-        return (
-            <h3 className="error">
-                PayPal Ratenzahlung steht bis zu einem Bestellwert von {terms.formattedMaxAmount}€ zur Verfügung. Bitte
-                geben Sie einen Betrag von {terms.formattedMaxAmount}€ oder weniger ein.
-            </h3>
-        );
+        return <h3 className="error">{content.terms.maxAmount}</h3>;
     }
 
     const [offer] = terms.offers.length ? terms.offers : [];
@@ -35,11 +24,11 @@ const TableContent = ({ terms }) => {
         return genericError;
     }
 
+    const offerContent = useContent('INST', { offer });
+
     return (
         <Fragment>
-            <h3 className="header">
-                {offer.term} monatliche Raten von je €{offer.monthly}
-            </h3>
+            <h3 className="header">{offerContent.terms.tableHeader}</h3>
             <hr className="divider" />
             <table className="table">
                 <tbody>

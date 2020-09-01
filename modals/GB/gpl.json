@@ -2,5 +2,26 @@
     "meta": {
         "product": "GPL"
     },
-    "content": {}
+    "content": {
+        "headline": {
+            "qualified": ["3 interest-free payments of", "£{offer.periodic} per month with Flex"],
+            "unqualified": ["3 interest-free monthly", "payments with Flex"]
+        },
+        "subHeadline": {
+            "qualified": "For purchases between £{terms.formattedMinAmount} and £{terms.formattedMaxAmount}",
+            "unqualified": "On eligible purchases"
+        },
+        "terms": [
+            "Subject to status. Terms and Conditions apply. UK residents only.",
+            "PayPal Flex is a trading name of PayPal (Europe) S.à.r.l. et",
+            "Cie, S.C.A.,",
+            "22-24 Boulevard Royal, L-2449, Luxembourg."
+        ],
+        "instructions": [
+            ["Get your items straight away", "and pay nothing for 1 month."],
+            ["Apply easily and get an", "instant decision."],
+            ["Check out with PayPal and", "choose"]
+        ],
+        "productName": "Flex"
+    }
 }

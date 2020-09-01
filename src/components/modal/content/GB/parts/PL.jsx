@@ -1,33 +1,44 @@
 /** @jsx h */
-import { h } from 'preact';
+import { h, Fragment } from 'preact';
 import { useCalculator } from '../../../lib/hooks';
 import Icon from '../../../parts/Icon';
+import { useContent } from '../../../lib';
 
 const isEligible = terms => {
+    const content = useContent('PL', {
+        terms
+    });
+
     if (typeof terms.amount === 'undefined' || terms.amount < terms.minAmount || terms.amount > terms.maxAmount) {
         return (
             <h1 className="offer">
-                3 interest-free monthly <br /> payments with Flex
+                {content.headline.unqualified[0]} <br /> {content.headline.unqualified[1]}
             </h1>
         );
     }
+
     return (
         <h1 className="offer">
-            3 interest-free payments of <br /> £{terms.offers[0].periodic} per month with Flex
+            {content.headline.qualified[0]} <br /> {content.headline.qualified[1]}
         </h1>
     );
 };
 
 const PL = () => {
     const { terms } = useCalculator();
+    const content = useContent('PL', {
+        terms,
+        offer: terms.offers[0]
+    });
+
     return (
         <div className="content-body">
             <div className="left">
                 {isEligible(terms)}
                 <p className="subheadline">
                     {!terms.error && terms.formattedMinAmount && terms.formattedMaxAmount
-                        ? `For purchases between £${terms.formattedMinAmount} and £${terms.formattedMaxAmount}`
-                        : 'On eligible purchases'}
+                        ? content.subHeadline.qualified
+                        : content.subHeadline.unqualified}
                 </p>
                 <Icon name="icecream" />
                 <div className="thumbs-up">
@@ -35,9 +46,12 @@ const PL = () => {
                 </div>
                 <div className="terms">
                     <p>
-                        Subject to status. Terms and Conditions apply. UK residents only. <br />
-                        PayPal Flex is a trading name of PayPal (Europe) S.à.r.l. et <br />
-                        Cie, S.C.A., <br /> 22-24 Boulevard Royal, L-2449, Luxembourg.
+                        {content.terms.map(term => (
+                            <Fragment>
+                                {term}
+                                <br />
+                            </Fragment>
+                        ))}
                     </p>
                 </div>
             </div>
@@ -46,15 +60,18 @@ const PL = () => {
                 <div className="info">
                     <Icon name="shopping-bag" />
                     <p>
-                        Get your items straight away <br /> and pay nothing for 1 month.
+                        {content.terms[0][0]} <br />
+                        {content.terms[0][1]}
                     </p>
                     <Icon name="checkmark" />
                     <p>
-                        Apply easily and get an <br /> instant decision.
+                        {content.terms[1][0]} <br />
+                        {content.terms[1][1]}
                     </p>
                     <Icon name="pp-button" />
                     <p>
-                        Check out with PayPal and <br /> choose <span>Flex.</span>
+                        {content.terms[2][0]} <br />
+                        {content.terms[2][1]} <span>{content.productName}</span>
                     </p>
                 </div>
             </div>

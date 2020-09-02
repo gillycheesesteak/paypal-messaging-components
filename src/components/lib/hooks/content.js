@@ -28,6 +28,7 @@ function replaceVariables(content, data) {
 export default function useContent(product, data = {}) {
     const { products } = useServerData();
 
+    console.log(products);
     const { content = '' } = products.find(({ meta }) => meta.product === product);
 
     return replaceVariables(content, data);

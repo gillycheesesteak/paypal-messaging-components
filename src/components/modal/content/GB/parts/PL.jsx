@@ -5,7 +5,7 @@ import Icon from '../../../parts/Icon';
 import { useContent } from '../../../lib';
 
 const isEligible = terms => {
-    const content = useContent('PL', {
+    const content = useContent('GPL', {
         terms
     });
 
@@ -26,7 +26,7 @@ const isEligible = terms => {
 
 const PL = () => {
     const { terms } = useCalculator();
-    const content = useContent('PL', {
+    const content = useContent('GPL', {
         terms,
         offer: terms.offers[0]
     });
@@ -60,18 +60,18 @@ const PL = () => {
                 <div className="info">
                     <Icon name="shopping-bag" />
                     <p>
-                        {content.terms[0][0]} <br />
-                        {content.terms[0][1]}
+                        {content.instructions[0][0]} <br />
+                        {content.instructions[0][1]}
                     </p>
                     <Icon name="checkmark" />
                     <p>
-                        {content.terms[1][0]} <br />
-                        {content.terms[1][1]}
+                        {content.instructions[1][0]} <br />
+                        {content.instructions[1][1]}
                     </p>
                     <Icon name="pp-button" />
                     <p>
-                        {content.terms[2][0]} <br />
-                        {content.terms[2][1]} <span>{content.productName}</span>
+                        {content.instructions[2][0]} <br />
+                        {content.instructions[2][1]} <span>{content.productName}</span>
                     </p>
                 </div>
             </div>

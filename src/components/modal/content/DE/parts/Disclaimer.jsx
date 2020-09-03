@@ -10,13 +10,7 @@ const Disclaimer = ({ terms }) => {
         terms.offers &&
         terms.offers.length > 0
     ) {
-        const minAmount = terms.formattedMinAmount.split(',')[0];
-        const maxAmount = terms.formattedMaxAmount.split(',')[0];
-
-        const content = useContent('INST', {
-            minAmount,
-            maxAmount
-        });
+        const content = useContent('INST');
 
         const [offer] = terms.offers;
         const disclosure = Number(offer.apr.replace(/[,.]/g, '')) === 0 ? content.disclosure0 : content.disclosure;

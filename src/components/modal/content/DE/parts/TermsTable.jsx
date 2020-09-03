@@ -3,7 +3,7 @@ import { h, Fragment } from 'preact';
 import { useContent } from '../../../lib';
 
 const TableContent = ({ terms }) => {
-    const content = useContent('INST', { terms });
+    const content = useContent('INST');
 
     const genericError = <h3 className="error">{content.terms.genericError}</h3>;
 
@@ -24,7 +24,7 @@ const TableContent = ({ terms }) => {
         return genericError;
     }
 
-    const offerContent = useContent('INST', { offer });
+    const offerContent = useContent('INST');
 
     return (
         <Fragment>

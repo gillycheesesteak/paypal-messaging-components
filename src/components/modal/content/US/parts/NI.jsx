@@ -1,14 +1,13 @@
 /** @jsx h */
 import { h } from 'preact';
 
-import { useServerData, useApplyNow, useContent } from '../../../lib';
+import { useApplyNow, useContent } from '../../../lib';
 import Button from '../../../parts/Button';
 
 export default () => {
     const handleApplyNowClick = useApplyNow('Apply Now');
-    const { aprEntry } = useServerData();
 
-    const content = useContent('NI', { aprEntry });
+    const content = useContent('NI');
 
     return (
         <section className="content-body">

@@ -5,9 +5,7 @@ import Icon from '../../../parts/Icon';
 import { useContent } from '../../../lib';
 
 const isEligible = terms => {
-    const content = useContent('GPL', {
-        terms
-    });
+    const content = useContent('GPL');
 
     if (typeof terms.amount === 'undefined' || terms.amount < terms.minAmount || terms.amount > terms.maxAmount) {
         return (
@@ -26,10 +24,7 @@ const isEligible = terms => {
 
 const PL = () => {
     const { terms } = useCalculator();
-    const content = useContent('GPL', {
-        terms,
-        offer: terms.offers[0]
-    });
+    const content = useContent('GPL');
 
     return (
         <div className="content-body">

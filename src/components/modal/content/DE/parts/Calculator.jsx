@@ -8,7 +8,7 @@ import Disclaimer from './Disclaimer';
 
 const Calculator = () => {
     const { terms, value, isLoading, submit, changeInput } = useCalculator();
-    const content = useContent('INST', { terms });
+    const content = useContent('INST');
 
     return (
         <Fragment>

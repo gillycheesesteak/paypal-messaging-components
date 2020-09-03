@@ -7,10 +7,7 @@ import PieChart from './PieChart';
 export default () => {
     const { terms } = useServerData();
 
-    const content = useContent('PI4', {
-        minAmount: `$${terms.minAmount}`,
-        maxAmount: `$${terms.maxAmount}`
-    });
+    const content = useContent('PI4');
 
     // For now, only PI4 INST offer should be shown in this modal
     const offer = terms.offers.find(ofr => ofr.type === 'INST' && ofr.qualified);

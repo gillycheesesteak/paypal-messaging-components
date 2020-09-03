@@ -1,4 +1,5 @@
 import objectKeys from 'core-js-pure/stable/object/keys';
+import arrayFind from 'core-js-pure/stable/array/find';
 import { useServerData } from '../providers';
 import { objectGet } from '../../../utils';
 
@@ -29,7 +30,7 @@ export default function useContent(product, data = {}) {
     const { products } = useServerData();
 
     console.log(products);
-    const { content = '' } = products.find(({ meta }) => meta.product === product);
+    const { content = '' } = arrayFind(products, ({ meta }) => meta.product === product);
 
     return replaceVariables(content, data);
 }

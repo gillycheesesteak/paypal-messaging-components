@@ -53,21 +53,19 @@ const PL = () => {
             <div className="right">
                 <h2 className="title">Buy now, pay later</h2>
                 <div className="info">
-                    <Icon name="shopping-bag" />
-                    <p>
-                        {content.instructions[0][0]} <br />
-                        {content.instructions[0][1]}
-                    </p>
-                    <Icon name="checkmark" />
-                    <p>
-                        {content.instructions[1][0]} <br />
-                        {content.instructions[1][1]}
-                    </p>
-                    <Icon name="pp-button" />
-                    <p>
-                        {content.instructions[2][0]} <br />
-                        {content.instructions[2][1]} <span>{content.productName}</span>
-                    </p>
+                    {content.instructions.map(([icon, ...text]) => (
+                        <Fragment>
+                            <Icon name={icon} />
+                            <p>
+                                {text.map((textPart, idx) => (
+                                    <Fragment>
+                                        {idx !== 0 && textPart !== 'PRODUCT_NAME' ? <br /> : null}
+                                        {textPart === 'PRODUCT_NAME' ? <span>{content.productName}</span> : textPart}
+                                    </Fragment>
+                                ))}
+                            </p>
+                        </Fragment>
+                    ))}
                 </div>
             </div>
         </div>

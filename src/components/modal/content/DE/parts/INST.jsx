@@ -10,25 +10,7 @@ const INST = () => {
 
     return (
         <section className="content-body">
-            <Carousel
-                items={[
-                    {
-                        imageSrc: 'https://www.paypalobjects.com/upstream/assets/img/de/icon_shoppingcart.svg',
-                        imageAlt: 'Shopping cart icon',
-                        description: content.carousel[0]
-                    },
-                    {
-                        imageSrc: 'https://www.paypalobjects.com/upstream/assets/img/de/icon_calendar.svg',
-                        imageAlt: 'Calendar icon',
-                        description: content.carousel[1]
-                    },
-                    {
-                        imageSrc: 'https://www.paypalobjects.com/upstream/assets/img/de/icon_payovertime.svg',
-                        imageAlt: 'Clock and wallet icon',
-                        description: content.carousel[2]
-                    }
-                ]}
-            />
+            <Carousel items={content.carousel} />
 
             {/* <!-- Calculator --> */}
             <div className="calculator-container">

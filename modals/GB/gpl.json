@@ -18,9 +18,9 @@
             "22-24 Boulevard Royal, L-2449, Luxembourg."
         ],
         "instructions": [
-            ["Get your items straight away", "and pay nothing for 1 month."],
-            ["Apply easily and get an", "instant decision."],
-            ["Check out with PayPal and", "choose"]
+            ["shopping-bag", "Get your items straight away", "and pay nothing for 1 month."],
+            ["checkmark", "Apply easily and get an", "instant decision."],
+            ["pp-button", "Check out with PayPal and", "choose", "PRODUCT_NAME"]
         ],
         "productName": "Flex"
     }

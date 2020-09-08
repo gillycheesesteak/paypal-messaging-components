@@ -7,7 +7,7 @@ import PieChart from './PieChart';
 export default () => {
     const { terms } = useServerData();
 
-    const content = useContent('PI4');
+    const content = useContent('GPL');
 
     // For now, only PI4 INST offer should be shown in this modal
     const offer = terms.offers.find(ofr => ofr.type === 'INST' && ofr.qualified);

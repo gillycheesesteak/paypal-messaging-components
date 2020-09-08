@@ -4,10 +4,23 @@
     },
     "content": {
         "carousel": [
-            "Mit PayPal bezahlen und PayPal Ratenzahlung wählen.",
-            "Wir teilen Ihren Betrag in 12 monatliche Raten.",
-            "Nie eine Rate verpassen dank Lastschrifteinzug."
+            {
+                "imageSrc": "https://www.paypalobjects.com/upstream/assets/img/de/icon_shoppingcart.svg",
+                "imageAlt": "Shopping cart icon",
+                "description": "Mit PayPal bezahlen und PayPal Ratenzahlung wählen."
+            },
+            {
+                "imageSrc": "https://www.paypalobjects.com/upstream/assets/img/de/icon_calendar.svg",
+                "imageAlt": "Calendar icon",
+                "description": "Wir teilen Ihren Betrag in 12 monatliche Raten."
+            },
+            {
+                "imageSrc": "https://www.paypalobjects.com/upstream/assets/img/de/icon_payovertime.svg",
+                "imageAlt": "Clock and wallet icon",
+                "description": "Nie eine Rate verpassen dank Lastschrifteinzug."
+            }
         ],
+
         "calculator": {
             "title": "Monatliche Raten berechnen",
             "instructions": "Geben Sie einen Betrag zwischen {terms.formattedMinAmount}€ und {terms.formattedMaxAmount}€ ein.",

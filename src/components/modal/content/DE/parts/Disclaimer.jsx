@@ -3,6 +3,8 @@ import { h } from 'preact';
 import { useContent } from '../../../../lib';
 
 const Disclaimer = ({ terms }) => {
+    const content = useContent('INST');
+
     if (
         !terms.error &&
         terms.formattedMinAmount &&
@@ -10,8 +12,6 @@ const Disclaimer = ({ terms }) => {
         terms.offers &&
         terms.offers.length > 0
     ) {
-        const content = useContent('INST');
-
         const [offer] = terms.offers;
         const disclosure = Number(offer.apr.replace(/[,.]/g, '')) === 0 ? content.disclosure0 : content.disclosure;
 
@@ -28,8 +28,6 @@ const Disclaimer = ({ terms }) => {
             </p>
         );
     }
-
-    const content = useContent('INST');
 
     return <p className="disclosure">{content.disclaimer}</p>;
 };

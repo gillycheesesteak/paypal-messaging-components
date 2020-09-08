@@ -3,7 +3,7 @@ import { h } from 'preact';
 import { useRef } from 'preact/hooks';
 
 import { createEvent } from '../../../../../utils';
-import { useXProps, useServerData, useScroll, useApplyNow, useContent } from '../../../lib';
+import { useXProps, useScroll, useApplyNow, useContent } from '../../../lib';
 import Icon from '../../../parts/Icon';
 import Calculator from './Calculator';
 import Button from '../../../parts/Button';
@@ -45,12 +45,8 @@ export const Header = () => {
 
 export const Content = () => {
     const { onClick } = useXProps();
-    const { aprEntry } = useServerData();
 
-    const content = useContent('EZP', {
-        aprEntry,
-        fullYear: new Date().getFullYear()
-    });
+    const content = useContent('EZP');
 
     return (
         <section className="content-body">

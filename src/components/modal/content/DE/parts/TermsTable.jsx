@@ -24,11 +24,9 @@ const TableContent = ({ terms }) => {
         return genericError;
     }
 
-    const offerContent = useContent('INST');
-
     return (
         <Fragment>
-            <h3 className="header">{offerContent.terms.tableHeader}</h3>
+            <h3 className="header">{content.terms.tableHeader}</h3>
             <hr className="divider" />
             <table className="table">
                 <tbody>

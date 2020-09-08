@@ -16,9 +16,7 @@ export default () => {
 
                 <p>{content.subHeadline}</p>
 
-                <div className="payment-breakdown" />
-
-                <p className="apply-now">
+                <p className="call-to-action">
                     <div>
                         <p>
                             <b>{content.applyNow.headline}</b>

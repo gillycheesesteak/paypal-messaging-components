@@ -12,11 +12,11 @@ const TableContent = ({ terms }) => {
     }
 
     if (+terms.amount < terms.minAmount && terms.type === 'pala') {
-        return <h3 className="error">{content.terms.minError}</h3>;
+        return <h3 className="error">{content.terms.minError.replace(/,00/g, '')}</h3>;
     }
 
     if (+terms.amount > terms.maxAmount && terms.type === 'pala') {
-        return <h3 className="error">{content.terms.maxAmount}</h3>;
+        return <h3 className="error">{content.terms.maxError.replace(/,00/g, '')}</h3>;
     }
 
     const [offer] = terms.offers.length ? terms.offers : [];

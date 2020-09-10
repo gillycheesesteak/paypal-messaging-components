@@ -18,7 +18,7 @@ const Calculator = () => {
                     <input className="input" value={value} onInput={changeInput} />
                     <p className="instructions">
                         {!terms.error && terms.formattedMinAmount && terms.formattedMaxAmount
-                            ? content.calculator.instructions
+                            ? content.calculator.instructions.replace(/,00/g, '')
                             : null}
                     </p>
                     <Button size="md" type="submit">

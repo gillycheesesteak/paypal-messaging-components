@@ -17,7 +17,7 @@ const Disclaimer = ({ terms }) => {
 
         return (
             <p className="disclosure">
-                {disclosure}{' '}
+                {disclosure.replace(/,00/g, '')}{' '}
                 <a
                     target="_blank"
                     rel="noopener noreferrer"

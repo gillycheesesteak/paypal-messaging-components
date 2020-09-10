@@ -5,7 +5,7 @@ import Icon from '../../../parts/Icon';
 import { useContent } from '../../../lib';
 
 export default () => {
-    const content = useContent('GPL');
+    const { content } = useContent('GPL');
 
     return (
         <section className="content-body">

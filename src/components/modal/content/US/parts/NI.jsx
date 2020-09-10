@@ -7,7 +7,7 @@ import Button from '../../../parts/Button';
 export default () => {
     const handleApplyNowClick = useApplyNow('Apply Now');
 
-    const content = useContent('NI');
+    const { content } = useContent('NI');
 
     return (
         <section className="content-body">

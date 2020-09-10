@@ -1,13 +1,12 @@
 /** @jsx h */
 import { h, Fragment } from 'preact';
-import { useCalculator } from '../../../lib/hooks';
 import Icon from '../../../parts/Icon';
 import { useContent } from '../../../lib';
 
-const isEligible = terms => {
-    const content = useContent('GPL');
+const headline = () => {
+    const { content, meta } = useContent('GPL');
 
-    if (typeof terms.amount === 'undefined' || terms.amount < terms.minAmount || terms.amount > terms.maxAmount) {
+    if (meta.periodicPayment === '-' || meta.amount < meta.minAmount || meta.amount > meta.maxAmount) {
         return (
             <h1 className="offer">
                 {content.headline.unqualified[0]} <br /> {content.headline.unqualified[1]}
@@ -17,23 +16,21 @@ const isEligible = terms => {
 
     return (
         <h1 className="offer">
-            {content.headline.qualified[0]} <br /> {content.headline.qualified[1]}
+            {content.headline.qualified[0].replace(/\.00/g, '')} <br />{' '}
+            {content.headline.qualified[1].replace(/\.00/g, '')}
         </h1>
     );
 };
 
 const PL = () => {
-    const { terms } = useCalculator();
-    const content = useContent('GPL');
+    const { content, meta } = useContent('GPL');
 
     return (
         <div className="content-body">
             <div className="left">
-                {isEligible(terms)}
+                {headline()}
                 <p className="subheadline">
-                    {!terms.error && terms.formattedMinAmount && terms.formattedMaxAmount
-                        ? content.subHeadline.qualified
-                        : content.subHeadline.unqualified}
+                    {meta.periodicPayment !== '-' ? content.subHeadline.qualified : content.subHeadline.unqualified}
                 </p>
                 <Icon name="icecream" />
                 <div className="thumbs-up">

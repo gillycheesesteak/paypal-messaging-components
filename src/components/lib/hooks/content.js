@@ -4,5 +4,5 @@ import { useServerData } from '../providers';
 export default function useContent(product) {
     const { products } = useServerData();
 
-    return arrayFind(products, ({ meta }) => meta.product === product)?.content ?? {};
+    return arrayFind(products, ({ meta }) => meta.product === product) ?? { content: {} };
 }

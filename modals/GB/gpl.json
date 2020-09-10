@@ -1,14 +1,21 @@
 {
     "meta": {
-        "product": "GPL"
+        "product": "GPL",
+        "periodicPayment": "${CREDIT_OFFERS_DS.formattedPeriodicPayment}",
+        "minAmount": "{CREDIT_OFFERS_DS.minAmount}",
+        "maxAmount": "${CREDIT_OFFERS_DS.maxAmount}",
+        "amount": "${eval(transaction_amount ? transaction_amount : '-')}"
     },
     "content": {
         "headline": {
-            "qualified": ["3 interest-free payments of", "£{offer.periodic} per month with Flex"],
+            "qualified": [
+                "3 interest-free payments of",
+                "${CREDIT_OFFERS_DS.formattedPeriodicPayment} per month with Flex"
+            ],
             "unqualified": ["3 interest-free monthly", "payments with Flex"]
         },
         "subHeadline": {
-            "qualified": "For purchases between £{terms.formattedMinAmount} and £{terms.formattedMaxAmount}",
+            "qualified": "For purchases between ${CREDIT_OFFERS_DS.formattedMinAmount} and {CREDIT_OFFERS_DS.formattedMinAmount}",
             "unqualified": "On eligible purchases"
         },
         "terms": [

@@ -10,7 +10,7 @@ import Button from '../../../parts/Button';
 export const Header = () => {
     const buttonRef = useRef();
     const handleApplyNowClick = useApplyNow('Apply Now');
-    const content = useContent('NI');
+    const { content } = useContent('NI');
 
     useScroll(({ target: { scrollTop } }) => {
         const { offsetTop, clientHeight } = buttonRef.current;
@@ -44,7 +44,7 @@ export const Header = () => {
 export const Content = () => {
     const { onClick } = useXProps();
 
-    const content = useContent('NI');
+    const { content } = useContent('NI');
 
     return (
         <section className="content-body">

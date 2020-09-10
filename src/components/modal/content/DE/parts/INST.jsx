@@ -6,7 +6,7 @@ import Calculator from './Calculator';
 import { useContent } from '../../../lib';
 
 const INST = () => {
-    const content = useContent('INST');
+    const { content } = useContent('INST');
 
     return (
         <section className="content-body">

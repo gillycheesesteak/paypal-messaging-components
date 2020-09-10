@@ -3,7 +3,7 @@ import { h } from 'preact';
 import { useContent } from '../../../../lib';
 
 const Disclaimer = ({ terms }) => {
-    const content = useContent('INST');
+    const { content } = useContent('INST');
 
     if (
         !terms.error &&

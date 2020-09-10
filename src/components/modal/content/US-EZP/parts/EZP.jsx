@@ -11,8 +11,8 @@ import Button from '../../../parts/Button';
 export const Header = () => {
     const buttonRef = useRef();
     const handleApplyNowClick = useApplyNow('Apply Now');
-    const content = useContent('EZP');
-
+    const { content, meta } = useContent('EZP');
+    console.log(meta);
     useScroll(({ target: { scrollTop } }) => {
         const { offsetTop, clientHeight } = buttonRef.current;
 
@@ -46,7 +46,7 @@ export const Header = () => {
 export const Content = () => {
     const { onClick } = useXProps();
 
-    const content = useContent('EZP');
+    const { content } = useContent('EZP');
 
     return (
         <section className="content-body">

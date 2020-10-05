@@ -92,6 +92,16 @@ export default (app, server, compiler) => {
         return statusCode === 200 ? JSON.parse(body) : null;
     };
 
+    const getCustomMarkup = async markup => {
+        try {
+            const { statusCode, body } = await got(markup);
+            return statusCode === 200 ? body : '';
+        } catch (error) {
+            console.log(error.response.body);
+            return '';
+        }
+    };
+
     const getRenderedMessage = async req => {
         try {
             const populatedBanner = getMockBanner(req) ?? (await passthroughMessageReq(req));
@@ -114,7 +124,13 @@ export default (app, server, compiler) => {
                     populatedBanner.meta.offerCountry
                 );
 
-                const markup = render({ style: validatedStyle }, populatedBanner);
+                const renderOptions = { style: validatedStyle };
+
+                if (validatedStyle.markup) {
+                    renderOptions.customMarkup = await getCustomMarkup(validatedStyle.markup);
+                }
+
+                const markup = render(renderOptions, populatedBanner);
                 const parentStyles = getParentStyles(validatedStyle);
 
                 return {

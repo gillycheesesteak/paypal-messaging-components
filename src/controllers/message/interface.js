@@ -10,7 +10,8 @@ import {
     nextIndex,
     logger,
     getCurrentTime,
-    globalEvent
+    globalEvent,
+    getStorageState
 } from '../../utils';
 
 import { getMessageComponent } from '../../zoid/message';
@@ -18,6 +19,11 @@ import { Modal } from '../modal';
 
 export default (options = {}) => ({
     render: (selector = '[data-pp-message]') => {
+        getStorageState(storage => {
+            console.log(storage.merchantBucket);
+            // storage.merchantBucket = Math.random();
+        });
+
         const renderStart = getCurrentTime();
         const { messagesMap } = getGlobalState();
         const containers = getAllBySelector(selector);

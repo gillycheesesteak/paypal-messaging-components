@@ -1,7 +1,8 @@
 /** @jsx h */
 import objectEntries from 'core-js-pure/stable/object/entries';
 import { h } from 'preact';
-import { useLayoutEffect, useRef } from 'preact/hooks';
+import { useEffect, useLayoutEffect, useRef } from 'preact/hooks';
+import { ZalgoPromise } from 'zalgo-promise/src';
 
 import { request, getActiveTags } from '../../utils';
 import { useXProps, useServerData, useDidUpdateEffect, useDidUpdateLayoutEffect } from './lib';
@@ -66,35 +67,44 @@ const Message = () => {
         }
     });
 
-    useDidUpdateEffect(() => {
-        const query = objectEntries({
-            message_request_id: meta.messageRequestId,
-            amount,
-            currency,
-            buyer_country: buyerCountry,
-            style,
-            credit_type: offer,
-            payer_id: payerId,
-            client_id: clientId,
-            merchant_id: merchantId,
-            version,
-            env
-        })
-            .filter(([, val]) => Boolean(val))
-            .reduce(
-                (acc, [key, val]) =>
-                    `${acc}&${key}=${encodeURIComponent(typeof val === 'object' ? JSON.stringify(val) : val)}`,
-                ''
-            )
-            .slice(1);
+    useEffect(() => {
+        console.log('here');
+        // const query = objectEntries({
+        //     message_request_id: meta.messageRequestId,
+        //     amount,
+        //     currency,
+        //     buyer_country: buyerCountry,
+        //     style,
+        //     credit_type: offer,
+        //     payer_id: payerId,
+        //     client_id: clientId,
+        //     merchant_id: merchantId,
+        //     version,
+        //     env
+        // })
+        //     .filter(([, val]) => Boolean(val))
+        //     .reduce(
+        //         (acc, [key, val]) =>
+        //             `${acc}&${key}=${encodeURIComponent(typeof val === 'object' ? JSON.stringify(val) : val)}`,
+        //         ''
+        //     )
+        //     .slice(1);
 
-        request('GET', `${window.location.origin}/credit-presentment/renderMessage?${query}`).then(({ data }) => {
+        ZalgoPromise.all([
+            request('GET', `https://localhost.paypal.com:8080/gpl_text_markup.html`),
+            request('GET', `https://localhost.paypal.com:8080/variables.json`)
+        ]).then(([{ data: content }, { data: variables }]) => {
+            console.log(content, variables);
             setServerData({
-                markup: data.markup ?? markup,
-                meta: data.meta ?? meta,
+                markup: Object.entries(variables).reduce(
+                    // eslint-disable-next-line security/detect-non-literal-regexp
+                    (accumulator, [key, val]) => accumulator.replace(new RegExp(`{{${key}}}`, 'g'), val),
+                    content
+                ),
+                meta,
                 // Respect empty string value in order to remove styles when switch from flex to text layout
-                parentStyles: data.parentStyles ?? parentStyles,
-                warnings: data.warnings ?? warnings
+                parentStyles,
+                warnings
             });
         });
     }, [amount, currency, buyerCountry, JSON.stringify(style), offer, payerId, clientId, merchantId]);

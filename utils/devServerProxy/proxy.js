@@ -145,6 +145,7 @@ export default (app, server, compiler) => {
                 );
                 const parentStyles = getParentStyles(validatedStyle);
 
+                console.log(markup);
                 return {
                     markup,
                     warnings,

@@ -11,11 +11,12 @@ import {
     getSDKQueryParam,
     getNamespace as getSDKNamespace,
     getSessionID as getSDKSessionID,
+    getStorage as getSDKStorage,
     getStorageID as getSDKStorageID,
     getStorageState as getSDKStorageState
 } from '@paypal/sdk-client/src';
 
-import { getStorage } from 'belter/src';
+import { getStorage as _getStorage } from 'belter/src';
 
 import 'core-js-pure/stable/object/entries';
 
@@ -101,7 +102,7 @@ export function getSessionID() {
     if (__MESSAGES__.__TARGET__ === 'SDK') {
         return getSDKSessionID();
     } else {
-        return getStorage({ name: getNamespace() }).getSessionID();
+        return _getStorage({ name: getNamespace() }).getSessionID();
     }
 }
 
@@ -109,14 +110,23 @@ export function getStorageID() {
     if (__MESSAGES__.__TARGET__ === 'SDK') {
         return getSDKStorageID();
     } else {
-        return getStorage({ name: getNamespace() }).getID();
+        return _getStorage({ name: getNamespace() }).getID();
     }
 }
 
-export function getStorageState(handler) {
+export function getStorage() {
+    if (__MESSAGES__.__TARGET__ === 'SDK') {
+        return getSDKStorage();
+    } else {
+        // Default hander to an identity function so we can call without a handler to just retrieve
+        return _getStorage({ name: getNamespace() }).getState(s => s);
+    }
+}
+
+export function setStorage(handler) {
     if (__MESSAGES__.__TARGET__ === 'SDK') {
         return getSDKStorageState(handler);
     } else {
-        return getStorage({ name: getNamespace() }).getState(handler);
+        return _getStorage({ name: getNamespace() }).getState(handler);
     }
 }

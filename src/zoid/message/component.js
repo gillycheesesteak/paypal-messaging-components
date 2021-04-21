@@ -14,7 +14,9 @@ import {
     getStorageID,
     getSessionID,
     getGlobalState,
-    getCurrentTime
+    getCurrentTime,
+    getStorage,
+    setStorage
 } from '../../utils';
 import validate from './validation';
 import containerTemplate from './containerTemplate';
@@ -91,7 +93,18 @@ export default createGlobalVariableGetter('__paypal_credit_message__', () =>
                 type: 'boolean',
                 queryParam: 'ignore_cache',
                 required: false,
+
                 value: validate.ignoreCache
+            },
+            // Use CDN rules something like this to unify requests
+            // for different merchants based on matching config hash
+            // https://developer.fastly.com/solutions/examples/normalize-requests
+            // If this value is not present, have CDN pass-through to origin
+            // TODO: can/should we load this up front with the SDK bundle to ensure it is always available
+            merchantConfigHash: {
+                type: 'string',
+                queryParam: 'merchant_config',
+                value: () => getStorage().merchantConfigHash
             },
 
             // Callbacks
@@ -218,7 +231,7 @@ export default createGlobalVariableGetter('__paypal_credit_message__', () =>
                 value: ({ props, event }) => {
                     const { onMarkup } = props;
 
-                    return ({ styles, warnings, ...rest }) => {
+                    return ({ styles, warnings, meta, ...rest }) => {
                         const { getContainer } = props;
 
                         if (typeof styles !== 'undefined') {
@@ -234,7 +247,12 @@ export default createGlobalVariableGetter('__paypal_credit_message__', () =>
                             });
                         }
 
-                        return onMarkup && onMarkup({ styles, warnings, ...rest });
+                        setStorage(storage => {
+                            // eslint-disable-next-line no-param-reassign
+                            storage.merchantConfigHash = meta.merchantConfigHash;
+                        });
+
+                        return onMarkup && onMarkup({ styles, warnings, meta, ...rest });
                     };
                 }
             },

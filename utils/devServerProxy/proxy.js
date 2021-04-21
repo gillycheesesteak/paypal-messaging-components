@@ -38,6 +38,12 @@ const devAccountMap = {
 };
 
 export default (app, server, compiler) => {
+    app.use('*', (req, res, next) => {
+        res.header('Access-Control-Allow-Origin', '*');
+        res.header('Access-Control-Allow-Headers', '*');
+        next();
+    });
+
     const getMockBanner = req => {
         const { amount, client_id: clientId, payer_id: payerId, credit_type: preferredCreditType } = req.query;
 

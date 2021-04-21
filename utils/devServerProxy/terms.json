@@ -6,6 +6,21 @@
             "term": 12,
             "apr": 0,
             "nominalRate": 0
+        },
+        {
+            "term": 24,
+            "apr": 0,
+            "nominalRate": 0
+        },
+        {
+            "term": 6,
+            "apr": 0,
+            "nominalRate": 0
+        },
+        {
+            "term": 3,
+            "apr": 0,
+            "nominalRate": 0
         }
     ]
 }

@@ -4,7 +4,7 @@ import { h } from 'preact';
 import { useEffect, useLayoutEffect, useRef } from 'preact/hooks';
 import { ZalgoPromise } from 'zalgo-promise/src';
 
-import { request, getActiveTags } from '../../utils';
+import { request, getActiveTags, getStorage, setStorage } from '../../utils';
 import { useXProps, useServerData, useDidUpdateEffect, useDidUpdateLayoutEffect } from './lib';
 
 const Message = () => {
@@ -23,7 +23,8 @@ const Message = () => {
         onReady,
         onHover,
         onMarkup,
-        resize
+        resize,
+        merchantConfigHash
     } = useXProps();
     const { markup, meta, parentStyles, warnings, setServerData } = useServerData();
     const dimensionsRef = useRef({ width: 0, height: 0 });
@@ -68,7 +69,6 @@ const Message = () => {
     });
 
     useEffect(() => {
-        console.log('here');
         // const query = objectEntries({
         //     message_request_id: meta.messageRequestId,
         //     amount,
@@ -90,11 +90,15 @@ const Message = () => {
         //     )
         //     .slice(1);
 
+        console.log(merchantConfigHash);
+        // merchantConfigHash and amount should be sent in these requests
+        // to be used by the CDN as "cache keys" to cache responses for both requests
+        // these values can be included in the url to get automatic cache handling
+        // or custom rules can be configured in the CDN to only check certain query params
         ZalgoPromise.all([
             request('GET', `https://localhost.paypal.com:8080/gpl_text_markup.html`),
             request('GET', `https://localhost.paypal.com:8080/variables.json`)
         ]).then(([{ data: content }, { data: variables }]) => {
-            console.log(content, variables);
             setServerData({
                 markup: Object.entries(variables).reduce(
                     // eslint-disable-next-line security/detect-non-literal-regexp

@@ -26,7 +26,7 @@ const Message = () => {
         resize,
         merchantConfigHash
     } = useXProps();
-    const { markup, meta, parentStyles, warnings, setServerData } = useServerData();
+    const { markup, meta, parentStyles, warnings, setServerData, messageMarkup } = useServerData();
     const dimensionsRef = useRef({ width: 0, height: 0 });
     const buttonRef = useRef();
 
@@ -96,11 +96,17 @@ const Message = () => {
         // these values can be included in the url to get automatic cache handling
         // or custom rules can be configured in the CDN to only check certain query params
         ZalgoPromise.all([
-            request('GET', `https://localhost.paypal.com:8080/gpl_text_markup.html`),
-            request('GET', `https://localhost.paypal.com:8080/variables.json`)
+            request(
+                'GET',
+                `https://uideploy--staticcontent--45b0eb3695776--ghe.preview.dev.paypalinc.com/upstream/assets/cdn-cache-test/gpl_text_markup.html`
+            ),
+            request(
+                'GET',
+                `https://uideploy--staticcontent--45b0eb3695776--ghe.preview.dev.paypalinc.com/upstream/assets/cdn-cache-test/variables.json`
+            )
         ]).then(([{ data: content }, { data: variables }]) => {
             setServerData({
-                markup: Object.entries(variables).reduce(
+                messageMarkup: Object.entries(variables).reduce(
                     // eslint-disable-next-line security/detect-non-literal-regexp
                     (accumulator, [key, val]) => accumulator.replace(new RegExp(`{{${key}}}`, 'g'), val),
                     content
@@ -131,8 +137,10 @@ const Message = () => {
                 fontFamily: 'inherit',
                 fontSize: 'inherit'
             }}
-            innerHTML={markup}
-        />
+        >
+            <div innerHTML={markup} />
+            {messageMarkup ? <div innerHTML={messageMarkup} /> : null}
+        </button>
     );
 };
 

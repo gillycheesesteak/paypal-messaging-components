@@ -3,8 +3,7 @@
 import { h, Fragment } from 'preact';
 import arrayIncludes from 'core-js-pure/stable/array/includes';
 import { objectMerge, objectFlattenToArray, curry } from '../../src/utils/server';
-import { getMutations, getLocaleStyles, getLocaleClass, getLocaleProductName, getMinimumWidthOptions } from '../locale';
-import allStyles from './styles';
+import { getMutations, getLocaleClass, getLocaleProductName, getMinimumWidthOptions } from '../locale';
 import Logo from './parts/Logo';
 import MutatedText from './parts/MutatedText';
 import Styles from './parts/Styles';
@@ -150,14 +149,9 @@ export default ({ addLog, options, markup, locale }) => {
             ? { logo: false, styles: [], headline: [], disclaimer: '' }
             : applyCascadeRules(Object, getMutations(locale, offerType, `layout:${layout}`));
 
-    const layoutProp = `layout:${layout}`;
-    const globalStyleRules = applyCascadeRules(Array, allStyles[layoutProp]);
-
     const localeClass = getLocaleClass(locale, offerType);
     // Scope all locale-specific styles to the selected locale
-    const localeStyleRules = applyCascadeRules(Array, getLocaleStyles(locale, layoutProp, offerType)).map(rule =>
-        rule.replace(/\.message/g, `.${localeClass} .message`)
-    );
+
     const mutationStyleRules = mutationRules.styles ?? [];
     const customFontStyleRules = getFontRules(addLog, style);
     const miscStyleRules = [];
@@ -190,8 +184,6 @@ export default ({ addLog, options, markup, locale }) => {
         return (
             <CustomMessage data={markup} meta={markup.meta} template={options.customMarkup}>
                 <Styles
-                    globalStyleRules={globalStyleRules}
-                    localeStyleRules={localeStyleRules}
                     mutationStyleRules={mutationStyleRules}
                     miscStyleRules={miscStyleRules}
                     customFontStyleRules={customFontStyleRules}
@@ -203,8 +195,6 @@ export default ({ addLog, options, markup, locale }) => {
     return (
         <div role="button" className="message" tabIndex="0">
             <Styles
-                globalStyleRules={globalStyleRules}
-                localeStyleRules={localeStyleRules}
                 mutationStyleRules={mutationStyleRules}
                 miscStyleRules={miscStyleRules}
                 customFontStyleRules={customFontStyleRules}

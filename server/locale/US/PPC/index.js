@@ -4,7 +4,7 @@ import logos from './logos';
 import styles from './styles';
 
 export default {
-    localeClass: 'locale--US',
+    productClass: 'product--PPC',
     productName: ['with', 'PayPal Credit.'],
     validOptions,
     minimumSizeOptions: {

@@ -4,7 +4,7 @@ import logos from '../../../message/logos';
 import styles from './styles';
 
 export default {
-    localeClass: 'locale--US',
+    productClass: 'product--GPL',
     productName: ['with', 'PayPal.'],
     validOptions,
     minimumSizeOptions: {

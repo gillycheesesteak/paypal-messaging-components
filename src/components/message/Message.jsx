@@ -52,7 +52,7 @@ const Message = () => {
         if (typeof onReady === 'function') {
             onReady({ meta, activeTags: getActiveTags(buttonRef.current) });
         }
-    }, [meta.messageRequestId]);
+    }, [meta?.messageRequestId]);
 
     useDidUpdateLayoutEffect(() => {
         const buttonWidth = buttonRef.current.offsetWidth;
@@ -69,52 +69,48 @@ const Message = () => {
     });
 
     useEffect(() => {
-        // const query = objectEntries({
-        //     message_request_id: meta.messageRequestId,
-        //     amount,
-        //     currency,
-        //     buyer_country: buyerCountry,
-        //     style,
-        //     credit_type: offer,
-        //     payer_id: payerId,
-        //     client_id: clientId,
-        //     merchant_id: merchantId,
-        //     version,
-        //     env
-        // })
-        //     .filter(([, val]) => Boolean(val))
-        //     .reduce(
-        //         (acc, [key, val]) =>
-        //             `${acc}&${key}=${encodeURIComponent(typeof val === 'object' ? JSON.stringify(val) : val)}`,
-        //         ''
-        //     )
-        //     .slice(1);
+        const query = objectEntries({
+            amount,
+            currency,
+            buyer_country: buyerCountry,
+            style,
+            credit_type: offer,
+            payer_id: payerId,
+            client_id: clientId,
+            merchant_id: merchantId,
+            version,
+            env
+        })
+            .filter(([, val]) => Boolean(val))
+            .reduce(
+                (acc, [key, val]) =>
+                    `${acc}&${key}=${encodeURIComponent(typeof val === 'object' ? JSON.stringify(val) : val)}`,
+                ''
+            )
+            .slice(1);
 
-        console.log(merchantConfigHash);
         // merchantConfigHash and amount should be sent in these requests
         // to be used by the CDN as "cache keys" to cache responses for both requests
         // these values can be included in the url to get automatic cache handling
         // or custom rules can be configured in the CDN to only check certain query params
         ZalgoPromise.all([
-            request(
-                'GET',
-                `https://uideploy--staticcontent--45b0eb3695776--ghe.preview.dev.paypalinc.com/upstream/assets/cdn-cache-test/gpl_text_markup.html`
-            ),
+            request('GET', `${window.location.origin}/credit-presentment/renderMessage?${query}`),
             request(
                 'GET',
                 `https://uideploy--staticcontent--45b0eb3695776--ghe.preview.dev.paypalinc.com/upstream/assets/cdn-cache-test/variables.json`
             )
         ]).then(([{ data: content }, { data: variables }]) => {
+            console.log(content.markup);
             setServerData({
                 messageMarkup: Object.entries(variables).reduce(
                     // eslint-disable-next-line security/detect-non-literal-regexp
                     (accumulator, [key, val]) => accumulator.replace(new RegExp(`{{${key}}}`, 'g'), val),
-                    content
+                    content.markup
                 ),
-                meta,
+                meta: content.meta,
                 // Respect empty string value in order to remove styles when switch from flex to text layout
-                parentStyles,
-                warnings
+                parentStyles: content.parentStyles,
+                warnings: content.warnings
             });
         });
     }, [amount, currency, buyerCountry, JSON.stringify(style), offer, payerId, clientId, merchantId]);

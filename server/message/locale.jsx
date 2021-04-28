@@ -2,7 +2,7 @@
 import { h } from 'preact';
 import arrayIncludes from 'core-js-pure/stable/array/includes';
 import { objectMerge, objectFlattenToArray, curry } from '../../src/utils/server';
-import { getLocaleStyles, getLocaleClass, getMinimumWidthOptions } from '../locale';
+import { getLocaleStyles, getLocaleClass } from '../locale';
 import allStyles from './styles';
 import Styles from './parts/Styles';
 
@@ -34,16 +34,8 @@ const applyCascade = curry((style, flattened, type, rules) =>
     )
 );
 
-export default ({ options, markup, locale }) => {
-    // Because offerType is necessary and impacts the locale styles, we cannot reuse this agnostic of "amount"
-    // Is there a way to make the locale styles agnostic of amount and offerType so they can be reused?
-    // If not, this wrapper can only include a very limited bit of global styles
-    const offerType = markup?.meta?.offerType;
-    const style =
-        options.style.layout === 'text' && options.style.preset === 'smallest'
-            ? objectMerge(options.style, getMinimumWidthOptions(locale, offerType))
-            : options.style;
-
+export default ({ options, locale }) => {
+    const { style } = options;
     const { layout } = style;
 
     const styleSelectors = objectFlattenToArray(style);
@@ -52,10 +44,19 @@ export default ({ options, markup, locale }) => {
     const layoutProp = `layout:${layout}`;
     const globalStyleRules = applyCascadeRules(Array, allStyles[layoutProp]);
 
-    const localeClass = getLocaleClass(locale, offerType);
     // Scope all locale-specific styles to the selected locale
-    const localeStyleRules = applyCascadeRules(Array, getLocaleStyles(locale, layoutProp, offerType)).map(rule =>
-        rule.replace(/\.message/g, `.${localeClass} .message`)
+    const localeClass = getLocaleClass(locale);
+    const localeStyles = getLocaleStyles(locale, layoutProp);
+    console.log(localeClass);
+    const normalizedLocaleStyles = Array.isArray(localeStyles) ? { '': localeStyles } : localeStyles;
+    const localeStyleRules = Object.entries(normalizedLocaleStyles).reduce(
+        (accumulator, [productClass, styles]) => [
+            ...accumulator,
+            ...applyCascadeRules(Array, styles).map(rule =>
+                rule.replace(/\.message/g, `.${localeClass}${productClass === '' ? '' : `.${productClass}`} .message`)
+            )
+        ],
+        []
     );
 
     return <Styles globalStyleRules={globalStyleRules} localeStyleRules={localeStyleRules} />;

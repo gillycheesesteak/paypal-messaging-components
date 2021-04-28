@@ -3,7 +3,15 @@
 import { h, Fragment } from 'preact';
 import arrayIncludes from 'core-js-pure/stable/array/includes';
 import { objectMerge, objectFlattenToArray, curry } from '../../src/utils/server';
-import { getMutations, getLocaleClass, getLocaleProductName, getMinimumWidthOptions } from '../locale';
+import {
+    getMutations,
+    getLocaleClass,
+    getLocaleProductName,
+    getMinimumWidthOptions,
+    getLocaleStyles,
+    getProductClass,
+    getLocaleOfferStyles
+} from '../locale';
 import Logo from './parts/Logo';
 import MutatedText from './parts/MutatedText';
 import Styles from './parts/Styles';
@@ -149,7 +157,13 @@ export default ({ addLog, options, markup, locale }) => {
             ? { logo: false, styles: [], headline: [], disclaimer: '' }
             : applyCascadeRules(Object, getMutations(locale, offerType, `layout:${layout}`));
 
-    const localeClass = getLocaleClass(locale, offerType);
+    const layoutProp = `layout:${layout}`;
+    const localeClass = getLocaleClass(locale);
+    const productClass = getProductClass(locale, offerType);
+    const localeStyles = getLocaleOfferStyles(locale, layoutProp, offerType);
+    const localeStyleRules = applyCascadeRules(Array, localeStyles).map(rule =>
+        rule.replace(/\.message/g, `.${localeClass}${!productClass ? '' : `.${productClass}`} .message`)
+    );
     // Scope all locale-specific styles to the selected locale
 
     const mutationStyleRules = mutationRules.styles ?? [];
@@ -195,11 +209,12 @@ export default ({ addLog, options, markup, locale }) => {
     return (
         <div role="button" className="message" tabIndex="0">
             <Styles
+                localeStyleRules={localeStyleRules}
                 mutationStyleRules={mutationStyleRules}
                 miscStyleRules={miscStyleRules}
                 customFontStyleRules={customFontStyleRules}
             />
-            <div className={`message__container ${localeClass}`}>
+            <div className={`message__container ${localeClass} ${productClass}`}>
                 {/* foreground layer */}
                 <div className="message__foreground" />
 

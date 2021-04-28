@@ -104,6 +104,7 @@ export default createGlobalVariableGetter('__paypal_credit_message__', () =>
             merchantConfigHash: {
                 type: 'string',
                 queryParam: 'merchant_config',
+                required: false,
                 value: () => getStorage().merchantConfigHash
             },
 

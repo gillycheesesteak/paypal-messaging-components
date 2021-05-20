@@ -8,7 +8,6 @@ import {
     getLocaleClass,
     getLocaleProductName,
     getMinimumWidthOptions,
-    getLocaleStyles,
     getProductClass,
     getLocaleOfferStyles
 } from '../locale';

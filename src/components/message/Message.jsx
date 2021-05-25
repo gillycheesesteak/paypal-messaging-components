@@ -24,6 +24,7 @@ const Message = () => {
         onHover,
         onMarkup,
         resize,
+        stageTag,
         merchantConfigHash
     } = useXProps();
     const { markup, meta, parentStyles, warnings, setServerData, messageMarkup } = useServerData();
@@ -43,7 +44,7 @@ const Message = () => {
     };
 
     useLayoutEffect(() => {
-        if (typeof onMarkup === 'function') {
+        if (typeof onMarkup === 'function' && messageMarkup) {
             onMarkup({ meta, styles: parentStyles, warnings });
         }
     }, [parentStyles, warnings, markup]);
@@ -79,6 +80,7 @@ const Message = () => {
             client_id: clientId,
             merchant_id: merchantId,
             version,
+            stageTag,
             env
         })
             .filter(([, val]) => Boolean(val))
@@ -100,7 +102,7 @@ const Message = () => {
                 `https://uideploy--staticcontent--45b0eb3695776--ghe.preview.dev.paypalinc.com/upstream/assets/cdn-cache-test/variables.json`
             )
         ]).then(([{ data: content }, { data: variables }]) => {
-            console.log(content.markup);
+            console.log(content);
             setServerData({
                 messageMarkup: Object.entries(variables).reduce(
                     // eslint-disable-next-line security/detect-non-literal-regexp

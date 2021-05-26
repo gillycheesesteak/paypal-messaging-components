@@ -51,7 +51,7 @@ const Message = () => {
 
     useLayoutEffect(() => {
         if (typeof onReady === 'function') {
-            onReady({ meta, activeTags: getActiveTags(buttonRef.current) });
+            onReady({ activeTags: getActiveTags(buttonRef.current) });
         }
     }, [meta?.messageRequestId]);
 

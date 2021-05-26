@@ -185,35 +185,13 @@ export default createGlobalVariableGetter('__paypal_credit_message__', () =>
                     const { onReady } = props;
 
                     return ({ meta, activeTags }) => {
-                        const { account, merchantId, index, modal, getContainer } = props;
-                        const { messageRequestId, displayedMessage, trackingDetails, offerType } = meta;
-
-                        logger.addMetaBuilder(existingMeta => {
-                            // Remove potential existing meta info
-                            // Necessary because beaver-logger will not override an existing meta key if these values change
-                            // eslint-disable-next-line no-param-reassign
-                            delete existingMeta[index];
-
-                            return {
-                                [index]: {
-                                    type: 'message',
-                                    messageRequestId,
-                                    account: merchantId || account,
-                                    displayedMessage,
-                                    trackingDetails
-                                }
-                            };
-                        });
+                        const { index, getContainer } = props;
 
                         runStats({
                             container: getContainer(),
                             activeTags,
                             index
                         });
-                        // Set visible to false to prevent this update from popping open the modal
-                        // when the user has previously opened the modal
-                        modal.updateProps({ refIndex: index, offer: offerType, visible: false });
-                        modal.render('body');
 
                         logger.track({
                             index,
@@ -234,7 +212,31 @@ export default createGlobalVariableGetter('__paypal_credit_message__', () =>
                     const { onMarkup } = props;
 
                     return ({ styles, warnings, meta, ...rest }) => {
-                        const { getContainer } = props;
+                        const { account, merchantId, index, modal, getContainer } = props;
+
+                        const { messageRequestId, displayedMessage, trackingDetails, offerType } = meta;
+
+                        // Set visible to false to prevent this update from popping open the modal
+                        // when the user has previously opened the modal
+                        modal.updateProps({ refIndex: index, offer: offerType, visible: false });
+                        modal.render('body');
+
+                        logger.addMetaBuilder(existingMeta => {
+                            // Remove potential existing meta info
+                            // Necessary because beaver-logger will not override an existing meta key if these values change
+                            // eslint-disable-next-line no-param-reassign
+                            delete existingMeta[index];
+
+                            return {
+                                [index]: {
+                                    type: 'message',
+                                    messageRequestId,
+                                    account: merchantId || account,
+                                    displayedMessage,
+                                    trackingDetails
+                                }
+                            };
+                        });
 
                         if (typeof styles !== 'undefined') {
                             event.trigger('styles', { styles });

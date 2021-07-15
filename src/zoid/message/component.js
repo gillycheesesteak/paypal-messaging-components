@@ -18,7 +18,8 @@ import {
     getOrCreateStorageID,
     getStageTag,
     ppDebug,
-    isScriptBeingDestroyed
+    isScriptBeingDestroyed,
+    addLoggerMetaMutator
 } from '../../utils';
 import validate from './validation';
 import containerTemplate from './containerTemplate';
@@ -183,31 +184,16 @@ export default createGlobalVariableGetter('__paypal_credit_message__', () =>
                         // Write deviceID from iframe localStorage to merchant domain localStorage
                         writeStorageID(deviceID);
 
-                        logger.addMetaBuilder(existingMeta => {
-                            // Remove potential existing meta info
-                            // Necessary because beaver-logger will not override an existing meta key if these values change
-                            // eslint-disable-next-line no-param-reassign
-                            delete existingMeta[index];
+                        addLoggerMetaMutator(index, {
+                            type: 'message',
+                            messageRequestId,
+                            account: merchantId || account,
+                            trackingDetails
+                        });
 
-                            // Need to capture existing attributes under global before destroying
-                            const { global: existingGlobal = {} } = existingMeta;
-                            // eslint-disable-next-line no-param-reassign
-                            delete existingMeta.global;
-
-                            return {
-                                // Need to merge global attribute here due to preserve performance attributes
-                                global: {
-                                    ...existingGlobal,
-                                    deviceID, // deviceID from internal iframe storage
-                                    sessionID: getSessionID() // Session ID from parent local storage
-                                },
-                                [index]: {
-                                    type: 'message',
-                                    messageRequestId,
-                                    account: merchantId || account,
-                                    trackingDetails
-                                }
-                            };
+                        addLoggerMetaMutator('global', {
+                            deviceID, // deviceID from internal iframe storage
+                            sessionID: getSessionID() // Session ID from parent local storage
                         });
 
                         runStats({

@@ -57,6 +57,24 @@ export const logger = Logger({
     }
 });
 
+export function addLoggerMetaMutator(index, metaMutation) {
+    logger.addMetaBuilder(existingMeta => {
+        const newMetaForIndex = {
+            ...existingMeta[index],
+            ...metaMutation
+        };
+
+        // Remove potential existing meta info
+        // Necessary because beaver-logger will not override an existing meta key if these values change
+        // eslint-disable-next-line no-param-reassign
+        delete existingMeta[index];
+
+        return {
+            [index]: newMetaForIndex
+        };
+    });
+}
+
 logger.addMetaBuilder(() => {
     return {
         global: {

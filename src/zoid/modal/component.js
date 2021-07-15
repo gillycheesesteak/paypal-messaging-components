@@ -19,7 +19,8 @@ import {
     getSessionID,
     getOrCreateStorageID,
     getStageTag,
-    ppDebug
+    ppDebug,
+    addLoggerMetaMutator
 } from '../../utils';
 import validate from '../message/validation';
 import containerTemplate from './containerTemplate';
@@ -202,31 +203,16 @@ export default createGlobalVariableGetter('__paypal_credit_modal__', () =>
                         const { messageRequestId, trackingDetails, ppDebugId } = meta;
                         ppDebug(`Modal Correlation ID: ${ppDebugId}`);
 
-                        logger.addMetaBuilder(existingMeta => {
-                            // Remove potential existing meta info
-                            // Necessary because beaver-logger will not override an existing meta key if these values change
-                            // eslint-disable-next-line no-param-reassign
-                            delete existingMeta[index];
+                        addLoggerMetaMutator(index, {
+                            type: 'modal',
+                            messageRequestId,
+                            account: merchantId || account,
+                            trackingDetails
+                        });
 
-                            // Need to capture existing attributes under global before destroying
-                            const { global: existingGlobal = {} } = existingMeta;
-                            // eslint-disable-next-line no-param-reassign
-                            delete existingMeta.global;
-
-                            return {
-                                global: {
-                                    ...existingGlobal,
-                                    // Device ID should be correctly set during message render
-                                    deviceID,
-                                    sessionID: getSessionID()
-                                },
-                                [index]: {
-                                    type: 'modal',
-                                    messageRequestId,
-                                    account: merchantId || account,
-                                    trackingDetails
-                                }
-                            };
+                        addLoggerMetaMutator('global', {
+                            deviceID, // deviceID from internal iframe storage
+                            sessionID: getSessionID() // Session ID from parent local storage
                         });
 
                         const firstModalRenderDelay = getPerformanceMeasure('firstModalRenderDelay');

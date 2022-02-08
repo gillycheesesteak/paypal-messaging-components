@@ -83,7 +83,7 @@ filteredModule="${filteredModule:1}"
 # Build assets for each environment
 for env in "${filteredEnvArr[@]}"
 do
-    npm run --silent build:"$env" -- --env.VERSION="$version" --env.MODULE="$filteredModule" ${optionalArgs[@]} --bail --display none &> /dev/null
+    npm run build:"$env" -- --env.VERSION="$version" --env.MODULE="$filteredModule" ${optionalArgs[@]} --bail
 
     if [ "$env" = "production" ]; then dir="js"; else dir="$env"; fi 
 
